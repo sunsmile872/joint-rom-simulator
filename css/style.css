@@ -962,3 +962,67 @@ body {
   font-size: 11px;
 }
 
+/* Dynamic Pathology Alert Banner */
+.pathology-alert {
+  position: absolute;
+  bottom: 86px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(217, 119, 6, 0.18);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  z-index: 15;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  animation: pulse-pathology 2s infinite alternate;
+}
+
+.pathology-alert.hidden {
+  display: none;
+}
+
+@keyframes pulse-pathology {
+  0% {
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.15);
+  }
+  100% {
+    border-color: rgba(245, 158, 11, 0.8);
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.35);
+  }
+}
+
+.pathology-alert-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.pathology-alert-header strong {
+  color: #fbbf24;
+  font-size: 12px;
+}
+
+.pathology-alert-desc {
+  margin: 0;
+  color: #e2e8f0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.badge-pathology-limit {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  letter-spacing: 0.05em;
+}
+
