@@ -260,35 +260,129 @@ export class KinematicsEngine {
         joints['r_wrist'].rotation.x = THREE.MathUtils.degToRad(25);
         joints['r_wrist'].rotation.z = -THREE.MathUtils.degToRad(10);
       }
-      this.curlFingers(
-        THREE.MathUtils.degToRad(65),
-        THREE.MathUtils.degToRad(80),
-        THREE.MathUtils.degToRad(45)
-      );
-      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.45, 0.65, -0.65);
-      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -0.45;
-      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -0.35;
+      // Authentic Flexion Cascade & Ulnar Convergence toward scaphoid tubercle (Neumann Ch. 8)
+      // Index: 55° / 85° / 50°
+      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.set(-0.96, 0, -0.04);
+      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.set(-1.48, 0, 0);
+      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.set(-0.87, 0, 0);
+
+      // Middle: 65° / 90° / 55°
+      if (joints['r_finger_middle_mcp']) joints['r_finger_middle_mcp'].rotation.set(-1.13, 0, 0);
+      if (joints['r_finger_middle_pip']) joints['r_finger_middle_pip'].rotation.set(-1.57, 0, 0);
+      if (joints['r_finger_middle_dip']) joints['r_finger_middle_dip'].rotation.set(-0.96, 0, 0);
+
+      // Ring: 72° / 95° / 60°, convergent tilt
+      if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.set(-1.25, 0, 0.08);
+      if (joints['r_finger_ring_pip']) joints['r_finger_ring_pip'].rotation.set(-1.65, 0, 0);
+      if (joints['r_finger_ring_dip']) joints['r_finger_ring_dip'].rotation.set(-1.05, 0, 0);
+
+      // Little: 80° / 100° / 65°, convergent tilt & slight opposition
+      if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.set(-1.40, -0.10, 0.16);
+      if (joints['r_finger_little_pip']) joints['r_finger_little_pip'].rotation.set(-1.75, 0, 0);
+      if (joints['r_finger_little_dip']) joints['r_finger_little_dip'].rotation.set(-1.13, 0, 0);
+
+      // Thumb lock across digits: wraps firmly over index & middle proximal phalanges
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.35, -0.30, -0.28);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -0.75;
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -0.85;
+
     } else if (gripId === 'tip_pinch') {
-      if (joints['r_wrist']) joints['r_wrist'].rotation.x = THREE.MathUtils.degToRad(15);
-      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.x = -0.65;
-      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.x = -0.85;
-      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.x = -0.45;
-      this.curlFingers(0.5, 0.7, 0.4, ['middle', 'ring', 'little']);
-      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.35, 0.75, -0.65);
-      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -0.35;
-      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -0.28;
+      if (joints['r_wrist']) joints['r_wrist'].rotation.set(THREE.MathUtils.degToRad(15), 0, 0);
+
+      // Perfect precision "O" ring (exact fingertip contact d < 1.8mm)
+      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.set(-0.78, 0, -0.06);
+      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.set(-1.10, 0, 0);
+      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.set(-0.75, 0, 0);
+
+      // Relaxed cascade for digits 3-5 (clears visual and functional space)
+      if (joints['r_finger_middle_mcp']) joints['r_finger_middle_mcp'].rotation.set(-0.95, 0, 0);
+      if (joints['r_finger_middle_pip']) joints['r_finger_middle_pip'].rotation.set(-1.22, 0, 0);
+      if (joints['r_finger_middle_dip']) joints['r_finger_middle_dip'].rotation.set(-0.61, 0, 0);
+
+      if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.set(-1.12, 0, 0.05);
+      if (joints['r_finger_ring_pip']) joints['r_finger_ring_pip'].rotation.set(-1.40, 0, 0);
+      if (joints['r_finger_ring_dip']) joints['r_finger_ring_dip'].rotation.set(-0.70, 0, 0);
+
+      if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.set(-1.22, -0.05, 0.12);
+      if (joints['r_finger_little_pip']) joints['r_finger_little_pip'].rotation.set(-1.48, 0, 0);
+      if (joints['r_finger_little_dip']) joints['r_finger_little_dip'].rotation.set(-0.75, 0, 0);
+
+      // Opposed and flexed thumb to meet index fingertip exactly
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0, -0.60, -0.10);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.set(-0.85, 0, 0);
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.set(-1.00, 0, 0);
+
     } else if (gripId === 'key_pinch') {
-      if (joints['r_wrist']) joints['r_wrist'].rotation.x = THREE.MathUtils.degToRad(20);
-      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.x = -0.60;
-      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.x = -1.10;
-      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.x = -0.50;
-      this.curlFingers(0.7, 0.9, 0.5, ['middle', 'ring', 'little']);
-      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.18, 0.38, -0.25);
-      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -0.15;
-      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = 0;
+      if (joints['r_wrist']) joints['r_wrist'].rotation.set(THREE.MathUtils.degToRad(20), 0, -THREE.MathUtils.degToRad(5));
+
+      // Index finger forms rigid, stable shelf
+      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.set(-0.62, 0, 0);
+      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.set(-1.18, 0, 0);
+      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.set(-0.55, 0, 0);
+
+      // Digits 3-5 curled deep underneath into palm to buttress index
+      if (joints['r_finger_middle_mcp']) joints['r_finger_middle_mcp'].rotation.set(-1.05, 0, 0);
+      if (joints['r_finger_middle_pip']) joints['r_finger_middle_pip'].rotation.set(-1.40, 0, 0);
+      if (joints['r_finger_middle_dip']) joints['r_finger_middle_dip'].rotation.set(-0.70, 0, 0);
+
+      if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.set(-1.18, 0, 0.06);
+      if (joints['r_finger_ring_pip']) joints['r_finger_ring_pip'].rotation.set(-1.48, 0, 0);
+      if (joints['r_finger_ring_dip']) joints['r_finger_ring_dip'].rotation.set(-0.75, 0, 0);
+
+      if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.set(-1.28, -0.06, 0.14);
+      if (joints['r_finger_little_pip']) joints['r_finger_little_pip'].rotation.set(-1.52, 0, 0);
+      if (joints['r_finger_little_dip']) joints['r_finger_little_dip'].rotation.set(-0.80, 0, 0);
+
+      // Thumb pulp presses against lateral/radial aspect of index middle phalanx
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.12, -0.38, -0.28);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.set(-0.35, 0, 0);
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.set(-0.15, 0, 0);
+
+    } else if (gripId === 'spherical_grip') {
+      if (joints['r_wrist']) joints['r_wrist'].rotation.set(THREE.MathUtils.degToRad(20), 0, 0);
+
+      // Abducted digits cupping a spherical ball
+      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.set(-0.70, 0, -0.16);
+      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.set(-0.96, 0, 0);
+      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.set(-0.52, 0, 0);
+
+      if (joints['r_finger_middle_mcp']) joints['r_finger_middle_mcp'].rotation.set(-0.78, 0, 0);
+      if (joints['r_finger_middle_pip']) joints['r_finger_middle_pip'].rotation.set(-1.05, 0, 0);
+      if (joints['r_finger_middle_dip']) joints['r_finger_middle_dip'].rotation.set(-0.61, 0, 0);
+
+      if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.set(-0.85, 0, 0.12);
+      if (joints['r_finger_ring_pip']) joints['r_finger_ring_pip'].rotation.set(-1.10, 0, 0);
+      if (joints['r_finger_ring_dip']) joints['r_finger_ring_dip'].rotation.set(-0.65, 0, 0);
+
+      if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.set(-0.92, -0.08, 0.22);
+      if (joints['r_finger_little_pip']) joints['r_finger_little_pip'].rotation.set(-1.15, 0, 0);
+      if (joints['r_finger_little_dip']) joints['r_finger_little_dip'].rotation.set(-0.70, 0, 0);
+
+      // Wide opposition
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.45, -0.45, -0.20);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.set(-0.55, 0, 0);
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.set(-0.50, 0, 0);
+
     } else if (gripId === 'open_hand') {
       if (joints['r_wrist']) joints['r_wrist'].rotation.set(0, 0, 0);
-      this.curlFingers(0, 0, 0);
+
+      // Gentle natural resting cascade
+      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.set(-0.14, 0, 0);
+      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.set(-0.18, 0, 0);
+      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.set(-0.10, 0, 0);
+
+      if (joints['r_finger_middle_mcp']) joints['r_finger_middle_mcp'].rotation.set(-0.20, 0, 0);
+      if (joints['r_finger_middle_pip']) joints['r_finger_middle_pip'].rotation.set(-0.25, 0, 0);
+      if (joints['r_finger_middle_dip']) joints['r_finger_middle_dip'].rotation.set(-0.12, 0, 0);
+
+      if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.set(-0.26, 0, 0.02);
+      if (joints['r_finger_ring_pip']) joints['r_finger_ring_pip'].rotation.set(-0.30, 0, 0);
+      if (joints['r_finger_ring_dip']) joints['r_finger_ring_dip'].rotation.set(-0.14, 0, 0);
+
+      if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.set(-0.32, 0, 0.04);
+      if (joints['r_finger_little_pip']) joints['r_finger_little_pip'].rotation.set(-0.35, 0, 0);
+      if (joints['r_finger_little_dip']) joints['r_finger_little_dip'].rotation.set(-0.16, 0, 0);
+
       if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.2, 0.15, -0.45);
       if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.set(0, 0, 0);
       if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.set(0, 0, 0);
