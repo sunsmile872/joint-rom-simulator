@@ -167,10 +167,10 @@ class App {
     return 'r_shoulder';
   }
 
-  setCameraPreset(preset) {
+  setCameraPreset(preset, instant = false) {
     const jointMeshKey = this.getJointKeyForMotion(this.currentMotionId);
     const jointPos = this.skeleton.getJointPosition(jointMeshKey);
-    this.scene.setCameraPreset(preset, jointPos);
+    this.scene.setCameraPreset(preset, jointPos, instant);
   }
 
   onSceneUpdate() {
