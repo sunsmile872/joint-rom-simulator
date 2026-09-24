@@ -177,6 +177,13 @@ export class ControlsManager {
     // Update 2:1 Scapulohumeral Monitor if applicable
     this.updateScapularRhythmUI(val, motionData);
 
+    // If active pathology restriction applies, override status badge with warning!
+    if (this.app.activeRestriction) {
+      this.rangeBadge.className = 'status-badge status-risk';
+      this.rangeBadge.textContent = `🔒 ${this.app.activeRestriction.label}`;
+      return;
+    }
+
     // Evaluate Range Zone (only override if not impinging)
     const isImpinging = this.app.kinematics && this.app.kinematics.isImpinging;
     if (!isImpinging) {
@@ -193,6 +200,27 @@ export class ControlsManager {
         this.rangeBadge.className = 'status-badge status-risk';
         this.rangeBadge.textContent = 'Excessive / Impingement Risk';
       }
+    }
+  }
+
+  showPathologyAlert(pathology, restriction) {
+    if (!this.pathologyAlert) return;
+    this.pathologyAlert.classList.remove('hidden');
+    if (this.pathologyAlertTitle) {
+      this.pathologyAlertTitle.textContent = `🔒 ${pathology.name}`;
+    }
+    if (this.pathologyAlertBadge) {
+      const limitTxt = restriction.max !== undefined ? `LOCKED AT ${restriction.max}°` : `RESTRICTED`;
+      this.pathologyAlertBadge.textContent = limitTxt;
+    }
+    if (this.pathologyAlertDesc) {
+      this.pathologyAlertDesc.textContent = restriction.explanation;
+    }
+  }
+
+  clearPathologyAlert() {
+    if (this.pathologyAlert) {
+      this.pathologyAlert.classList.add('hidden');
     }
   }
 
@@ -226,8 +254,14 @@ export class ControlsManager {
     if (!this.isPlaying) return;
 
     const motionData = this.app.currentMotion;
-    const min = motionData.normalMin;
-    const max = motionData.normalMax;
+    let min = motionData.normalMin;
+    let max = motionData.normalMax;
+
+    if (this.app.activeRestriction) {
+      if (this.app.activeRestriction.max !== undefined) max = this.app.activeRestriction.max;
+      if (this.app.activeRestriction.min !== undefined) min = this.app.activeRestriction.min;
+    }
+
     const range = max - min;
 
     // Physiological smooth sinusoidal oscillation (period: 3 seconds at 1x speed)
