@@ -1201,6 +1201,154 @@ export const ROM_DATA = {
     ]
   },
 
+  thumb_cmc_abduction: {
+    id: 'thumb_cmc_abduction',
+    region: 'wrist',
+    jointName: '1st Carpometacarpal (CMC / Trapeziometacarpal) Saddle Joint',
+    motionName: 'Thumb CMC Palmar Abduction',
+    plane: 'Sagittal (Perpendicular to Palm)',
+    axis: 'Anteroposterior Axis through Trapezium',
+    normalMin: 0,
+    normalMax: 45,
+    unit: 'degrees',
+    referenceRangeText: '0° – 45° (AAOS: 45°–50°, Neumann: 45°)',
+    functionalRange: '35° (Grasping large cups, bottles, opening grasp)',
+    hypermobilityThreshold: 55,
+    impingementRiskThreshold: 65,
+    sliderMin: 0,
+    sliderMax: 60,
+    endFeel: {
+      type: 'Firm (Web space tissue stretch / Ligamentous)',
+      description: 'Tension in first web space fascia, intermetacarpal ligament, and adductor pollicis muscle.',
+      abnormalEndFeel: 'Hard (basilar thumb osteoarthritis / CMC spurring) or Empty.'
+    },
+    arthrokinematics: {
+      type: 'Saddle Joint: Convex-on-Concave Orthogonal Rule',
+      rule: 'Convex 1st Metacarpal base rolls and slides in OPPOSITE directions on Concave Trapezium',
+      description: 'Orthogonal Saddle Kinematics (Neumann Ch. 8, pp. 268–270): In palmar abduction, the convex diameter of the 1st metacarpal base rolls palmarward (anteriorly) and slides dorsalward (posteriorly) across the concave saddle surface of the trapezium.',
+      closePacked: 'Full opposition / extreme abduction',
+      loosePacked: 'Midway between abduction/adduction and flexion/extension'
+    },
+    muscles: {
+      primeMovers: [
+        { name: 'Abductor pollicis brevis (APB)', innervation: 'Median Nerve (C8-T1, Recurrent thenar motor branch)' },
+        { name: 'Abductor pollicis longus (APL)', innervation: 'Posterior Interosseous Nerve / Radial (C7-C8)' }
+      ],
+      synergists: ['Opponens pollicis', 'Flexor pollicis brevis (superficial head)'],
+      antagonists: ['Adductor pollicis (transverse & oblique heads)', 'First dorsal interosseous']
+    },
+    goniometry: {
+      position: 'Forearm in mid-position resting on ulnar border on table, thumb alongside 2nd metacarpal.',
+      fulcrum: 'Junction of the bases of the 1st and 2nd metacarpals (anatomical snuffbox region).',
+      stationaryArm: 'Lateral midline of the 2nd metacarpal bone.',
+      movableArm: 'Lateral midline of the 1st metacarpal bone.',
+      substitutions: 'Thumb MCP/IP hyperextension, wrist radial deviation.'
+    },
+    citations: [
+      { book: 'Neumann (3rd Ed)', chapter: 'Chapter 8: Hand', page: 'pp. 268–272, Fig 8.13 & Table 8.3' },
+      { book: "Braddom's PM&R (7th Ed)", chapter: 'Hand & Upper Limb Examination', page: 'Ch. 3' },
+      { book: 'Daniels & Worthingham (10th Ed)', chapter: 'Thumb Abduction Testing', page: 'pp. 134–137' }
+    ]
+  },
+
+  thumb_cmc_flexion: {
+    id: 'thumb_cmc_flexion',
+    region: 'wrist',
+    jointName: '1st Carpometacarpal (CMC / Trapeziometacarpal) Saddle Joint',
+    motionName: 'Thumb CMC Flexion (Across Palm)',
+    plane: 'Frontal (Parallel to Palm)',
+    axis: 'Oblique Coronal Axis through Trapezium',
+    normalMin: 0,
+    normalMax: 45,
+    unit: 'degrees',
+    referenceRangeText: '0° – 45° (AAOS: 45°–50°)',
+    functionalRange: '30° (Holding pen, cutlery, fine key pinch)',
+    hypermobilityThreshold: 55,
+    impingementRiskThreshold: 65,
+    sliderMin: 0,
+    sliderMax: 55,
+    endFeel: {
+      type: 'Soft (Soft tissue approximation) or Firm',
+      description: 'Contact with thenar eminence tissues; tension in posterior oblique ligament and dorsal CMC capsule.',
+      abnormalEndFeel: 'Hard (osteoarthritis / thumb CMC osteophytes).'
+    },
+    arthrokinematics: {
+      type: 'Saddle Joint: Concave-on-Convex Orthogonal Rule',
+      rule: 'Concave 1st Metacarpal base rolls and slides in the SAME direction on Convex Trapezium',
+      description: 'Orthogonal Saddle Kinematics (Neumann Ch. 8, pp. 268–270): In flexion across the palm, the concave diameter of the 1st metacarpal base rolls and slides in the SAME ulnar/medial direction across the convex saddle surface of the trapezium.',
+      closePacked: 'Full opposition / extreme flexion',
+      loosePacked: 'Midway between abduction/adduction and flexion/extension'
+    },
+    muscles: {
+      primeMovers: [
+        { name: 'Flexor pollicis brevis (FPB)', innervation: 'Median (superficial head, C8-T1) & Deep Ulnar (deep head, C8-T1)' },
+        { name: 'Opponens pollicis', innervation: 'Median Nerve (C8-T1)' }
+      ],
+      synergists: ['Flexor pollicis longus', 'Adductor pollicis'],
+      antagonists: ['Extensor pollicis longus (EPL)', 'Extensor pollicis brevis (EPB)', 'Abductor pollicis longus']
+    },
+    goniometry: {
+      position: 'Forearm supinated, resting dorsal surface on table.',
+      fulcrum: 'Palmar / dorsal junction of 1st CMC joint.',
+      stationaryArm: 'Ventral midline of 2nd metacarpal.',
+      movableArm: 'Ventral midline of 1st metacarpal.',
+      substitutions: 'Thumb MCP flexion compensation.'
+    },
+    citations: [
+      { book: 'Neumann (3rd Ed)', chapter: 'Chapter 8: Hand', page: 'pp. 268–272, Fig 8.14 & Table 8.3' },
+      { book: 'Daniels & Worthingham (10th Ed)', chapter: 'Thumb Flexion Testing', page: 'pp. 138–140' }
+    ]
+  },
+
+  thumb_opposition: {
+    id: 'thumb_opposition',
+    region: 'wrist',
+    jointName: '1st Ray & CMC Saddle Complex',
+    motionName: 'Thumb Opposition (Triplanar Compound)',
+    plane: 'Multiplanar (Combined Abduction + Flexion + Internal Axial Rotation)',
+    axis: 'Dynamic Sequential Saddle Helical Axis',
+    normalMin: 0,
+    normalMax: 60,
+    unit: 'degrees',
+    referenceRangeText: '0° – 60° (AAOS: Pad of thumb touches base or tip of 5th digit = 0 mm)',
+    functionalRange: '45° (Writing, typing, buttoning shirts, precision pinch)',
+    hypermobilityThreshold: 70,
+    impingementRiskThreshold: 75,
+    sliderMin: 0,
+    sliderMax: 65,
+    endFeel: {
+      type: 'Soft (Pulp contact) or Firm (Ligamentous)',
+      description: 'Contact between thumb pulp and fingertip pulp; tension in dorsoradial ligament complex.',
+      abnormalEndFeel: 'Empty (median nerve thenar motor branch palsy / severe CTS atrophy).'
+    },
+    arthrokinematics: {
+      type: 'Triplanar Compound Saddle Coupling',
+      rule: 'Phase 1: Abduction → Phase 2: Flexion → Phase 3: Medial Axial Rotation',
+      description: 'Evolutionary Hallux-Pollux Milestone (Neumann Ch. 8, pp. 270–271): Opposition is a coordinated sequence where the 1st metacarpal abducts, flexes medially, and automatically rotates internally (~45°–60°) around its own long axis due to oblique pulling of Opponens Pollicis and helical tension in the anterior oblique (beak) ligament, presenting the thumb pulp directly face-to-face with the opposite fingers!',
+      closePacked: 'Full opposition (thumb tip pressing firmly against 5th digit)',
+      loosePacked: 'Anatomical neutral'
+    },
+    muscles: {
+      primeMovers: [
+        { name: 'Opponens pollicis (primary workhorse for internal rotation)', innervation: 'Median Nerve (C8-T1, Recurrent branch)' },
+        { name: 'Abductor pollicis brevis (APB)', innervation: 'Median Nerve (C8-T1)' }
+      ],
+      synergists: ['Flexor pollicis brevis', 'Adductor pollicis'],
+      antagonists: ['Extensor pollicis longus', 'Extensor pollicis brevis', 'Abductor pollicis longus']
+    },
+    goniometry: {
+      position: 'Forearm supinated, wrist in neutral.',
+      fulcrum: 'Linear millimeter ruler measuring distance from tip of thumb to base of 5th digit (or angular rotation of 1st metacarpal).',
+      stationaryArm: 'Palmar plane across metacarpal heads 2-5.',
+      movableArm: 'Plane across thumbnail / 1st metacarpal.',
+      substitutions: 'Cupping of palm by 5th digit flexion (opponens digiti minimi trick movement).'
+    },
+    citations: [
+      { book: 'Neumann (3rd Ed)', chapter: 'Chapter 8: Hand', page: 'pp. 270–273, Fig 8.16 & Table 8.4' },
+      { book: "Braddom's PM&R (7th Ed)", chapter: 'Hand Functional Prehension Assessment', page: 'Ch. 3' }
+    ]
+  },
+
   // ==========================================
   // HIP JOINT
   // ==========================================
