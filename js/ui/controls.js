@@ -38,6 +38,12 @@ export class ControlsManager {
     this.ghProgressFill = document.getElementById('gh-progress-fill');
     this.stProgressFill = document.getElementById('st-progress-fill');
     this.impingementAlert = document.getElementById('impingement-alert');
+
+    // Pathology Alert Elements
+    this.pathologyAlert = document.getElementById('pathology-alert');
+    this.pathologyAlertTitle = document.getElementById('pathology-alert-title');
+    this.pathologyAlertBadge = document.getElementById('pathology-alert-badge');
+    this.pathologyAlertDesc = document.getElementById('pathology-alert-desc');
   }
 
   attachEventListeners() {
@@ -51,9 +57,19 @@ export class ControlsManager {
       });
     }
 
-    // Slider input
+    // Slider input with pathology resistance clamp
     this.slider.addEventListener('input', (e) => {
-      const val = parseFloat(e.target.value);
+      let val = parseFloat(e.target.value);
+      if (this.app.activeRestriction) {
+        if (this.app.activeRestriction.max !== undefined && val > this.app.activeRestriction.max) {
+          val = this.app.activeRestriction.max;
+          this.slider.value = val;
+        }
+        if (this.app.activeRestriction.min !== undefined && val < this.app.activeRestriction.min) {
+          val = this.app.activeRestriction.min;
+          this.slider.value = val;
+        }
+      }
       this.app.setAngle(val, false);
       if (this.isPlaying) this.pause();
     });
