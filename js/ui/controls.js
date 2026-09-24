@@ -254,7 +254,14 @@ export class ControlsManager {
     );
 
     if (isShoulderElevation) {
-      this.rhythmPanel.classList.remove('hidden');
+      if (this.rhythmPanel.classList.contains('hidden')) {
+        this.rhythmPanel.classList.remove('hidden');
+        if (window.innerWidth <= 768) {
+          this.rhythmPanel.classList.add('collapsed');
+          const t = this.rhythmPanel.querySelector('.collapse-text');
+          if (t) t.textContent = 'ขยาย';
+        }
+      }
       const bd = this.app.kinematics.getScapulohumeralBreakdown(val);
 
       if (this.ghDegVal) this.ghDegVal.textContent = `${bd.ghDeg}° / 120°`;
@@ -295,7 +302,14 @@ export class ControlsManager {
     );
 
     if (isFootMotion) {
-      this.footPanel.classList.remove('hidden');
+      if (this.footPanel.classList.contains('hidden')) {
+        this.footPanel.classList.remove('hidden');
+        if (window.innerWidth <= 768) {
+          this.footPanel.classList.add('collapsed');
+          const t = this.footPanel.querySelector('.collapse-text');
+          if (t) t.textContent = 'ขยาย';
+        }
+      }
       const state = this.app.kinematics.getFootBiomechanicsState(val, motionData.id);
       if (!state) return;
 
@@ -346,7 +360,14 @@ export class ControlsManager {
     );
 
     if (isHandMotion) {
-      this.handPanel.classList.remove('hidden');
+      if (this.handPanel.classList.contains('hidden')) {
+        this.handPanel.classList.remove('hidden');
+        if (window.innerWidth <= 768) {
+          this.handPanel.classList.add('collapsed');
+          const t = this.handPanel.querySelector('.collapse-text');
+          if (t) t.textContent = 'ขยาย';
+        }
+      }
       const state = this.app.kinematics.getHandBiomechanicsState(val, motionData.id);
       if (!state) return;
 
