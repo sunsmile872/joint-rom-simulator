@@ -116,7 +116,7 @@ export class SimulationScene {
     this.scene.add(floor);
   }
 
-  setCameraPreset(preset, targetJointPos = null) {
+  setCameraPreset(preset, targetJointPos = null, instant = false) {
     this.currentCameraPreset = preset;
     const duration = 800;
     const startTime = performance.now();
@@ -158,6 +158,16 @@ export class SimulationScene {
         break;
       default:
         targetPos.set(0, 1.3, 3.2);
+    }
+
+    if (instant) {
+      this.camera.position.copy(targetPos);
+      this.controls.target.copy(newTarget);
+      this.controls.update();
+      if (this.renderer && this.scene && this.camera) {
+        this.renderer.render(this.scene, this.camera);
+      }
+      return;
     }
 
     // Smooth transition
