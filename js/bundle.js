@@ -4443,7 +4443,7 @@
         depthWrite: false
       });
       this.rollSprite = new THREE5.Sprite(rollSpriteMat);
-      this.rollSprite.scale.set(0.09, 0.03, 1);
+      this.rollSprite.scale.set(0.072, 0.024, 1);
       this.rollSprite.renderOrder = 1e3;
       this.group.add(this.rollSprite);
       const slideSpriteMat = new THREE5.SpriteMaterial({
@@ -4452,7 +4452,7 @@
         depthWrite: false
       });
       this.slideSprite = new THREE5.Sprite(slideSpriteMat);
-      this.slideSprite.scale.set(0.09, 0.03, 1);
+      this.slideSprite.scale.set(0.072, 0.024, 1);
       this.slideSprite.renderOrder = 1e3;
       this.group.add(this.slideSprite);
     }
@@ -4490,7 +4490,7 @@
         if (perp.lengthSq() < 1e-3) {
           perp.crossVectors(rollDir, new THREE5.Vector3(1, 0, 0));
         }
-        perp.normalize().multiplyScalar(0.026);
+        perp.normalize().multiplyScalar(0.034);
         this.rollArrow.position.copy(perp);
         this.slideArrow.position.copy(perp.clone().negate());
       } else {
@@ -4501,10 +4501,16 @@
       this.slideArrow.setDirection(slideDir);
       this.rollArrow.setLength(pulse, 0.04, 0.024);
       this.slideArrow.setLength(pulse, 0.04, 0.024);
+      let rollDist = pulse + 0.038;
+      let slideDist = pulse + 0.038;
+      if (isSame) {
+        rollDist = pulse + 0.052;
+        slideDist = pulse + 0.022;
+      }
       this.rollSprite.material.map = getBadgeTexture(labelRoll, "#059669");
-      this.rollSprite.position.copy(this.rollArrow.position).addScaledVector(rollDir, pulse + 0.038);
+      this.rollSprite.position.copy(this.rollArrow.position).addScaledVector(rollDir, rollDist);
       this.slideSprite.material.map = getBadgeTexture(labelSlide, "#e11d48");
-      this.slideSprite.position.copy(this.slideArrow.position).addScaledVector(slideDir, pulse + 0.038);
+      this.slideSprite.position.copy(this.slideArrow.position).addScaledVector(slideDir, slideDist);
     }
     setVisible(visible) {
       this.group.visible = visible;
