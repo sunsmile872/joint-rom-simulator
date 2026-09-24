@@ -183,18 +183,18 @@ export class SkeletonModel {
     rClavicleGroup.add(rScapulaGroup);
     this.joints['r_scapula'] = rScapulaGroup;
 
-    // 1. Anatomical Scapular Blade (Body & Borders)
+    // 1. Anatomical Scapular Blade (Body & Borders - Hugs Posterior Ribcage)
     const scapulaGeo = new THREE.BufferGeometry();
     const scapulaVerts = new Float32Array([
       // Anterior Surface (Costal Fossa)
-      0.03, 0.01, 0.02,   -0.09, 0.03, -0.01,   -0.07, -0.16, 0.01,
-      0.03, 0.01, 0.02,   -0.07, -0.16, 0.01,    0.01, -0.05, 0.02,
+      0.025, 0.01, 0.015,   -0.075, 0.02, -0.008,   -0.045, -0.115, 0.005,
+      0.025, 0.01, 0.015,   -0.045, -0.115, 0.005,    0.01, -0.04, 0.015,
       // Posterior Surface (Infraspinous / Supraspinous)
-      0.03, 0.01, 0.01,   -0.07, -0.16, 0.00,   -0.09, 0.03, -0.02,
-      0.03, 0.01, 0.01,    0.01, -0.05, 0.01,   -0.07, -0.16, 0.00,
+      0.025, 0.01, 0.008,   -0.045, -0.115, -0.002,  -0.075, 0.02, -0.015,
+      0.025, 0.01, 0.008,    0.01, -0.04, 0.008,     -0.045, -0.115, -0.002,
       // Medial Border Wall
-      -0.09, 0.03, -0.01,  -0.09, 0.03, -0.02,  -0.07, -0.16, 0.00,
-      -0.09, 0.03, -0.01,  -0.07, -0.16, 0.00,  -0.07, -0.16, 0.01
+      -0.075, 0.02, -0.008,  -0.075, 0.02, -0.015,   -0.045, -0.115, -0.002,
+      -0.075, 0.02, -0.008,  -0.045, -0.115, -0.002, -0.045, -0.115, 0.005
     ]);
     scapulaGeo.setAttribute('position', new THREE.BufferAttribute(scapulaVerts, 3));
     scapulaGeo.computeVertexNormals();
@@ -202,11 +202,11 @@ export class SkeletonModel {
     rScapulaGroup.add(scapulaMesh);
     this.meshes['r_scapula_blade'] = scapulaMesh;
 
-    // 2. Spine of Scapula (Prominent horizontal posterior ridge)
-    const rSpineGeo = new THREE.BoxGeometry(0.11, 0.014, 0.016);
+    // 2. Spine of Scapula (Horizontal posterior ridge)
+    const rSpineGeo = new THREE.BoxGeometry(0.09, 0.012, 0.014);
     const rSpineMesh = new THREE.Mesh(rSpineGeo, this.boneMaterial);
-    rSpineMesh.position.set(-0.04, 0.015, -0.015);
-    rSpineMesh.rotation.set(0, 0, 0.15);
+    rSpineMesh.position.set(-0.035, 0.015, -0.012);
+    rSpineMesh.rotation.set(0, 0, 0.12);
     rScapulaGroup.add(rSpineMesh);
 
     // 3. Acromion Shelf (Anatomical roof arching over humeral head)
