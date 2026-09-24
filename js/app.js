@@ -14,6 +14,8 @@ class App {
     this.currentMotionId = 'shoulder_abduction';
     this.currentMotion = ROM_DATA['shoulder_abduction'];
     this.currentAngle = 0;
+    this.activePathology = null;
+    this.activeRestriction = null;
 
     this.scene = null;
     this.skeleton = null;
