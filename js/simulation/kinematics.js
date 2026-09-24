@@ -520,16 +520,32 @@ export class KinematicsEngine {
         break;
 
       // ----------------------------------------------------
-      // WRIST JOINT
+      // WRIST & HAND COMPLEX
       // ----------------------------------------------------
       case 'wrist_flexion':
         if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
         if (joints['r_wrist']) joints['r_wrist'].rotation.x = -rad; // Palmar flexion anteriorly
+        if (this.isTenodesisPassive) {
+          // Passive extensor digitorum tension straightens fingers flat / open
+          this.curlFingers(0, 0, 0);
+          if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.2, 0.15, -0.45);
+        }
         break;
 
       case 'wrist_extension':
         if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
         if (joints['r_wrist']) joints['r_wrist'].rotation.x = rad; // Dorsiflexion posteriorly
+        if (this.isTenodesisPassive) {
+          // Passive FDP/FDS flexor tension curls fingers automatically into a functional grasp!
+          const ratio = Math.min(1, value / 65);
+          const mcp = THREE.MathUtils.degToRad(55 * ratio);
+          const pip = THREE.MathUtils.degToRad(70 * ratio);
+          const dip = THREE.MathUtils.degToRad(40 * ratio);
+          this.curlFingers(mcp, pip, dip);
+          if (joints['r_thumb_cmc']) {
+            joints['r_thumb_cmc'].rotation.y = 0.15 + ratio * 0.35;
+          }
+        }
         break;
 
       case 'wrist_radial_deviation':
@@ -541,6 +557,43 @@ export class KinematicsEngine {
         if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
         if (joints['r_wrist']) joints['r_wrist'].rotation.z = -rad; // Deviates towards pinky (-X)
         break;
+
+      case 'thumb_cmc_abduction': {
+        if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
+        if (joints['r_thumb_cmc']) {
+          // Palmar abduction: rolls palmarward (+Y), slides dorsalward
+          joints['r_thumb_cmc'].rotation.y = 0.15 + rad * 0.85;
+          joints['r_thumb_cmc'].rotation.x = 0.2 + rad * 0.25;
+        }
+        break;
+      }
+
+      case 'thumb_cmc_flexion': {
+        if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
+        if (joints['r_thumb_cmc']) {
+          // Flexion across palm: sweeps medially (-Z)
+          joints['r_thumb_cmc'].rotation.z = -0.45 - rad * 0.75;
+          joints['r_thumb_cmc'].rotation.x = 0.2 - rad * 0.2;
+        }
+        break;
+      }
+
+      case 'thumb_opposition': {
+        if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
+        if (joints['r_thumb_cmc']) {
+          // Coordinated Abduction + Medial Flexion + Axial Internal Rotation
+          joints['r_thumb_cmc'].rotation.x = 0.2 + rad * 0.45;
+          joints['r_thumb_cmc'].rotation.y = 0.15 + rad * 0.65;
+          joints['r_thumb_cmc'].rotation.z = -0.45 - rad * 0.55;
+        }
+        if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -rad * 0.35;
+        if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -rad * 0.30;
+        // Little finger opposing cupping
+        const oppFlex = rad * 0.25;
+        if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.x = -oppFlex;
+        if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.x = -oppFlex * 0.6;
+        break;
+      }
 
       // ----------------------------------------------------
       // HIP JOINT
@@ -607,7 +660,7 @@ export class KinematicsEngine {
       }
 
       // ----------------------------------------------------
-      // ANKLE & FOOT
+      // ANKLE & FOOT COMPLEX
       // ----------------------------------------------------
       case 'ankle_dorsiflexion':
         if (joints['r_ankle']) joints['r_ankle'].rotation.x = -rad; // Foot lifts up
@@ -618,27 +671,62 @@ export class KinematicsEngine {
         break;
 
       case 'subtalar_inversion':
+      case 'subtalar_supination': {
         if (joints['r_subtalar']) {
-          joints['r_subtalar'].rotation.z = rad * 0.85; // Calcaneal varus tilt
-          joints['r_subtalar'].rotation.y = rad * 0.3;  // Forefoot adduction
+          joints['r_subtalar'].rotation.z = rad * 0.85; // Inversion / Varus
+          joints['r_subtalar'].rotation.y = rad * 0.35; // Adduction
+          joints['r_subtalar'].rotation.x = rad * 0.25; // Plantarflexion
+        }
+        // TNCC Crossed / Converging lock (rigid lever)
+        this.model.setTnccAxesState(false, 36);
+        this.model.setPlantarFasciaTension(rad * 0.25);
+
+        // Weight-Bearing Closed Chain Coupling
+        if (this.isWeightBearing && joints['r_tibia_axial']) {
+          // Supination drives Tibial External Rotation!
+          joints['r_tibia_axial'].rotation.y = -rad * 0.45;
         }
         break;
+      }
 
       case 'subtalar_eversion':
+      case 'subtalar_pronation': {
         if (joints['r_subtalar']) {
-          joints['r_subtalar'].rotation.z = -rad * 0.85; // Calcaneal valgus tilt
-          joints['r_subtalar'].rotation.y = -rad * 0.3;  // Forefoot abduction
+          joints['r_subtalar'].rotation.z = -rad * 0.85; // Eversion / Valgus
+          joints['r_subtalar'].rotation.y = -rad * 0.35; // Abduction
+          joints['r_subtalar'].rotation.x = -rad * 0.25; // Dorsiflexion
+        }
+        // TNCC Parallel alignment (unlocked shock absorber)
+        this.model.setTnccAxesState(true, 0);
+        this.model.setPlantarFasciaTension(0.08);
+
+        // Weight-Bearing Closed Chain Coupling
+        if (this.isWeightBearing && joints['r_tibia_axial']) {
+          // Pronation drives Tibial Internal Rotation!
+          joints['r_tibia_axial'].rotation.y = rad * 0.55;
         }
         break;
+      }
 
       case 'first_mtp_extension': {
         if (joints['r_first_mtp']) {
           joints['r_first_mtp'].rotation.x = -rad; // Great toe elevates
         }
-        // Windlass mechanism: Plantar aponeurosis winds around metatarsal head, elevating arch
+        if (joints['r_toe_ip']) {
+          joints['r_toe_ip'].rotation.x = -rad * 0.25;
+        }
+        // Windlass mechanism: Plantar aponeurosis winds around metatarsal head
+        const sinRad = Math.sin(rad);
         if (joints['r_subtalar']) {
-          const archElevation = Math.sin(rad) * 0.02;
-          joints['r_subtalar'].position.y = archElevation;
+          joints['r_subtalar'].position.y = sinRad * 0.024; // Elevate MLA
+          joints['r_subtalar'].rotation.z = sinRad * 0.14;  // Inversion / Supination
+        }
+        const tensionRatio = Math.min(1.0, sinRad * 1.15);
+        this.model.setPlantarFasciaTension(tensionRatio);
+        this.model.setTnccAxesState(value < 35, 36);
+
+        if (this.isWeightBearing && joints['r_tibia_axial']) {
+          joints['r_tibia_axial'].rotation.y = -sinRad * 0.25; // Tibial external rotation
         }
         break;
       }
@@ -649,6 +737,15 @@ export class KinematicsEngine {
         }
         break;
       }
+
+      default:
+        console.warn(`Unrecognized motion ID: ${motionId}`);
+    }
+
+    // Apply Active Functional Prehension Grip Override if selected
+    if (this.currentGrip !== 'none') {
+      this.applyGrip(this.currentGrip);
+    }
 
       default:
         console.warn(`Unrecognized motion ID: ${motionId}`);
