@@ -2300,72 +2300,72 @@
       const scapulaGeo = new THREE2.BufferGeometry();
       const scapulaVerts = new Float32Array([
         // Anterior Surface (Costal Fossa)
-        0.03,
+        0.025,
         0.01,
+        0.015,
+        -0.075,
         0.02,
-        -0.09,
-        0.03,
-        -0.01,
-        -0.07,
-        -0.16,
+        -8e-3,
+        -0.045,
+        -0.115,
+        5e-3,
+        0.025,
         0.01,
-        0.03,
+        0.015,
+        -0.045,
+        -0.115,
+        5e-3,
         0.01,
-        0.02,
-        -0.07,
-        -0.16,
-        0.01,
-        0.01,
-        -0.05,
-        0.02,
+        -0.04,
+        0.015,
         // Posterior Surface (Infraspinous / Supraspinous)
-        0.03,
+        0.025,
         0.01,
+        8e-3,
+        -0.045,
+        -0.115,
+        -2e-3,
+        -0.075,
+        0.02,
+        -0.015,
+        0.025,
         0.01,
-        -0.07,
-        -0.16,
-        0,
-        -0.09,
-        0.03,
-        -0.02,
-        0.03,
+        8e-3,
         0.01,
-        0.01,
-        0.01,
-        -0.05,
-        0.01,
-        -0.07,
-        -0.16,
-        0,
+        -0.04,
+        8e-3,
+        -0.045,
+        -0.115,
+        -2e-3,
         // Medial Border Wall
-        -0.09,
-        0.03,
-        -0.01,
-        -0.09,
-        0.03,
-        -0.02,
-        -0.07,
-        -0.16,
-        0,
-        -0.09,
-        0.03,
-        -0.01,
-        -0.07,
-        -0.16,
-        0,
-        -0.07,
-        -0.16,
-        0.01
+        -0.075,
+        0.02,
+        -8e-3,
+        -0.075,
+        0.02,
+        -0.015,
+        -0.045,
+        -0.115,
+        -2e-3,
+        -0.075,
+        0.02,
+        -8e-3,
+        -0.045,
+        -0.115,
+        -2e-3,
+        -0.045,
+        -0.115,
+        5e-3
       ]);
       scapulaGeo.setAttribute("position", new THREE2.BufferAttribute(scapulaVerts, 3));
       scapulaGeo.computeVertexNormals();
       const scapulaMesh = new THREE2.Mesh(scapulaGeo, this.boneMaterial);
       rScapulaGroup.add(scapulaMesh);
       this.meshes["r_scapula_blade"] = scapulaMesh;
-      const rSpineGeo = new THREE2.BoxGeometry(0.11, 0.014, 0.016);
+      const rSpineGeo = new THREE2.BoxGeometry(0.09, 0.012, 0.014);
       const rSpineMesh = new THREE2.Mesh(rSpineGeo, this.boneMaterial);
-      rSpineMesh.position.set(-0.04, 0.015, -0.015);
-      rSpineMesh.rotation.set(0, 0, 0.15);
+      rSpineMesh.position.set(-0.035, 0.015, -0.012);
+      rSpineMesh.rotation.set(0, 0, 0.12);
       rScapulaGroup.add(rSpineMesh);
       const rAcromionGeo = new THREE2.BoxGeometry(0.042, 0.014, 0.046);
       const rAcromionMesh = new THREE2.Mesh(rAcromionGeo, this.boneMaterial);
@@ -2454,49 +2454,49 @@
       lClavicleGroup.add(lScapulaGroup);
       const lScapulaGeo = new THREE2.BufferGeometry();
       const lScapulaVerts = new Float32Array([
-        -0.03,
+        -0.025,
         0.01,
+        0.015,
+        0.075,
         0.02,
-        0.09,
-        0.03,
+        -8e-3,
+        0.045,
+        -0.115,
+        5e-3,
+        -0.025,
+        0.01,
+        0.015,
+        0.045,
+        -0.115,
+        5e-3,
         -0.01,
-        0.07,
-        -0.16,
+        -0.04,
+        0.015,
+        -0.025,
         0.01,
-        -0.03,
-        0.01,
+        8e-3,
+        0.045,
+        -0.115,
+        -2e-3,
+        0.075,
         0.02,
-        0.07,
-        -0.16,
+        -0.015,
+        -0.025,
         0.01,
+        8e-3,
         -0.01,
-        -0.05,
-        0.02,
-        -0.03,
-        0.01,
-        0.01,
-        0.07,
-        -0.16,
-        0,
-        0.09,
-        0.03,
-        -0.02,
-        -0.03,
-        0.01,
-        0.01,
-        -0.01,
-        -0.05,
-        0.01,
-        0.07,
-        -0.16,
-        0
+        -0.04,
+        8e-3,
+        0.045,
+        -0.115,
+        -2e-3
       ]);
       lScapulaGeo.setAttribute("position", new THREE2.BufferAttribute(lScapulaVerts, 3));
       lScapulaGeo.computeVertexNormals();
       lScapulaGroup.add(new THREE2.Mesh(lScapulaGeo, this.boneMaterial));
-      const lSpineMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.11, 0.014, 0.016), this.boneMaterial);
-      lSpineMesh.position.set(0.04, 0.015, -0.015);
-      lSpineMesh.rotation.set(0, 0, -0.15);
+      const lSpineMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.09, 0.012, 0.014), this.boneMaterial);
+      lSpineMesh.position.set(0.035, 0.015, -0.012);
+      lSpineMesh.rotation.set(0, 0, -0.12);
       lScapulaGroup.add(lSpineMesh);
       const lAcromionMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.042, 0.014, 0.046), this.boneMaterial);
       lAcromionMesh.position.set(-0.035, 0.036, 0.02);
@@ -2803,13 +2803,17 @@
             joints["r_shoulder"].rotation.x = -ghRad;
           }
           if (joints["r_scapula"]) {
-            joints["r_scapula"].rotation.z = stRad * 0.45;
-            joints["r_scapula"].rotation.x = -stRad * 0.2;
-            joints["r_scapula"].rotation.y = stRad * 0.15;
+            const glideRatio = breakdown.stDeg / 60;
+            joints["r_scapula"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.35);
+            joints["r_scapula"].rotation.x = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.2);
+            joints["r_scapula"].rotation.y = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.22);
+            joints["r_scapula"].position.x = 0.15 - glideRatio * 0.025;
+            joints["r_scapula"].position.y = glideRatio * 0.022;
+            joints["r_scapula"].position.z = -0.06 + glideRatio * 0.045;
           }
           if (joints["r_clavicle"]) {
-            joints["r_clavicle"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.45);
-            joints["r_clavicle"].rotation.y = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.15);
+            joints["r_clavicle"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.38);
+            joints["r_clavicle"].rotation.y = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.18);
           }
           this.model.setImpingementState(this.isImpinging);
           break;
@@ -2827,6 +2831,7 @@
           this.isImpinging = breakdown.isImpinging;
           const ghRad = THREE3.MathUtils.degToRad(breakdown.ghDeg);
           const stRad = THREE3.MathUtils.degToRad(breakdown.stDeg);
+          const glideRatio = breakdown.stDeg / 60;
           if (joints["r_shoulder"]) {
             joints["r_shoulder"].rotation.z = ghRad;
             if (!this.isScapulaLocked && totalDeg > 60) {
@@ -2835,13 +2840,16 @@
             }
           }
           if (joints["r_scapula"]) {
-            joints["r_scapula"].rotation.z = stRad * 0.5;
-            joints["r_scapula"].rotation.x = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.33);
-            joints["r_scapula"].rotation.y = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.15);
+            joints["r_scapula"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.38);
+            joints["r_scapula"].rotation.x = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.25);
+            joints["r_scapula"].rotation.y = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.18);
+            joints["r_scapula"].position.x = 0.15 - glideRatio * 0.038;
+            joints["r_scapula"].position.y = glideRatio * 0.022;
+            joints["r_scapula"].position.z = -0.06 + glideRatio * 0.025;
           }
           if (joints["r_clavicle"]) {
-            joints["r_clavicle"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.5);
-            joints["r_clavicle"].rotation.y = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.2);
+            joints["r_clavicle"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.4);
+            joints["r_clavicle"].rotation.y = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.15);
           }
           this.model.setImpingementState(this.isImpinging);
           break;
