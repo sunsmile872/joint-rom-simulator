@@ -44,6 +44,31 @@ export class ControlsManager {
     this.pathologyAlertTitle = document.getElementById('pathology-alert-title');
     this.pathologyAlertBadge = document.getElementById('pathology-alert-badge');
     this.pathologyAlertDesc = document.getElementById('pathology-alert-desc');
+
+    // Foot Biomechanics HUD Elements
+    this.footPanel = document.getElementById('foot-biomechanics-panel');
+    this.toggleWb = document.getElementById('toggle-weight-bearing');
+    this.footCouplingBadge = document.getElementById('foot-coupling-badge');
+    this.footFrontalVal = document.getElementById('foot-frontal-val');
+    this.footTransverseVal = document.getElementById('foot-transverse-val');
+    this.footSagittalVal = document.getElementById('foot-sagittal-val');
+    this.tnccStatusPill = document.getElementById('tncc-status-pill');
+    this.tnccAxesVal = document.getElementById('tncc-axes-val');
+    this.tibialRotVal = document.getElementById('tibial-rot-val');
+    this.fasciaProgressFill = document.getElementById('fascia-progress-fill');
+    this.fasciaPercentVal = document.getElementById('fascia-percent-val');
+    this.mlaHeightVal = document.getElementById('mla-height-val');
+
+    // Hand Biomechanics HUD Elements
+    this.handPanel = document.getElementById('hand-biomechanics-panel');
+    this.toggleTenodesis = document.getElementById('toggle-tenodesis');
+    this.saddleRuleName = document.getElementById('saddle-rule-name');
+    this.handRollVal = document.getElementById('hand-roll-val');
+    this.handSlideVal = document.getElementById('hand-slide-val');
+    this.vectorRelationSymbol = document.getElementById('vector-relation-symbol');
+    this.tenodesisStatusPill = document.getElementById('tenodesis-status-pill');
+    this.tenodesisDescVal = document.getElementById('tenodesis-desc-val');
+    this.gripButtons = document.querySelectorAll('.grip-btn');
   }
 
   attachEventListeners() {
@@ -56,6 +81,39 @@ export class ControlsManager {
         this.updateScapularRhythmUI(this.app.currentAngle, this.app.currentMotion);
       });
     }
+
+    // Foot Weight-Bearing Toggle
+    if (this.toggleWb) {
+      this.toggleWb.addEventListener('change', (e) => {
+        this.app.kinematics.setWeightBearing(e.target.checked);
+        this.app.setAngle(this.app.currentAngle, false);
+      });
+    }
+
+    // Hand Tenodesis Toggle
+    if (this.toggleTenodesis) {
+      this.toggleTenodesis.addEventListener('change', (e) => {
+        this.app.kinematics.setTenodesis(e.target.checked);
+        this.app.setAngle(this.app.currentAngle, false);
+      });
+    }
+
+    // Prehension Grip Buttons
+    this.gripButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const grip = btn.getAttribute('data-grip');
+        const isCurrentActive = btn.classList.contains('active');
+        this.gripButtons.forEach(b => b.classList.remove('active'));
+
+        if (isCurrentActive) {
+          this.app.kinematics.setGrip('none');
+        } else {
+          btn.classList.add('active');
+          this.app.kinematics.setGrip(grip);
+        }
+        this.app.setAngle(this.app.currentAngle, false);
+      });
+    });
 
     // Slider input with pathology resistance clamp
     this.slider.addEventListener('input', (e) => {
