@@ -4912,6 +4912,10 @@
     }
     onRegionChange(regionId) {
       this.currentRegionId = regionId;
+      const regionSelect = document.getElementById("region-select");
+      if (regionSelect && regionSelect.value !== regionId) {
+        regionSelect.value = regionId;
+      }
       this.updateMotionDropdown(regionId);
     }
     onMotionChange(motionId) {
@@ -4963,6 +4967,10 @@
       this.currentMotionId = motionId;
       this.currentMotion = ROM_DATA[motionId];
       this.currentAngle = this.currentMotion.normalMin;
+      const motionSelect = document.getElementById("motion-select");
+      if (motionSelect && motionSelect.value !== motionId) {
+        motionSelect.value = motionId;
+      }
       if (this.activePathology && this.activePathology.restrictions && this.activePathology.restrictions[motionId]) {
         this.activeRestriction = this.activePathology.restrictions[motionId];
         this.controls.showPathologyAlert(this.activePathology, this.activeRestriction);
