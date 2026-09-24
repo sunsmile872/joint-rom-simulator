@@ -229,11 +229,102 @@ export class ControlsManager {
     }
   }
 
+  updateFootBiomechanicsUI(val, motionData) {
+    if (!this.footPanel) return;
+
+    const isFootMotion = motionData && (
+      motionData.region === 'ankle_foot' ||
+      motionData.id.startsWith('subtalar') ||
+      motionData.id.startsWith('first_mtp') ||
+      motionData.id.startsWith('ankle')
+    );
+
+    if (isFootMotion) {
+      this.footPanel.classList.remove('hidden');
+      const state = this.app.kinematics.getFootBiomechanicsState(val, motionData.id);
+      if (!state) return;
+
+      if (this.footFrontalVal) {
+        const dir = state.isPronation ? 'Eversion' : (state.isSupination ? 'Inversion' : 'Frontal');
+        this.footFrontalVal.textContent = `${state.frontalDeg}° ${dir}`;
+      }
+      if (this.footTransverseVal) {
+        const dir = state.isPronation ? 'Abduction' : (state.isSupination ? 'Adduction' : 'Transverse');
+        this.footTransverseVal.textContent = `${state.transverseDeg}° ${dir}`;
+      }
+      if (this.footSagittalVal) {
+        const dir = state.isPronation ? 'Dorsiflexion' : (state.isSupination ? 'Plantarflexion' : 'Sagittal');
+        this.footSagittalVal.textContent = `${state.sagittalDeg}° ${dir}`;
+      }
+
+      if (this.tnccStatusPill) {
+        this.tnccStatusPill.className = `status-pill ${state.tnccLocked ? 'status-locked' : 'status-unlocked'}`;
+        this.tnccStatusPill.textContent = state.tnccStatusText;
+      }
+      if (this.tnccAxesVal) {
+        this.tnccAxesVal.textContent = state.tnccAxesText;
+      }
+      if (this.tibialRotVal) {
+        this.tibialRotVal.textContent = state.tibialRotType;
+      }
+      if (this.fasciaProgressFill) {
+        this.fasciaProgressFill.style.width = `${state.fasciaTensionPercent}%`;
+      }
+      if (this.fasciaPercentVal) {
+        this.fasciaPercentVal.textContent = `${state.fasciaTensionPercent}%`;
+      }
+      if (this.mlaHeightVal) {
+        this.mlaHeightVal.textContent = `${state.mlaHeightMm} mm`;
+      }
+    } else {
+      this.footPanel.classList.add('hidden');
+    }
+  }
+
+  updateHandBiomechanicsUI(val, motionData) {
+    if (!this.handPanel) return;
+
+    const isHandMotion = motionData && (
+      motionData.region === 'wrist' ||
+      motionData.id.startsWith('wrist') ||
+      motionData.id.startsWith('thumb')
+    );
+
+    if (isHandMotion) {
+      this.handPanel.classList.remove('hidden');
+      const state = this.app.kinematics.getHandBiomechanicsState(val, motionData.id);
+      if (!state) return;
+
+      if (this.saddleRuleName) this.saddleRuleName.textContent = state.arthroRule;
+      if (this.handRollVal) this.handRollVal.textContent = state.rollDir;
+      if (this.handSlideVal) this.handSlideVal.textContent = state.slideDir;
+      if (this.vectorRelationSymbol) {
+        this.vectorRelationSymbol.textContent = state.isOpposite ? '≠ OPPOSITE' : '= SAME DIR';
+        this.vectorRelationSymbol.style.color = state.isOpposite ? '#f59e0b' : '#34d399';
+      }
+
+      if (this.tenodesisStatusPill) {
+        this.tenodesisStatusPill.textContent = state.isTenodesisPassive ? '🔗 Tenodesis Active' : '⚪ Tenodesis Disabled';
+      }
+      if (this.tenodesisDescVal) {
+        this.tenodesisDescVal.textContent = state.tenodesisStatusText;
+      }
+    } else {
+      this.handPanel.classList.add('hidden');
+    }
+  }
+
   updateValueDisplay(val, motionData) {
     this.angleDisplay.textContent = Math.round(val * 10) / 10;
 
     // Update 2:1 Scapulohumeral Monitor if applicable
     this.updateScapularRhythmUI(val, motionData);
+
+    // Update Foot & Ankle Biomechanics Monitor if applicable
+    this.updateFootBiomechanicsUI(val, motionData);
+
+    // Update Hand & Wrist Biomechanics Monitor if applicable
+    this.updateHandBiomechanicsUI(val, motionData);
 
     // If active pathology restriction applies, override status badge with warning!
     if (this.app.activeRestriction) {
