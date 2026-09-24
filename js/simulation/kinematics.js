@@ -746,9 +746,6 @@ export class KinematicsEngine {
     if (this.currentGrip !== 'none') {
       this.applyGrip(this.currentGrip);
     }
-
-      default:
-        console.warn(`Unrecognized motion ID: ${motionId}`);
-    }
   }
 }
+
