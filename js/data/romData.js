@@ -2273,5 +2273,34 @@ export const PATHOLOGY_PRESETS = [
         explanation: 'เส้นประสาท Radial บาดเจ็บ อัมพาตกล้ามเนื้อเหยียดข้อมือ ไม่สามารถกระดกข้อมือต้านแรงโน้มถ่วงได้เลย (0°)'
       }
     }
+  },
+  {
+    id: 'c6_tetraplegia_tenodesis',
+    name: 'C6 Tetraplegia (Tenodesis Grasp Candidate)',
+    primaryJointId: 'wrist_extension',
+    description: 'Intact wrist extensors (ECRL/ECRB, C6) allow active wrist extension to induce functional passive finger flexion via Tenodesis action.',
+    restrictions: {
+      wrist_extension: {
+        max: 45,
+        targetDegrees: 35,
+        label: 'Tenodesis Functional Grasp Zone (30°–40° Extension)',
+        explanation: 'ผู้ป่วยอัมพาตระดับ C6 ใช้กล้ามเนื้อเหยียดข้อมือ (ECRL/ECRB) กระดกข้อมือ 35° เพื่อดึงเส้นเอ็นนิ้วมือให้งอจับสิ่งของอัตโนมัติ (Tenodesis Grasp)'
+      }
+    }
+  },
+  {
+    id: 'pes_planus',
+    name: 'Severe Pes Planus / Posterior Tibial Dysfunction',
+    primaryJointId: 'subtalar_pronation',
+    description: 'Loss of medial longitudinal arch with excessive subtalar eversion, unlocked TNCC, and compensatory internal tibial torsion.',
+    restrictions: {
+      subtalar_supination: {
+        max: 8,
+        targetDegrees: 5,
+        label: 'Rigid Flatfoot (Locked in Pronation, Lacks Supination)',
+        explanation: 'เอ็น Tibialis Posterior เสื่อมสภาพ อุ้งเท้าแบนยุบ เท้าล็อกค้างอยู่ในท่า Pronation ไม่สามารถ Supinate เป็นคานแข็งดีดตัวได้'
+      }
+    }
   }
 ];
+
