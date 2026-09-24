@@ -339,18 +339,18 @@ export class SkeletonModel {
 
     const lScapulaGeo = new THREE.BufferGeometry();
     const lScapulaVerts = new Float32Array([
-      -0.03, 0.01, 0.02,   0.09, 0.03, -0.01,   0.07, -0.16, 0.01,
-      -0.03, 0.01, 0.02,   0.07, -0.16, 0.01,  -0.01, -0.05, 0.02,
-      -0.03, 0.01, 0.01,   0.07, -0.16, 0.00,   0.09, 0.03, -0.02,
-      -0.03, 0.01, 0.01,  -0.01, -0.05, 0.01,   0.07, -0.16, 0.00
+      -0.025, 0.01, 0.015,   0.075, 0.02, -0.008,   0.045, -0.115, 0.005,
+      -0.025, 0.01, 0.015,   0.045, -0.115, 0.005,  -0.01, -0.04, 0.015,
+      -0.025, 0.01, 0.008,   0.045, -0.115, -0.002,  0.075, 0.02, -0.015,
+      -0.025, 0.01, 0.008,  -0.01, -0.04, 0.008,    0.045, -0.115, -0.002
     ]);
     lScapulaGeo.setAttribute('position', new THREE.BufferAttribute(lScapulaVerts, 3));
     lScapulaGeo.computeVertexNormals();
     lScapulaGroup.add(new THREE.Mesh(lScapulaGeo, this.boneMaterial));
 
-    const lSpineMesh = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.014, 0.016), this.boneMaterial);
-    lSpineMesh.position.set(0.04, 0.015, -0.015);
-    lSpineMesh.rotation.set(0, 0, -0.15);
+    const lSpineMesh = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.012, 0.014), this.boneMaterial);
+    lSpineMesh.position.set(0.035, 0.015, -0.012);
+    lSpineMesh.rotation.set(0, 0, -0.12);
     lScapulaGroup.add(lSpineMesh);
 
     const lAcromionMesh = new THREE.Mesh(new THREE.BoxGeometry(0.042, 0.014, 0.046), this.boneMaterial);
