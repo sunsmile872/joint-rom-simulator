@@ -293,33 +293,106 @@ export class SkeletonModel {
     const rWristJointMesh = this.createJointSphere(0.028, true);
     rWristGroup.add(rWristJointMesh);
 
-    // Hand & Fingers (Palm facing anteriorly +Z in anatomical neutral)
+    // Hand & Palm Group
     const rHandGroup = new THREE.Group();
     rWristGroup.add(rHandGroup);
     this.joints['r_hand'] = rHandGroup;
 
-    const rPalmMesh = new THREE.Mesh(new THREE.BoxGeometry(0.065, 0.09, 0.022), this.boneMaterial);
-    rPalmMesh.position.set(0, -0.045, 0);
+    // Carpal Tunnel Arch & Palm Base
+    const rCarpusMesh = new THREE.Mesh(new THREE.BoxGeometry(0.058, 0.035, 0.024), this.boneMaterial);
+    rCarpusMesh.position.set(0, -0.018, 0);
+    rHandGroup.add(rCarpusMesh);
+
+    // Metacarpals 2-5 Body
+    const rPalmMesh = new THREE.Mesh(new THREE.BoxGeometry(0.062, 0.055, 0.020), this.boneMaterial);
+    rPalmMesh.position.set(-0.005, -0.055, 0);
     rHandGroup.add(rPalmMesh);
 
-    // Fingers MCP & IP (Digits 2-5)
+    // 1st CMC Trapezium Saddle Joint Landmark (Lateral / Radial aspect: +X)
+    const rTrapeziumMesh = new THREE.Mesh(new THREE.BoxGeometry(0.020, 0.018, 0.020), this.boneMaterial);
+    rTrapeziumMesh.position.set(0.032, -0.022, 0.005);
+    rHandGroup.add(rTrapeziumMesh);
+    this.meshes['r_trapezium'] = rTrapeziumMesh;
+
+    // Thumb 1st Ray (CMC Saddle Joint Pivot)
+    const rThumbCmcGroup = new THREE.Group();
+    rThumbCmcGroup.position.set(0.034, -0.026, 0.008);
+    // Resting anatomical alignment: 20° abduction, 15° internal rotation
+    rThumbCmcGroup.rotation.set(0.2, 0.15, -0.45);
+    rHandGroup.add(rThumbCmcGroup);
+    this.joints['r_thumb_cmc'] = rThumbCmcGroup;
+    this.joints['r_thumb'] = rThumbCmcGroup; // Backwards compatible alias
+
+    // 1st Metacarpal Bone
+    const r1stMetacarpal = this.createCylinderBone(0.012, 0.010, 0.045);
+    r1stMetacarpal.position.set(0.008, -0.022, 0.004);
+    rThumbCmcGroup.add(r1stMetacarpal);
+
+    // Thumb MCP Joint
+    const rThumbMcpGroup = new THREE.Group();
+    rThumbMcpGroup.position.set(0.016, -0.045, 0.008);
+    rThumbCmcGroup.add(rThumbMcpGroup);
+    this.joints['r_thumb_mcp'] = rThumbMcpGroup;
+
+    const rThumbProxPhalanx = this.createCylinderBone(0.010, 0.008, 0.030);
+    rThumbProxPhalanx.position.set(0, -0.015, 0);
+    rThumbMcpGroup.add(rThumbProxPhalanx);
+
+    // Thumb IP Joint & Distal Phalanx
+    const rThumbIpGroup = new THREE.Group();
+    rThumbIpGroup.position.set(0, -0.030, 0);
+    rThumbMcpGroup.add(rThumbIpGroup);
+    this.joints['r_thumb_ip'] = rThumbIpGroup;
+
+    const rThumbDistPhalanx = this.createCylinderBone(0.008, 0.006, 0.022);
+    rThumbDistPhalanx.position.set(0, -0.011, 0);
+    rThumbIpGroup.add(rThumbDistPhalanx);
+
+    // Fingers (Digits 2-5) Common Anchor
     const rFingersGroup = new THREE.Group();
-    rFingersGroup.position.set(0, -0.09, 0);
+    rFingersGroup.position.set(-0.005, -0.082, 0);
     rHandGroup.add(rFingersGroup);
     this.joints['r_fingers'] = rFingersGroup;
 
-    const rFingersMesh = this.createCylinderBone(0.012, 0.009, 0.075);
-    rFingersGroup.add(rFingersMesh);
+    // Segmented Individual Finger Rays for Authentic Tenodesis & Grasp Kinematics
+    const fingerDefs = [
+      { name: 'index', x: 0.022, lenProx: 0.036, lenMid: 0.022, lenDist: 0.018 },
+      { name: 'middle', x: 0.007, lenProx: 0.040, lenMid: 0.025, lenDist: 0.020 },
+      { name: 'ring', x: -0.008, lenProx: 0.036, lenMid: 0.022, lenDist: 0.018 },
+      { name: 'little', x: -0.022, lenProx: 0.028, lenMid: 0.018, lenDist: 0.016 }
+    ];
 
-    // Thumb (1st Ray - on LATERAL side +X pointing laterally/anteriorly)
-    const rThumbCmcGroup = new THREE.Group();
-    rThumbCmcGroup.position.set(0.038, -0.02, 0.008);
-    rHandGroup.add(rThumbCmcGroup);
-    this.joints['r_thumb'] = rThumbCmcGroup;
+    fingerDefs.forEach(f => {
+      // MCP joint
+      const mcpGroup = new THREE.Group();
+      mcpGroup.position.set(f.x, 0, 0);
+      rFingersGroup.add(mcpGroup);
+      this.joints[`r_finger_${f.name}_mcp`] = mcpGroup;
 
-    const rThumbMesh = this.createCylinderBone(0.012, 0.009, 0.06);
-    rThumbMesh.rotation.z = -Math.PI / 4;
-    rThumbCmcGroup.add(rThumbMesh);
+      const proxMesh = this.createCylinderBone(0.008, 0.007, f.lenProx);
+      proxMesh.position.set(0, -f.lenProx / 2, 0);
+      mcpGroup.add(proxMesh);
+
+      // PIP joint
+      const pipGroup = new THREE.Group();
+      pipGroup.position.set(0, -f.lenProx, 0);
+      mcpGroup.add(pipGroup);
+      this.joints[`r_finger_${f.name}_pip`] = pipGroup;
+
+      const midMesh = this.createCylinderBone(0.007, 0.006, f.lenMid);
+      midMesh.position.set(0, -f.lenMid / 2, 0);
+      pipGroup.add(midMesh);
+
+      // DIP joint
+      const dipGroup = new THREE.Group();
+      dipGroup.position.set(0, -f.lenMid, 0);
+      pipGroup.add(dipGroup);
+      this.joints[`r_finger_${f.name}_dip`] = dipGroup;
+
+      const distMesh = this.createCylinderBone(0.006, 0.004, f.lenDist);
+      distMesh.position.set(0, -f.lenDist / 2, 0);
+      dipGroup.add(distMesh);
+    });
 
     // ----------------------------------------------------
     // LEFT UPPER EXTREMITY (Symmetrical Resting Posture)
