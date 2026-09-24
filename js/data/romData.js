@@ -13,7 +13,7 @@ export const JOINT_REGIONS = [
   { id: 'tmj', name: 'Temporomandibular (TMJ)', icon: '🗣️' },
   { id: 'shoulder', name: 'Shoulder Complex', icon: '💪' },
   { id: 'elbow_forearm', name: 'Elbow & Forearm', icon: '🦾' },
-  { id: 'wrist', name: 'Wrist Joint', icon: '🖐️' },
+  { id: 'wrist', name: 'Wrist & Hand Complex', icon: '🖐️' },
   { id: 'hip', name: 'Hip Joint', icon: '🦵' },
   { id: 'knee', name: 'Knee Joint', icon: '🦿' },
   { id: 'ankle_foot', name: 'Ankle & Foot', icon: '🦶' },
