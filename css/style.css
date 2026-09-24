@@ -38,15 +38,18 @@
   padding: 0;
 }
 
-body {
+html, body {
   font-family: var(--font-family);
   background-color: var(--bg-primary);
   color: var(--text-main);
   overflow: hidden;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
+  width: 100dvw;
   display: flex;
   flex-direction: column;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* ---------------------------------------------------------
@@ -105,6 +108,29 @@ body {
   border-radius: var(--radius-sm);
   font-size: 11px;
   color: var(--text-muted);
+}
+
+.btn-toggle-reference {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 29, 61, 0.85);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-toggle-reference:hover,
+.btn-toggle-reference.active {
+  background: rgba(20, 184, 166, 0.2);
+  border-color: var(--teal-primary);
+  color: var(--teal-primary);
+  box-shadow: 0 0 10px rgba(20, 184, 166, 0.25);
 }
 
 .btn-poster {
@@ -267,8 +293,11 @@ body {
 .bottom-control-bar {
   position: absolute;
   bottom: 20px;
+  bottom: max(16px, env(safe-area-inset-bottom, 16px));
   left: 20px;
+  left: max(16px, env(safe-area-inset-left, 16px));
   right: 20px;
+  right: max(16px, env(safe-area-inset-right, 16px));
   background-color: rgba(11, 21, 45, 0.92);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(20, 184, 166, 0.3);
@@ -433,8 +462,54 @@ body {
   background-color: var(--bg-secondary);
   border-left: 1px solid var(--border-color);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  z-index: 25;
+}
+
+.detail-panel.panel-collapsed {
+  display: none !important;
+}
+
+.detail-panel-top-bar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(11, 21, 45, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.detail-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal-primary);
+}
+
+.btn-close-detail {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn-close-detail:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: #ef4444;
 }
 
 #detail-content {
@@ -736,9 +811,11 @@ body {
    ==================================================== */
 .scapular-rhythm-panel {
   position: absolute;
-  bottom: 106px;
+  bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 84px);
   left: 20px;
+  left: max(16px, env(safe-area-inset-left, 16px));
   right: 20px;
+  right: max(16px, env(safe-area-inset-right, 16px));
   background: rgba(11, 20, 42, 0.94);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(20, 184, 166, 0.25);
@@ -1024,9 +1101,11 @@ body {
    ==================================================== */
 .biomechanics-hud-panel {
   position: absolute;
-  bottom: 106px;
+  bottom: calc(max(16px, env(safe-area-inset-bottom, 16px)) + 84px);
   left: 20px;
+  left: max(16px, env(safe-area-inset-left, 16px));
   right: 20px;
+  right: max(16px, env(safe-area-inset-right, 16px));
   background: rgba(11, 20, 42, 0.94);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(20, 184, 166, 0.25);
@@ -1293,6 +1372,243 @@ body {
   border-color: #2dd4bf;
   color: #fff;
   box-shadow: 0 0 10px rgba(45, 212, 191, 0.3);
+}
+
+/* ====================================================
+   RESPONSIVE DESIGN (IPAD, TABLET & IPHONE OPTIMIZATION)
+   ==================================================== */
+
+/* Tablet & iPad (Landscape & Portrait <= 1024px) */
+@media (max-width: 1024px) {
+  .badge-textbook {
+    display: none;
+  }
+
+  .app-header {
+    padding: 0 14px;
+    height: 52px;
+  }
+
+  .app-title {
+    font-size: 14px;
+  }
+
+  .app-subtitle {
+    font-size: 10px;
+  }
+
+  /* Detail Panel becomes slide-out drawer on iPad/Tablet */
+  .detail-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(420px, 85vw);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.6);
+  }
+
+  .detail-panel-top-bar {
+    display: flex;
+  }
+
+  .bottom-control-bar {
+    bottom: max(12px, env(safe-area-inset-bottom, 12px));
+    left: max(12px, env(safe-area-inset-left, 12px));
+    right: max(12px, env(safe-area-inset-right, 12px));
+    padding: 10px 14px;
+    gap: 12px;
+  }
+
+  .scapular-rhythm-panel,
+  .biomechanics-hud-panel {
+    bottom: calc(max(12px, env(safe-area-inset-bottom, 12px)) + 78px);
+    left: max(12px, env(safe-area-inset-left, 12px));
+    right: max(12px, env(safe-area-inset-right, 12px));
+    padding: 10px 14px;
+    gap: 10px;
+    max-height: calc(100dvh - 170px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .angle-number {
+    font-size: 22px;
+  }
+
+  .btn-play {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .speed-select {
+    padding: 5px 6px;
+    font-size: 10px;
+  }
+
+  .pathology-group select {
+    max-width: 170px;
+    font-size: 11px;
+  }
+}
+
+/* Mobile & iPhone (<= 768px) */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 0 10px;
+    height: 48px;
+  }
+
+  .app-title-group {
+    max-width: 170px;
+  }
+
+  .app-title {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .app-subtitle {
+    display: none;
+  }
+
+  .btn-ref-text, .btn-poster-text {
+    display: none;
+  }
+
+  .btn-toggle-reference, .btn-poster {
+    padding: 6px 10px;
+  }
+
+  .viewport-overlay-top {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .selection-pills-group {
+    width: 100%;
+    gap: 6px;
+  }
+
+  .selection-pills-group select {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+
+  .layer-toggles {
+    align-self: flex-start;
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .camera-toolbar {
+    top: 112px;
+    left: 8px;
+    padding: 3px;
+    gap: 3px;
+  }
+
+  .cam-btn {
+    padding: 4px 6px;
+    font-size: 9px;
+  }
+
+  .bottom-control-bar {
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    padding: 10px 12px;
+    bottom: max(8px, env(safe-area-inset-bottom, 8px));
+    left: 8px;
+    right: 8px;
+  }
+
+  .slider-main-area {
+    order: 1;
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .control-group-play {
+    order: 2;
+    flex: 0 0 auto;
+    gap: 4px;
+  }
+
+  .pathology-group {
+    order: 3;
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .pathology-group label {
+    display: none;
+  }
+
+  .pathology-group select {
+    flex: 1;
+    width: 100%;
+    max-width: none;
+    font-size: 10px;
+    padding: 5px 6px;
+  }
+
+  .scapular-rhythm-panel,
+  .biomechanics-hud-panel {
+    bottom: calc(max(8px, env(safe-area-inset-bottom, 8px)) + 120px);
+    left: 8px;
+    right: 8px;
+    padding: 8px 10px;
+    gap: 8px;
+    max-height: calc(100dvh - 210px);
+  }
+
+  .hud-title, .rhythm-title {
+    font-size: 11px;
+  }
+
+  .badge-ratio {
+    font-size: 9px;
+    padding: 1px 6px;
+  }
+
+  .detail-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Height Constraint for iPad Landscape & Small Screens (<= 800px) */
+@media (max-height: 800px) {
+  .bottom-control-bar {
+    padding: 8px 14px;
+    gap: 12px;
+  }
+
+  .scapular-rhythm-panel,
+  .biomechanics-hud-panel {
+    bottom: calc(max(10px, env(safe-area-inset-bottom, 10px)) + 68px);
+    padding: 8px 12px;
+    gap: 8px;
+    max-height: calc(100dvh - 145px);
+  }
+
+  .hud-header, .rhythm-header {
+    gap: 4px;
+  }
+
+  .card-desc {
+    font-size: 10px;
+    line-height: 1.3;
+  }
 }
 
 

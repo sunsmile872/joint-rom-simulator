@@ -23,8 +23,11 @@
       <div class="badge-textbook">
         📖 Donald A. Neumann 3rd Ed • Braddom PM&R 7th Ed • Daniels & Worthingham
       </div>
+      <button id="btn-toggle-reference" class="btn-toggle-reference" title="Toggle Kinesiology Reference Panel">
+        <span>📖</span> <span class="btn-ref-text">Reference</span>
+      </button>
       <button id="btn-poster-mode" class="btn-poster">
-        <span>📄</span> A4 Medical Poster View
+        <span>📄</span> <span class="btn-poster-text">A4 Medical Poster View</span>
       </button>
     </div>
   </header>
@@ -315,7 +318,11 @@
     </section>
 
     <!-- RIGHT: CLINICAL MEDICAL REFERENCE DETAIL PANEL -->
-    <aside class="detail-panel">
+    <aside class="detail-panel" id="detail-panel">
+      <div class="detail-panel-top-bar">
+        <span class="detail-panel-title">📚 Clinical Kinesiology Reference</span>
+        <button id="btn-close-detail" class="btn-close-detail" title="Hide Reference Panel">✕</button>
+      </div>
       <div id="detail-content">
         <!-- Rendered by DetailPanel.js -->
       </div>

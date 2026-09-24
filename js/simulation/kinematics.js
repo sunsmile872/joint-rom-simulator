@@ -673,9 +673,9 @@ export class KinematicsEngine {
       case 'subtalar_inversion':
       case 'subtalar_supination': {
         if (joints['r_subtalar']) {
-          joints['r_subtalar'].rotation.z = rad * 0.85; // Inversion / Varus
-          joints['r_subtalar'].rotation.y = rad * 0.35; // Adduction
-          joints['r_subtalar'].rotation.x = rad * 0.25; // Plantarflexion
+          joints['r_subtalar'].rotation.z = -rad * 0.85; // Inversion / Varus (tilts sole medially toward -X)
+          joints['r_subtalar'].rotation.y = -rad * 0.35; // Adduction (toes point medially)
+          joints['r_subtalar'].rotation.x = rad * 0.25;  // Plantarflexion
         }
         // TNCC Crossed / Converging lock (rigid lever)
         this.model.setTnccAxesState(false, 36);
@@ -684,7 +684,7 @@ export class KinematicsEngine {
         // Weight-Bearing Closed Chain Coupling
         if (this.isWeightBearing && joints['r_tibia_axial']) {
           // Supination drives Tibial External Rotation!
-          joints['r_tibia_axial'].rotation.y = -rad * 0.45;
+          joints['r_tibia_axial'].rotation.y = rad * 0.45;
         }
         break;
       }
@@ -692,8 +692,8 @@ export class KinematicsEngine {
       case 'subtalar_eversion':
       case 'subtalar_pronation': {
         if (joints['r_subtalar']) {
-          joints['r_subtalar'].rotation.z = -rad * 0.85; // Eversion / Valgus
-          joints['r_subtalar'].rotation.y = -rad * 0.35; // Abduction
+          joints['r_subtalar'].rotation.z = rad * 0.85;  // Eversion / Valgus (tilts sole laterally toward +X)
+          joints['r_subtalar'].rotation.y = rad * 0.35;  // Abduction (toes point laterally)
           joints['r_subtalar'].rotation.x = -rad * 0.25; // Dorsiflexion
         }
         // TNCC Parallel alignment (unlocked shock absorber)
@@ -703,7 +703,7 @@ export class KinematicsEngine {
         // Weight-Bearing Closed Chain Coupling
         if (this.isWeightBearing && joints['r_tibia_axial']) {
           // Pronation drives Tibial Internal Rotation!
-          joints['r_tibia_axial'].rotation.y = rad * 0.55;
+          joints['r_tibia_axial'].rotation.y = -rad * 0.55;
         }
         break;
       }
@@ -719,14 +719,14 @@ export class KinematicsEngine {
         const sinRad = Math.sin(rad);
         if (joints['r_subtalar']) {
           joints['r_subtalar'].position.y = sinRad * 0.024; // Elevate MLA
-          joints['r_subtalar'].rotation.z = sinRad * 0.14;  // Inversion / Supination
+          joints['r_subtalar'].rotation.z = -sinRad * 0.14;  // Inversion / Supination (Varus tilt)
         }
         const tensionRatio = Math.min(1.0, sinRad * 1.15);
         this.model.setPlantarFasciaTension(tensionRatio);
         this.model.setTnccAxesState(value < 35, 36);
 
         if (this.isWeightBearing && joints['r_tibia_axial']) {
-          joints['r_tibia_axial'].rotation.y = -sinRad * 0.25; // Tibial external rotation
+          joints['r_tibia_axial'].rotation.y = sinRad * 0.25; // Tibial external rotation
         }
         break;
       }

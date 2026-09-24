@@ -54,6 +54,37 @@ class App {
       });
     }
 
+    // 4b. Reference Panel Toggle (Responsive iPad / Mobile)
+    const toggleRefBtn = document.getElementById('btn-toggle-reference');
+    const closeDetailBtn = document.getElementById('btn-close-detail');
+    const detailPanel = document.getElementById('detail-panel');
+
+    if (window.innerWidth <= 1024 && detailPanel) {
+      detailPanel.classList.add('panel-collapsed');
+    } else if (toggleRefBtn) {
+      toggleRefBtn.classList.add('active');
+    }
+
+    if (toggleRefBtn && detailPanel) {
+      toggleRefBtn.addEventListener('click', () => {
+        const isCollapsed = detailPanel.classList.toggle('panel-collapsed');
+        toggleRefBtn.classList.toggle('active', !isCollapsed);
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 300);
+      });
+    }
+
+    if (closeDetailBtn && detailPanel) {
+      closeDetailBtn.addEventListener('click', () => {
+        detailPanel.classList.add('panel-collapsed');
+        if (toggleRefBtn) toggleRefBtn.classList.remove('active');
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 300);
+      });
+    }
+
     // 5. Connect Scene Update Loop
     this.scene.addUpdateCallback(() => {
       this.onSceneUpdate();
@@ -83,7 +114,7 @@ class App {
     const motionsInRegion = Object.values(ROM_DATA).filter(m => m.region === regionId);
 
     motionSelect.innerHTML = motionsInRegion.map(m => `
-      <option value="${m.id}">${m.motionName} (${m.plane})</option>
+      <option value="${m.id}">${m.motionName} — ${m.plane}</option>
     `).join('');
 
     if (motionsInRegion.length > 0) {
@@ -93,6 +124,10 @@ class App {
 
   onRegionChange(regionId) {
     this.currentRegionId = regionId;
+    const regionSelect = document.getElementById('region-select');
+    if (regionSelect && regionSelect.value !== regionId) {
+      regionSelect.value = regionId;
+    }
     this.updateMotionDropdown(regionId);
   }
 
@@ -154,6 +189,11 @@ class App {
     this.currentMotionId = motionId;
     this.currentMotion = ROM_DATA[motionId];
     this.currentAngle = this.currentMotion.normalMin;
+
+    const motionSelect = document.getElementById('motion-select');
+    if (motionSelect && motionSelect.value !== motionId) {
+      motionSelect.value = motionId;
+    }
 
     // Check if active pathology restricts newly selected motion
     if (this.activePathology && this.activePathology.restrictions && this.activePathology.restrictions[motionId]) {

@@ -1175,7 +1175,7 @@
       region: "wrist",
       jointName: "1st Carpometacarpal (CMC / Trapeziometacarpal) Saddle Joint",
       motionName: "Thumb CMC Palmar Abduction",
-      plane: "Sagittal (Perpendicular to Palm)",
+      plane: "Sagittal",
       axis: "Anteroposterior Axis through Trapezium",
       normalMin: 0,
       normalMax: 45,
@@ -1223,8 +1223,8 @@
       id: "thumb_cmc_flexion",
       region: "wrist",
       jointName: "1st Carpometacarpal (CMC / Trapeziometacarpal) Saddle Joint",
-      motionName: "Thumb CMC Flexion (Across Palm)",
-      plane: "Frontal (Parallel to Palm)",
+      motionName: "Thumb CMC Flexion",
+      plane: "Frontal",
       axis: "Oblique Coronal Axis through Trapezium",
       normalMin: 0,
       normalMax: 45,
@@ -1271,8 +1271,8 @@
       id: "thumb_opposition",
       region: "wrist",
       jointName: "1st Ray & CMC Saddle Complex",
-      motionName: "Thumb Opposition (Triplanar Compound)",
-      plane: "Multiplanar (Combined Abduction + Flexion + Internal Axial Rotation)",
+      motionName: "Thumb Opposition",
+      plane: "Triplanar",
       axis: "Dynamic Sequential Saddle Helical Axis",
       normalMin: 0,
       normalMax: 60,
@@ -1837,8 +1837,8 @@
       id: "subtalar_inversion",
       region: "ankle_foot",
       jointName: "Subtalar & Transverse Tarsal Joints",
-      motionName: "Inversion (Supination component)",
-      plane: "Frontal (Triplanar component)",
+      motionName: "Inversion (Varus)",
+      plane: "Frontal",
       axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
       normalMin: 0,
       normalMax: 30,
@@ -1885,7 +1885,7 @@
       id: "subtalar_eversion",
       region: "ankle_foot",
       jointName: "Subtalar & Transverse Tarsal Joints",
-      motionName: "Eversion (Pronation component)",
+      motionName: "Eversion (Valgus)",
       plane: "Frontal",
       axis: "Oblique Subtalar Axis",
       normalMin: 0,
@@ -1933,8 +1933,8 @@
       id: "subtalar_pronation",
       region: "ankle_foot",
       jointName: "Subtalar & TNCC (Transverse Tarsal) Complex",
-      motionName: "Subtalar Pronation (Triplanar Unlocking)",
-      plane: "Triplanar (Eversion + Abduction + Dorsiflexion)",
+      motionName: "Subtalar Pronation (Unlocking)",
+      plane: "Triplanar",
       axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
       normalMin: 0,
       normalMax: 15,
@@ -1981,8 +1981,8 @@
       id: "subtalar_supination",
       region: "ankle_foot",
       jointName: "Subtalar & TNCC (Transverse Tarsal) Complex",
-      motionName: "Subtalar Supination (Triplanar Locking)",
-      plane: "Triplanar (Inversion + Adduction + Plantarflexion)",
+      motionName: "Subtalar Supination (Locking)",
+      plane: "Triplanar",
       axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
       normalMin: 0,
       normalMax: 30,
@@ -2029,7 +2029,7 @@
       id: "first_mtp_extension",
       region: "ankle_foot",
       jointName: "1st Metatarsophalangeal Joint (1st MTP)",
-      motionName: "Great Toe Extension & Windlass Mechanism",
+      motionName: "Great Toe Extension (Windlass)",
       plane: "Sagittal",
       axis: "Coronal Axis (through 1st Metatarsal Head)",
       normalMin: 0,
@@ -3658,28 +3658,28 @@
         case "subtalar_inversion":
         case "subtalar_supination": {
           if (joints["r_subtalar"]) {
-            joints["r_subtalar"].rotation.z = rad * 0.85;
-            joints["r_subtalar"].rotation.y = rad * 0.35;
+            joints["r_subtalar"].rotation.z = -rad * 0.85;
+            joints["r_subtalar"].rotation.y = -rad * 0.35;
             joints["r_subtalar"].rotation.x = rad * 0.25;
           }
           this.model.setTnccAxesState(false, 36);
           this.model.setPlantarFasciaTension(rad * 0.25);
           if (this.isWeightBearing && joints["r_tibia_axial"]) {
-            joints["r_tibia_axial"].rotation.y = -rad * 0.45;
+            joints["r_tibia_axial"].rotation.y = rad * 0.45;
           }
           break;
         }
         case "subtalar_eversion":
         case "subtalar_pronation": {
           if (joints["r_subtalar"]) {
-            joints["r_subtalar"].rotation.z = -rad * 0.85;
-            joints["r_subtalar"].rotation.y = -rad * 0.35;
+            joints["r_subtalar"].rotation.z = rad * 0.85;
+            joints["r_subtalar"].rotation.y = rad * 0.35;
             joints["r_subtalar"].rotation.x = -rad * 0.25;
           }
           this.model.setTnccAxesState(true, 0);
           this.model.setPlantarFasciaTension(0.08);
           if (this.isWeightBearing && joints["r_tibia_axial"]) {
-            joints["r_tibia_axial"].rotation.y = rad * 0.55;
+            joints["r_tibia_axial"].rotation.y = -rad * 0.55;
           }
           break;
         }
@@ -3693,13 +3693,13 @@
           const sinRad = Math.sin(rad);
           if (joints["r_subtalar"]) {
             joints["r_subtalar"].position.y = sinRad * 0.024;
-            joints["r_subtalar"].rotation.z = sinRad * 0.14;
+            joints["r_subtalar"].rotation.z = -sinRad * 0.14;
           }
           const tensionRatio = Math.min(1, sinRad * 1.15);
           this.model.setPlantarFasciaTension(tensionRatio);
           this.model.setTnccAxesState(value < 35, 36);
           if (this.isWeightBearing && joints["r_tibia_axial"]) {
-            joints["r_tibia_axial"].rotation.y = -sinRad * 0.25;
+            joints["r_tibia_axial"].rotation.y = sinRad * 0.25;
           }
           break;
         }
@@ -4857,6 +4857,32 @@
           this.posterView.show();
         });
       }
+      const toggleRefBtn = document.getElementById("btn-toggle-reference");
+      const closeDetailBtn = document.getElementById("btn-close-detail");
+      const detailPanel = document.getElementById("detail-panel");
+      if (window.innerWidth <= 1024 && detailPanel) {
+        detailPanel.classList.add("panel-collapsed");
+      } else if (toggleRefBtn) {
+        toggleRefBtn.classList.add("active");
+      }
+      if (toggleRefBtn && detailPanel) {
+        toggleRefBtn.addEventListener("click", () => {
+          const isCollapsed = detailPanel.classList.toggle("panel-collapsed");
+          toggleRefBtn.classList.toggle("active", !isCollapsed);
+          setTimeout(() => {
+            window.dispatchEvent(new Event("resize"));
+          }, 300);
+        });
+      }
+      if (closeDetailBtn && detailPanel) {
+        closeDetailBtn.addEventListener("click", () => {
+          detailPanel.classList.add("panel-collapsed");
+          if (toggleRefBtn) toggleRefBtn.classList.remove("active");
+          setTimeout(() => {
+            window.dispatchEvent(new Event("resize"));
+          }, 300);
+        });
+      }
       this.scene.addUpdateCallback(() => {
         this.onSceneUpdate();
       });
@@ -4878,7 +4904,7 @@
       const motionSelect = document.getElementById("motion-select");
       const motionsInRegion = Object.values(ROM_DATA).filter((m) => m.region === regionId);
       motionSelect.innerHTML = motionsInRegion.map((m) => `
-      <option value="${m.id}">${m.motionName} (${m.plane})</option>
+      <option value="${m.id}">${m.motionName} \u2014 ${m.plane}</option>
     `).join("");
       if (motionsInRegion.length > 0) {
         this.setMotion(motionsInRegion[0].id);
