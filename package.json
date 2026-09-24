@@ -6,7 +6,9 @@
   "main": "js/app.js",
   "scripts": {
     "start": "node server.js",
-    "build": "npx esbuild js/app.js --bundle --outfile=js/bundle.js --format=iife"
+    "build": "npx esbuild js/app.js --bundle --outfile=js/bundle.js --format=iife",
+    "backup:watch": "node scripts/auto-backup.js",
+    "backup": "node -e \"import('./scripts/auto-backup.js').then(m => m.runGitBackup())\""
   },
   "keywords": ["biomechanics", "kinesiology", "threejs", "rehabilitation", "goniometry"],
   "author": "Antigravity",

@@ -2,6 +2,7 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { startAutoBackupWatcher } from './scripts/auto-backup.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,4 +62,8 @@ server.listen(PORT, () => {
   console.log(`  🚀 Joint ROM Simulator running at:`);
   console.log(`  👉 http://localhost:${PORT}`);
   console.log(`======================================================\n`);
+
+  // Start continuous Git auto-backup file watcher
+  startAutoBackupWatcher();
 });
+
