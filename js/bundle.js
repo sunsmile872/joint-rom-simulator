@@ -1891,30 +1891,91 @@
     {
       id: "adhesive_capsulitis",
       name: "Adhesive Capsulitis (Frozen Shoulder)",
-      jointId: "shoulder_external_rotation",
-      targetDegrees: 20,
-      description: "Classic capsular pattern: External Rotation > Abduction > Internal Rotation severe restriction with painful firm end-feel."
+      primaryJointId: "shoulder_abduction",
+      description: "Classic Cyriax Capsular Pattern: Severe limitation in ER > Abduction > IR due to contracture of axillary pouch, coracohumeral ligament (CHL), and rotator interval fibrosis.",
+      restrictions: {
+        shoulder_abduction: {
+          max: 65,
+          targetDegrees: 65,
+          label: "Frozen Shoulder (Abduction: 65\xB0 Max)",
+          explanation: "\u0E1E\u0E31\u0E07\u0E1C\u0E37\u0E14\u0E2B\u0E14\u0E23\u0E31\u0E49\u0E07\u0E02\u0E2D\u0E07 Inferior Capsule (Axillary Pouch) \u0E02\u0E31\u0E14\u0E02\u0E27\u0E32\u0E07\u0E01\u0E32\u0E23\u0E40\u0E25\u0E37\u0E48\u0E2D\u0E19\u0E15\u0E31\u0E27\u0E25\u0E07 (Inferior Slide) \u0E02\u0E2D\u0E07\u0E2B\u0E31\u0E27 Humerus \u0E17\u0E33\u0E43\u0E2B\u0E49\u0E41\u0E02\u0E19\u0E01\u0E32\u0E07\u0E15\u0E34\u0E14\u0E25\u0E47\u0E2D\u0E01\u0E17\u0E35\u0E48 ~65\xB0 \u0E17\u0E31\u0E19\u0E17\u0E35!"
+        },
+        shoulder_external_rotation: {
+          max: 20,
+          targetDegrees: 20,
+          label: "Frozen Shoulder (External Rotation: 20\xB0 Max)",
+          explanation: "Coracohumeral Ligament \u0E41\u0E25\u0E30 Rotator Interval \u0E1E\u0E31\u0E07\u0E1C\u0E37\u0E14\u0E2B\u0E14\u0E23\u0E31\u0E49\u0E07\u0E23\u0E38\u0E19\u0E41\u0E23\u0E07\u0E17\u0E35\u0E48\u0E2A\u0E38\u0E14\u0E15\u0E32\u0E21 Capsular Pattern \u0E08\u0E33\u0E01\u0E31\u0E14\u0E01\u0E32\u0E23\u0E2B\u0E21\u0E38\u0E19\u0E2D\u0E2D\u0E01\u0E44\u0E21\u0E48\u0E40\u0E01\u0E34\u0E19 20\xB0 (\u0E1B\u0E01\u0E15\u0E34 90\xB0)"
+        },
+        shoulder_flexion: {
+          max: 80,
+          targetDegrees: 80,
+          label: "Frozen Shoulder (Flexion: 80\xB0 Max)",
+          explanation: "Anterior Capsule \u0E41\u0E25\u0E30 Axillary Pouch \u0E15\u0E34\u0E14\u0E25\u0E47\u0E2D\u0E01 \u0E2B\u0E22\u0E38\u0E14\u0E01\u0E32\u0E23\u0E22\u0E01\u0E41\u0E02\u0E19\u0E44\u0E1B\u0E02\u0E49\u0E32\u0E07\u0E2B\u0E19\u0E49\u0E32\u0E44\u0E27\u0E49\u0E17\u0E35\u0E48 ~80\xB0"
+        },
+        shoulder_internal_rotation: {
+          max: 35,
+          targetDegrees: 35,
+          label: "Frozen Shoulder (Internal Rotation: 35\xB0 Max)",
+          explanation: "Posterior Capsule \u0E1E\u0E31\u0E07\u0E1C\u0E37\u0E14\u0E15\u0E36\u0E07\u0E23\u0E31\u0E49\u0E07 \u0E08\u0E33\u0E01\u0E31\u0E14\u0E01\u0E32\u0E23\u0E40\u0E2D\u0E37\u0E49\u0E2D\u0E21\u0E21\u0E37\u0E2D\u0E44\u0E1B\u0E14\u0E49\u0E32\u0E19\u0E2B\u0E25\u0E31\u0E07"
+        }
+      }
+    },
+    {
+      id: "subacromial_impingement",
+      name: "Subacromial Impingement Syndrome",
+      primaryJointId: "shoulder_abduction",
+      description: "Painful Arc between 60\xB0 and 120\xB0 of abduction caused by supraspinatus tendon & subacromial bursa compression.",
+      restrictions: {
+        shoulder_abduction: {
+          max: 120,
+          targetDegrees: 90,
+          label: "Impingement Painful Arc (60\xB0\u2013120\xB0)",
+          explanation: "\u0E40\u0E2A\u0E49\u0E19\u0E40\u0E2D\u0E47\u0E19 Supraspinatus \u0E41\u0E25\u0E30\u0E16\u0E38\u0E07 Bursa \u0E16\u0E39\u0E01\u0E40\u0E1E\u0E14\u0E32\u0E19 Acromion \u0E01\u0E14\u0E40\u0E1A\u0E35\u0E22\u0E14\u0E23\u0E38\u0E19\u0E41\u0E23\u0E07\u0E43\u0E19\u0E0A\u0E48\u0E27\u0E07 60\xB0\u2013120\xB0 \u0E17\u0E33\u0E43\u0E2B\u0E49\u0E40\u0E08\u0E47\u0E1A\u0E02\u0E31\u0E14\u0E41\u0E25\u0E30\u0E0A\u0E30\u0E07\u0E31\u0E01\u0E01\u0E32\u0E23\u0E22\u0E01\u0E41\u0E02\u0E19"
+        }
+      }
     },
     {
       id: "knee_flexion_contracture",
       name: "Knee Flexion Contracture (Post-Op/Stroke)",
-      jointId: "knee_extension",
-      targetDegrees: 15,
-      description: "Inability to achieve terminal 0\xB0 extension due to posterior capsular tightening and hamstring spasticity."
+      primaryJointId: "knee_extension",
+      description: "Inability to achieve terminal 0\xB0 extension due to posterior capsular tightening and hamstring spasticity.",
+      restrictions: {
+        knee_extension: {
+          min: 15,
+          max: 15,
+          targetDegrees: 15,
+          label: "Knee Contracture (Lacks 15\xB0 Extension)",
+          explanation: "\u0E1C\u0E39\u0E49\u0E1B\u0E48\u0E27\u0E22\u0E02\u0E32\u0E14\u0E01\u0E32\u0E23\u0E40\u0E2B\u0E22\u0E35\u0E22\u0E14\u0E40\u0E02\u0E48\u0E32\u0E2A\u0E38\u0E14 15\xB0 (Terminal extension deficit) \u0E08\u0E32\u0E01 posterior capsule \u0E41\u0E25\u0E30 hamstrings \u0E2B\u0E14\u0E40\u0E01\u0E23\u0E47\u0E07"
+        }
+      }
     },
     {
       id: "hallux_rigidus",
       name: "Hallux Rigidus (1st MTP Arthrosis)",
-      jointId: "first_mtp_extension",
-      targetDegrees: 25,
-      description: "Severe loss of great toe extension (<30\xB0) leading to apropulsive gait and compensatory lateral foot rolling."
+      primaryJointId: "first_mtp_extension",
+      description: "Severe loss of great toe extension (<30\xB0) leading to apropulsive gait and compensatory lateral foot rolling.",
+      restrictions: {
+        first_mtp_extension: {
+          max: 25,
+          targetDegrees: 25,
+          label: "Hallux Rigidus (25\xB0 Max)",
+          explanation: "\u0E01\u0E23\u0E30\u0E14\u0E39\u0E01\u0E07\u0E2D\u0E01 Dorsal Osteophyte \u0E17\u0E35\u0E48\u0E2B\u0E31\u0E27\u0E01\u0E23\u0E30\u0E14\u0E39\u0E01 Metatarsal \u0E02\u0E31\u0E14\u0E02\u0E27\u0E32\u0E07\u0E01\u0E32\u0E23\u0E01\u0E23\u0E30\u0E14\u0E01\u0E19\u0E34\u0E49\u0E27\u0E42\u0E1B\u0E49\u0E07\u0E40\u0E17\u0E49\u0E32 \u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E40\u0E14\u0E34\u0E19\u0E25\u0E07\u0E19\u0E49\u0E33\u0E2B\u0E19\u0E31\u0E01\u0E41\u0E1A\u0E1A\u0E1B\u0E01\u0E15\u0E34\u0E44\u0E14\u0E49"
+        }
+      }
     },
     {
       id: "wrist_drop",
       name: "Radial Nerve Palsy (Wrist Drop)",
-      jointId: "wrist_extension",
-      targetDegrees: 0,
-      description: "Flaccid paralysis of wrist and finger extensors resulting in inability to extend wrist against gravity."
+      primaryJointId: "wrist_extension",
+      description: "Flaccid paralysis of wrist and finger extensors resulting in inability to extend wrist against gravity.",
+      restrictions: {
+        wrist_extension: {
+          max: 0,
+          targetDegrees: 0,
+          label: "Radial Nerve Palsy (Wrist Drop 0\xB0)",
+          explanation: "\u0E40\u0E2A\u0E49\u0E19\u0E1B\u0E23\u0E30\u0E2A\u0E32\u0E17 Radial \u0E1A\u0E32\u0E14\u0E40\u0E08\u0E47\u0E1A \u0E2D\u0E31\u0E21\u0E1E\u0E32\u0E15\u0E01\u0E25\u0E49\u0E32\u0E21\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E40\u0E2B\u0E22\u0E35\u0E22\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E37\u0E2D \u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E01\u0E23\u0E30\u0E14\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E37\u0E2D\u0E15\u0E49\u0E32\u0E19\u0E41\u0E23\u0E07\u0E42\u0E19\u0E49\u0E21\u0E16\u0E48\u0E27\u0E07\u0E44\u0E14\u0E49\u0E40\u0E25\u0E22 (0\xB0)"
+        }
+      }
     }
   ];
 
@@ -2613,7 +2674,24 @@
         this.applyMotion(this.currentMotionId, this.currentValue);
       }
     }
+    setPathology(pathologyId) {
+      this.currentPathology = pathologyId;
+    }
     getScapulohumeralBreakdown(totalDeg = this.currentValue) {
+      if (this.currentPathology === "adhesive_capsulitis") {
+        const ghDeg = Math.min(25, totalDeg * 0.38);
+        const stDeg = Math.min(40, totalDeg - ghDeg);
+        return {
+          ghDeg: Math.round(ghDeg),
+          stDeg: Math.round(stDeg),
+          maxGh: 120,
+          maxSt: 60,
+          totalDeg: Math.round(totalDeg),
+          isLocked: false,
+          isImpinging: false,
+          isFrozen: true
+        };
+      }
       if (this.isScapulaLocked) {
         const ghDeg = Math.min(totalDeg, 120);
         const stDeg = 0;
@@ -3366,6 +3444,10 @@
       this.ghProgressFill = document.getElementById("gh-progress-fill");
       this.stProgressFill = document.getElementById("st-progress-fill");
       this.impingementAlert = document.getElementById("impingement-alert");
+      this.pathologyAlert = document.getElementById("pathology-alert");
+      this.pathologyAlertTitle = document.getElementById("pathology-alert-title");
+      this.pathologyAlertBadge = document.getElementById("pathology-alert-badge");
+      this.pathologyAlertDesc = document.getElementById("pathology-alert-desc");
     }
     attachEventListeners() {
       if (this.toggleLockScapula) {
@@ -3377,7 +3459,17 @@
         });
       }
       this.slider.addEventListener("input", (e) => {
-        const val = parseFloat(e.target.value);
+        let val = parseFloat(e.target.value);
+        if (this.app.activeRestriction) {
+          if (this.app.activeRestriction.max !== void 0 && val > this.app.activeRestriction.max) {
+            val = this.app.activeRestriction.max;
+            this.slider.value = val;
+          }
+          if (this.app.activeRestriction.min !== void 0 && val < this.app.activeRestriction.min) {
+            val = this.app.activeRestriction.min;
+            this.slider.value = val;
+          }
+        }
         this.app.setAngle(val, false);
         if (this.isPlaying) this.pause();
       });
@@ -3456,6 +3548,11 @@
     updateValueDisplay(val, motionData) {
       this.angleDisplay.textContent = Math.round(val * 10) / 10;
       this.updateScapularRhythmUI(val, motionData);
+      if (this.app.activeRestriction) {
+        this.rangeBadge.className = "status-badge status-risk";
+        this.rangeBadge.textContent = `\u{1F512} ${this.app.activeRestriction.label}`;
+        return;
+      }
       const isImpinging = this.app.kinematics && this.app.kinematics.isImpinging;
       if (!isImpinging) {
         if (val < motionData.normalMin) {
@@ -3471,6 +3568,25 @@
           this.rangeBadge.className = "status-badge status-risk";
           this.rangeBadge.textContent = "Excessive / Impingement Risk";
         }
+      }
+    }
+    showPathologyAlert(pathology, restriction) {
+      if (!this.pathologyAlert) return;
+      this.pathologyAlert.classList.remove("hidden");
+      if (this.pathologyAlertTitle) {
+        this.pathologyAlertTitle.textContent = `\u{1F512} ${pathology.name}`;
+      }
+      if (this.pathologyAlertBadge) {
+        const limitTxt = restriction.max !== void 0 ? `LOCKED AT ${restriction.max}\xB0` : `RESTRICTED`;
+        this.pathologyAlertBadge.textContent = limitTxt;
+      }
+      if (this.pathologyAlertDesc) {
+        this.pathologyAlertDesc.textContent = restriction.explanation;
+      }
+    }
+    clearPathologyAlert() {
+      if (this.pathologyAlert) {
+        this.pathologyAlert.classList.add("hidden");
       }
     }
     play() {
@@ -3500,8 +3616,12 @@
     runAnimation() {
       if (!this.isPlaying) return;
       const motionData = this.app.currentMotion;
-      const min = motionData.normalMin;
-      const max = motionData.normalMax;
+      let min = motionData.normalMin;
+      let max = motionData.normalMax;
+      if (this.app.activeRestriction) {
+        if (this.app.activeRestriction.max !== void 0) max = this.app.activeRestriction.max;
+        if (this.app.activeRestriction.min !== void 0) min = this.app.activeRestriction.min;
+      }
       const range = max - min;
       const elapsedSec = (performance.now() - this.animStartTime) / 1e3;
       const frequency = 0.35 * this.playbackSpeed;
@@ -3868,6 +3988,8 @@
       this.currentMotionId = "shoulder_abduction";
       this.currentMotion = ROM_DATA["shoulder_abduction"];
       this.currentAngle = 0;
+      this.activePathology = null;
+      this.activeRestriction = null;
       this.scene = null;
       this.skeleton = null;
       this.kinematics = null;
@@ -3931,19 +4053,43 @@
     }
     onPathologyChange(pathologyId) {
       const preset = PATHOLOGY_PRESETS.find((p) => p.id === pathologyId);
-      if (!preset) return;
-      if (preset.id === "normal") {
+      if (!preset || preset.id === "normal") {
+        this.activePathology = null;
+        this.activeRestriction = null;
+        this.kinematics.setPathology(null);
+        this.controls.clearPathologyAlert();
+        this.controls.updateSliderRange(this.currentMotion);
         this.setAngle(this.currentMotion.normalMin, false);
         return;
       }
-      if (preset.jointId && ROM_DATA[preset.jointId]) {
-        this.currentRegionId = ROM_DATA[preset.jointId].region;
+      this.activePathology = preset;
+      this.kinematics.setPathology(preset.id);
+      if (preset.restrictions && preset.restrictions[this.currentMotionId]) {
+        this.applyActivePathology();
+      } else if (preset.primaryJointId && ROM_DATA[preset.primaryJointId]) {
+        const targetJoint = ROM_DATA[preset.primaryJointId];
+        this.currentRegionId = targetJoint.region;
         document.getElementById("region-select").value = this.currentRegionId;
         this.updateMotionDropdown(this.currentRegionId);
-        document.getElementById("motion-select").value = preset.jointId;
-        this.setMotion(preset.jointId);
-        this.setAngle(preset.targetDegrees, false);
-        this.controls.slider.value = preset.targetDegrees;
+        document.getElementById("motion-select").value = preset.primaryJointId;
+        this.setMotion(preset.primaryJointId);
+      }
+    }
+    applyActivePathology() {
+      if (!this.activePathology || !this.activePathology.restrictions) {
+        this.activeRestriction = null;
+        this.controls.clearPathologyAlert();
+        return;
+      }
+      const restriction = this.activePathology.restrictions[this.currentMotionId];
+      if (restriction) {
+        this.activeRestriction = restriction;
+        this.controls.showPathologyAlert(this.activePathology, restriction);
+        this.setAngle(restriction.targetDegrees, false);
+        this.controls.slider.value = restriction.targetDegrees;
+      } else {
+        this.activeRestriction = null;
+        this.controls.clearPathologyAlert();
       }
     }
     setMotion(motionId) {
@@ -3951,20 +4097,38 @@
       this.currentMotionId = motionId;
       this.currentMotion = ROM_DATA[motionId];
       this.currentAngle = this.currentMotion.normalMin;
+      if (this.activePathology && this.activePathology.restrictions && this.activePathology.restrictions[motionId]) {
+        this.activeRestriction = this.activePathology.restrictions[motionId];
+        this.controls.showPathologyAlert(this.activePathology, this.activeRestriction);
+      } else {
+        this.activeRestriction = null;
+        this.controls.clearPathologyAlert();
+      }
       const jointMeshKey = this.getJointKeyForMotion(motionId);
       this.skeleton.highlightJoint(jointMeshKey);
       this.controls.updateSliderRange(this.currentMotion);
       this.detailPanel.render(this.currentMotion);
-      this.kinematics.applyMotion(motionId, this.currentAngle);
+      const initialAngle = this.activeRestriction ? this.activeRestriction.targetDegrees : this.currentAngle;
+      this.setAngle(initialAngle, false);
+      this.controls.slider.value = initialAngle;
       if (this.scene.currentCameraPreset === "joint_focus") {
         const jointPos = this.skeleton.getJointPosition(jointMeshKey);
         this.scene.setCameraPreset("joint_focus", jointPos);
       }
     }
     setAngle(angle, fromAnimation = false) {
-      this.currentAngle = angle;
-      this.kinematics.applyMotion(this.currentMotionId, angle);
-      this.controls.updateValueDisplay(angle, this.currentMotion);
+      let effectiveAngle = angle;
+      if (this.activeRestriction) {
+        if (this.activeRestriction.max !== void 0 && effectiveAngle > this.activeRestriction.max) {
+          effectiveAngle = this.activeRestriction.max;
+        }
+        if (this.activeRestriction.min !== void 0 && effectiveAngle < this.activeRestriction.min) {
+          effectiveAngle = this.activeRestriction.min;
+        }
+      }
+      this.currentAngle = effectiveAngle;
+      this.kinematics.applyMotion(this.currentMotionId, effectiveAngle);
+      this.controls.updateValueDisplay(effectiveAngle, this.currentMotion);
     }
     getJointKeyForMotion(motionId) {
       if (motionId.startsWith("cervical")) return "cervical";
