@@ -16,7 +16,28 @@ export class KinematicsEngine {
     }
   }
 
+  setPathology(pathologyId) {
+    this.currentPathology = pathologyId;
+  }
+
   getScapulohumeralBreakdown(totalDeg = this.currentValue) {
+    if (this.currentPathology === 'adhesive_capsulitis') {
+      // In Frozen Shoulder: GH joint is severely restricted by capsular fibrosis (max ~25°)
+      // Any elevation up to ~65° is driven almost entirely by scapular hiking compensation!
+      const ghDeg = Math.min(25, totalDeg * 0.38);
+      const stDeg = Math.min(40, totalDeg - ghDeg);
+      return {
+        ghDeg: Math.round(ghDeg),
+        stDeg: Math.round(stDeg),
+        maxGh: 120,
+        maxSt: 60,
+        totalDeg: Math.round(totalDeg),
+        isLocked: false,
+        isImpinging: false,
+        isFrozen: true
+      };
+    }
+
     if (this.isScapulaLocked) {
       const ghDeg = Math.min(totalDeg, 120);
       const stDeg = 0;
