@@ -1635,16 +1635,54 @@ html, body {
     right: 8px;
     padding: 8px 10px;
     gap: 8px;
-    max-height: calc(100dvh - 210px);
+    max-height: 48vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: rgba(11, 20, 42, 0.94);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  }
+
+  .scapular-rhythm-panel.collapsed,
+  .biomechanics-hud-panel.collapsed {
+    max-height: 38px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .hud-header, .rhythm-header {
+    gap: 6px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .header-right-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .hud-collapse-btn {
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+
+  .hud-toggle-container .toggle-label,
+  .scapula-lock-toggle .toggle-label {
+    display: none; /* Hide verbose label on mobile to fit header on one compact line */
   }
 
   .hud-title, .rhythm-title {
     font-size: 11px;
+    gap: 4px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .badge-ratio {
-    font-size: 9px;
-    padding: 1px 6px;
+    display: none; /* Hide extra badges on small screens */
   }
 
   .detail-panel {
