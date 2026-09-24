@@ -112,8 +112,63 @@ export class ControlsManager {
           this.app.kinematics.setGrip(grip);
         }
         this.app.setAngle(this.app.currentAngle, false);
+
+        // On mobile, auto-collapse panel after selecting grip so user can immediately see the 3D model!
+        if (window.innerWidth <= 768) {
+          setTimeout(() => {
+            if (this.handPanel && !this.handPanel.classList.contains('collapsed')) {
+              this.handPanel.classList.add('collapsed');
+              const textSpan = this.handPanel.querySelector('.collapse-text');
+              if (textSpan) textSpan.textContent = 'ขยาย';
+            }
+          }, 350);
+        }
       });
     });
+
+    // Biomechanics HUD Panels Collapse / Expand Buttons
+    document.querySelectorAll('.hud-collapse-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const targetId = btn.getAttribute('data-target');
+        const panel = document.getElementById(targetId);
+        if (!panel) return;
+        const isCollapsed = panel.classList.toggle('collapsed');
+        const textSpan = btn.querySelector('.collapse-text');
+        if (textSpan) {
+          textSpan.textContent = isCollapsed ? 'ขยาย' : 'ซ่อน';
+        }
+      });
+    });
+
+    // Tap header to toggle collapse / expand
+    [this.rhythmPanel, this.footPanel, this.handPanel].forEach(panel => {
+      if (!panel) return;
+      const header = panel.querySelector('.hud-header, .rhythm-header');
+      if (header) {
+        header.addEventListener('click', (e) => {
+          if (e.target.closest('input, button, label')) return;
+          const btn = header.querySelector('.hud-collapse-btn');
+          if (btn) btn.click();
+        });
+      }
+    });
+
+    // On mobile screens, tapping 3D canvas collapses any open HUD panel so animation is completely visible
+    const canvas = document.querySelector('#viewport canvas');
+    if (canvas) {
+      canvas.addEventListener('pointerdown', () => {
+        if (window.innerWidth <= 768) {
+          [this.rhythmPanel, this.footPanel, this.handPanel].forEach(panel => {
+            if (panel && !panel.classList.contains('hidden') && !panel.classList.contains('collapsed')) {
+              panel.classList.add('collapsed');
+              const textSpan = panel.querySelector('.collapse-text');
+              if (textSpan) textSpan.textContent = 'ขยาย';
+            }
+          });
+        }
+      });
+    }
 
     // Slider input with pathology resistance clamp
     this.slider.addEventListener('input', (e) => {
