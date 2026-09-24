@@ -174,16 +174,22 @@ export class KinematicsEngine {
         }
 
         if (joints['r_scapula']) {
+          const glideRatio = breakdown.stDeg / 60;
           // Upward rotation, posterior tilt, and protraction around ribcage
-          joints['r_scapula'].rotation.z = stRad * 0.45;
-          joints['r_scapula'].rotation.x = -stRad * 0.2;
-          joints['r_scapula'].rotation.y = stRad * 0.15;
+          joints['r_scapula'].rotation.z = THREE.MathUtils.degToRad(breakdown.stDeg * 0.35);
+          joints['r_scapula'].rotation.x = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.2);
+          joints['r_scapula'].rotation.y = THREE.MathUtils.degToRad(breakdown.stDeg * 0.22);
+
+          // Anterior glide around thorax in forward flexion
+          joints['r_scapula'].position.x = 0.15 - glideRatio * 0.025;
+          joints['r_scapula'].position.y = glideRatio * 0.022;
+          joints['r_scapula'].position.z = -0.06 + glideRatio * 0.045;
         }
 
         if (joints['r_clavicle']) {
           // Clavicular elevation (+Z rotation) and slight protraction (+Y)
-          joints['r_clavicle'].rotation.z = THREE.MathUtils.degToRad(breakdown.stDeg * 0.45);
-          joints['r_clavicle'].rotation.y = THREE.MathUtils.degToRad(breakdown.stDeg * 0.15);
+          joints['r_clavicle'].rotation.z = THREE.MathUtils.degToRad(breakdown.stDeg * 0.38);
+          joints['r_clavicle'].rotation.y = THREE.MathUtils.degToRad(breakdown.stDeg * 0.18);
         }
 
         this.model.setImpingementState(this.isImpinging);
@@ -205,6 +211,7 @@ export class KinematicsEngine {
 
         const ghRad = THREE.MathUtils.degToRad(breakdown.ghDeg);
         const stRad = THREE.MathUtils.degToRad(breakdown.stDeg);
+        const glideRatio = breakdown.stDeg / 60; // 0 to 1
 
         if (joints['r_shoulder']) {
           // Glenohumeral abduction
@@ -218,19 +225,26 @@ export class KinematicsEngine {
 
         if (joints['r_scapula']) {
           // 3D Scapular movement (Neumann Ch. 5):
-          // 1. Upward rotation at AC joint: ~30° (in addition to ~30° clavicular elevation = 60° total ST)
-          joints['r_scapula'].rotation.z = stRad * 0.5;
-          // 2. Posterior tilting: -20° (tilts back, opening subacromial space, avoids anterior winging)
-          joints['r_scapula'].rotation.x = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.33);
-          // 3. Ribcage curvature conformity (slight medial glide/retraction):
-          joints['r_scapula'].rotation.y = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.15);
+          // 1. Upward rotation at AC joint: ~20° (synchronized with clavicular elevation ~24°)
+          joints['r_scapula'].rotation.z = THREE.MathUtils.degToRad(breakdown.stDeg * 0.38);
+          // 2. Posterior tilting: ~15° (tilts back, opening subacromial space, avoids anterior winging)
+          joints['r_scapula'].rotation.x = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.25);
+          // 3. Ribcage curvature wrap (External rotation around curved thorax):
+          joints['r_scapula'].rotation.y = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.18);
+
+          // 4. Scapulothoracic gliding translation (hugging the ribcage cylinder):
+          // Serratus anterior keeps the inferior angle flush against the thorax,
+          // preventing the scapular tip from flaring or protruding laterally into space!
+          joints['r_scapula'].position.x = 0.15 - glideRatio * 0.038;
+          joints['r_scapula'].position.y = glideRatio * 0.022;
+          joints['r_scapula'].position.z = -0.06 + glideRatio * 0.025;
         }
 
         if (joints['r_clavicle']) {
-          // Clavicular elevation at SC joint (+Z rotation raises lateral clavicle up ~30°)
-          joints['r_clavicle'].rotation.z = THREE.MathUtils.degToRad(breakdown.stDeg * 0.5);
+          // Clavicular elevation at SC joint (+Z rotation raises lateral clavicle up ~24°)
+          joints['r_clavicle'].rotation.z = THREE.MathUtils.degToRad(breakdown.stDeg * 0.4);
           // Clavicular retraction: slight posterior movement
-          joints['r_clavicle'].rotation.y = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.2);
+          joints['r_clavicle'].rotation.y = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.15);
         }
 
         this.model.setImpingementState(this.isImpinging);
