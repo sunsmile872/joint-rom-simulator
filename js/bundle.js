@@ -3129,10 +3129,22 @@
         this.applyMotion(this.currentMotionId, this.currentValue);
       }
     }
-    curlFingers(mcpRad, pipRad, dipRad, fingers = ["index", "middle", "ring", "little"]) {
+    curlFingers(mcpRad, pipRad, dipRad, fingers = ["index", "middle", "ring", "little"], convergence = false) {
       const joints = this.model.joints;
+      const convergenceFactors = {
+        index: { rotZ: -0.03, rotY: 0 },
+        middle: { rotZ: 0, rotY: 0 },
+        ring: { rotZ: 0.08, rotY: 0 },
+        little: { rotZ: 0.16, rotY: -0.1 }
+      };
       fingers.forEach((name) => {
-        if (joints[`r_finger_${name}_mcp`]) joints[`r_finger_${name}_mcp`].rotation.x = -mcpRad;
+        if (joints[`r_finger_${name}_mcp`]) {
+          joints[`r_finger_${name}_mcp`].rotation.x = -mcpRad;
+          if (convergence && convergenceFactors[name]) {
+            joints[`r_finger_${name}_mcp`].rotation.z = convergenceFactors[name].rotZ;
+            joints[`r_finger_${name}_mcp`].rotation.y = convergenceFactors[name].rotY;
+          }
+        }
         if (joints[`r_finger_${name}_pip`]) joints[`r_finger_${name}_pip`].rotation.x = -pipRad;
         if (joints[`r_finger_${name}_dip`]) joints[`r_finger_${name}_dip`].rotation.x = -dipRad;
       });
@@ -3321,35 +3333,86 @@
           joints["r_wrist"].rotation.x = THREE3.MathUtils.degToRad(25);
           joints["r_wrist"].rotation.z = -THREE3.MathUtils.degToRad(10);
         }
-        this.curlFingers(
-          THREE3.MathUtils.degToRad(65),
-          THREE3.MathUtils.degToRad(80),
-          THREE3.MathUtils.degToRad(45)
-        );
-        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.45, 0.65, -0.65);
-        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -0.45;
-        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -0.35;
+        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.set(-0.96, 0, -0.04);
+        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.set(-1.48, 0, 0);
+        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.set(-0.87, 0, 0);
+        if (joints["r_finger_middle_mcp"]) joints["r_finger_middle_mcp"].rotation.set(-1.13, 0, 0);
+        if (joints["r_finger_middle_pip"]) joints["r_finger_middle_pip"].rotation.set(-1.57, 0, 0);
+        if (joints["r_finger_middle_dip"]) joints["r_finger_middle_dip"].rotation.set(-0.96, 0, 0);
+        if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.set(-1.25, 0, 0.08);
+        if (joints["r_finger_ring_pip"]) joints["r_finger_ring_pip"].rotation.set(-1.65, 0, 0);
+        if (joints["r_finger_ring_dip"]) joints["r_finger_ring_dip"].rotation.set(-1.05, 0, 0);
+        if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.set(-1.4, -0.1, 0.16);
+        if (joints["r_finger_little_pip"]) joints["r_finger_little_pip"].rotation.set(-1.75, 0, 0);
+        if (joints["r_finger_little_dip"]) joints["r_finger_little_dip"].rotation.set(-1.13, 0, 0);
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.35, -0.3, -0.28);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -0.75;
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -0.85;
       } else if (gripId === "tip_pinch") {
-        if (joints["r_wrist"]) joints["r_wrist"].rotation.x = THREE3.MathUtils.degToRad(15);
-        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.x = -0.65;
-        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.x = -0.85;
-        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.x = -0.45;
-        this.curlFingers(0.5, 0.7, 0.4, ["middle", "ring", "little"]);
-        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.35, 0.75, -0.65);
-        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -0.35;
-        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -0.28;
+        if (joints["r_wrist"]) joints["r_wrist"].rotation.set(THREE3.MathUtils.degToRad(15), 0, 0);
+        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.set(-0.78, 0, -0.06);
+        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.set(-1.1, 0, 0);
+        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.set(-0.75, 0, 0);
+        if (joints["r_finger_middle_mcp"]) joints["r_finger_middle_mcp"].rotation.set(-0.95, 0, 0);
+        if (joints["r_finger_middle_pip"]) joints["r_finger_middle_pip"].rotation.set(-1.22, 0, 0);
+        if (joints["r_finger_middle_dip"]) joints["r_finger_middle_dip"].rotation.set(-0.61, 0, 0);
+        if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.set(-1.12, 0, 0.05);
+        if (joints["r_finger_ring_pip"]) joints["r_finger_ring_pip"].rotation.set(-1.4, 0, 0);
+        if (joints["r_finger_ring_dip"]) joints["r_finger_ring_dip"].rotation.set(-0.7, 0, 0);
+        if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.set(-1.22, -0.05, 0.12);
+        if (joints["r_finger_little_pip"]) joints["r_finger_little_pip"].rotation.set(-1.48, 0, 0);
+        if (joints["r_finger_little_dip"]) joints["r_finger_little_dip"].rotation.set(-0.75, 0, 0);
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0, -0.6, -0.1);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.set(-0.85, 0, 0);
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.set(-1, 0, 0);
       } else if (gripId === "key_pinch") {
-        if (joints["r_wrist"]) joints["r_wrist"].rotation.x = THREE3.MathUtils.degToRad(20);
-        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.x = -0.6;
-        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.x = -1.1;
-        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.x = -0.5;
-        this.curlFingers(0.7, 0.9, 0.5, ["middle", "ring", "little"]);
-        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.18, 0.38, -0.25);
-        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -0.15;
-        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = 0;
+        if (joints["r_wrist"]) joints["r_wrist"].rotation.set(THREE3.MathUtils.degToRad(20), 0, -THREE3.MathUtils.degToRad(5));
+        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.set(-0.62, 0, 0);
+        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.set(-1.18, 0, 0);
+        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.set(-0.55, 0, 0);
+        if (joints["r_finger_middle_mcp"]) joints["r_finger_middle_mcp"].rotation.set(-1.05, 0, 0);
+        if (joints["r_finger_middle_pip"]) joints["r_finger_middle_pip"].rotation.set(-1.4, 0, 0);
+        if (joints["r_finger_middle_dip"]) joints["r_finger_middle_dip"].rotation.set(-0.7, 0, 0);
+        if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.set(-1.18, 0, 0.06);
+        if (joints["r_finger_ring_pip"]) joints["r_finger_ring_pip"].rotation.set(-1.48, 0, 0);
+        if (joints["r_finger_ring_dip"]) joints["r_finger_ring_dip"].rotation.set(-0.75, 0, 0);
+        if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.set(-1.28, -0.06, 0.14);
+        if (joints["r_finger_little_pip"]) joints["r_finger_little_pip"].rotation.set(-1.52, 0, 0);
+        if (joints["r_finger_little_dip"]) joints["r_finger_little_dip"].rotation.set(-0.8, 0, 0);
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.12, -0.38, -0.28);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.set(-0.35, 0, 0);
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.set(-0.15, 0, 0);
+      } else if (gripId === "spherical_grip") {
+        if (joints["r_wrist"]) joints["r_wrist"].rotation.set(THREE3.MathUtils.degToRad(20), 0, 0);
+        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.set(-0.7, 0, -0.16);
+        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.set(-0.96, 0, 0);
+        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.set(-0.52, 0, 0);
+        if (joints["r_finger_middle_mcp"]) joints["r_finger_middle_mcp"].rotation.set(-0.78, 0, 0);
+        if (joints["r_finger_middle_pip"]) joints["r_finger_middle_pip"].rotation.set(-1.05, 0, 0);
+        if (joints["r_finger_middle_dip"]) joints["r_finger_middle_dip"].rotation.set(-0.61, 0, 0);
+        if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.set(-0.85, 0, 0.12);
+        if (joints["r_finger_ring_pip"]) joints["r_finger_ring_pip"].rotation.set(-1.1, 0, 0);
+        if (joints["r_finger_ring_dip"]) joints["r_finger_ring_dip"].rotation.set(-0.65, 0, 0);
+        if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.set(-0.92, -0.08, 0.22);
+        if (joints["r_finger_little_pip"]) joints["r_finger_little_pip"].rotation.set(-1.15, 0, 0);
+        if (joints["r_finger_little_dip"]) joints["r_finger_little_dip"].rotation.set(-0.7, 0, 0);
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.45, -0.45, -0.2);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.set(-0.55, 0, 0);
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.set(-0.5, 0, 0);
       } else if (gripId === "open_hand") {
         if (joints["r_wrist"]) joints["r_wrist"].rotation.set(0, 0, 0);
-        this.curlFingers(0, 0, 0);
+        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.set(-0.14, 0, 0);
+        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.set(-0.18, 0, 0);
+        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.set(-0.1, 0, 0);
+        if (joints["r_finger_middle_mcp"]) joints["r_finger_middle_mcp"].rotation.set(-0.2, 0, 0);
+        if (joints["r_finger_middle_pip"]) joints["r_finger_middle_pip"].rotation.set(-0.25, 0, 0);
+        if (joints["r_finger_middle_dip"]) joints["r_finger_middle_dip"].rotation.set(-0.12, 0, 0);
+        if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.set(-0.26, 0, 0.02);
+        if (joints["r_finger_ring_pip"]) joints["r_finger_ring_pip"].rotation.set(-0.3, 0, 0);
+        if (joints["r_finger_ring_dip"]) joints["r_finger_ring_dip"].rotation.set(-0.14, 0, 0);
+        if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.set(-0.32, 0, 0.04);
+        if (joints["r_finger_little_pip"]) joints["r_finger_little_pip"].rotation.set(-0.35, 0, 0);
+        if (joints["r_finger_little_dip"]) joints["r_finger_little_dip"].rotation.set(-0.16, 0, 0);
         if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.2, 0.15, -0.45);
         if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.set(0, 0, 0);
         if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.set(0, 0, 0);
@@ -3548,7 +3611,7 @@
             const mcp = THREE3.MathUtils.degToRad(55 * ratio);
             const pip = THREE3.MathUtils.degToRad(70 * ratio);
             const dip = THREE3.MathUtils.degToRad(40 * ratio);
-            this.curlFingers(mcp, pip, dip);
+            this.curlFingers(mcp, pip, dip, ["index", "middle", "ring", "little"], true);
             if (joints["r_thumb_cmc"]) {
               joints["r_thumb_cmc"].rotation.y = 0.15 + ratio * 0.35;
             }
