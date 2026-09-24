@@ -4670,8 +4670,55 @@
             this.app.kinematics.setGrip(grip);
           }
           this.app.setAngle(this.app.currentAngle, false);
+          if (window.innerWidth <= 768) {
+            setTimeout(() => {
+              if (this.handPanel && !this.handPanel.classList.contains("collapsed")) {
+                this.handPanel.classList.add("collapsed");
+                const textSpan = this.handPanel.querySelector(".collapse-text");
+                if (textSpan) textSpan.textContent = "\u0E02\u0E22\u0E32\u0E22";
+              }
+            }, 350);
+          }
         });
       });
+      document.querySelectorAll(".hud-collapse-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const targetId = btn.getAttribute("data-target");
+          const panel = document.getElementById(targetId);
+          if (!panel) return;
+          const isCollapsed = panel.classList.toggle("collapsed");
+          const textSpan = btn.querySelector(".collapse-text");
+          if (textSpan) {
+            textSpan.textContent = isCollapsed ? "\u0E02\u0E22\u0E32\u0E22" : "\u0E0B\u0E48\u0E2D\u0E19";
+          }
+        });
+      });
+      [this.rhythmPanel, this.footPanel, this.handPanel].forEach((panel) => {
+        if (!panel) return;
+        const header = panel.querySelector(".hud-header, .rhythm-header");
+        if (header) {
+          header.addEventListener("click", (e) => {
+            if (e.target.closest("input, button, label")) return;
+            const btn = header.querySelector(".hud-collapse-btn");
+            if (btn) btn.click();
+          });
+        }
+      });
+      const canvas = document.querySelector("#viewport canvas");
+      if (canvas) {
+        canvas.addEventListener("pointerdown", () => {
+          if (window.innerWidth <= 768) {
+            [this.rhythmPanel, this.footPanel, this.handPanel].forEach((panel) => {
+              if (panel && !panel.classList.contains("hidden") && !panel.classList.contains("collapsed")) {
+                panel.classList.add("collapsed");
+                const textSpan = panel.querySelector(".collapse-text");
+                if (textSpan) textSpan.textContent = "\u0E02\u0E22\u0E32\u0E22";
+              }
+            });
+          }
+        });
+      }
       this.slider.addEventListener("input", (e) => {
         let val = parseFloat(e.target.value);
         if (this.app.activeRestriction) {
@@ -4733,7 +4780,14 @@
       if (!this.rhythmPanel) return;
       const isShoulderElevation = motionData && (motionData.id === "shoulder_abduction" || motionData.id === "shoulder_flexion");
       if (isShoulderElevation) {
-        this.rhythmPanel.classList.remove("hidden");
+        if (this.rhythmPanel.classList.contains("hidden")) {
+          this.rhythmPanel.classList.remove("hidden");
+          if (window.innerWidth <= 768) {
+            this.rhythmPanel.classList.add("collapsed");
+            const t = this.rhythmPanel.querySelector(".collapse-text");
+            if (t) t.textContent = "\u0E02\u0E22\u0E32\u0E22";
+          }
+        }
         const bd = this.app.kinematics.getScapulohumeralBreakdown(val);
         if (this.ghDegVal) this.ghDegVal.textContent = `${bd.ghDeg}\xB0 / 120\xB0`;
         if (this.stDegVal) {
@@ -4763,7 +4817,14 @@
       if (!this.footPanel) return;
       const isFootMotion = motionData && (motionData.region === "ankle_foot" || motionData.id.startsWith("subtalar") || motionData.id.startsWith("first_mtp") || motionData.id.startsWith("ankle"));
       if (isFootMotion) {
-        this.footPanel.classList.remove("hidden");
+        if (this.footPanel.classList.contains("hidden")) {
+          this.footPanel.classList.remove("hidden");
+          if (window.innerWidth <= 768) {
+            this.footPanel.classList.add("collapsed");
+            const t = this.footPanel.querySelector(".collapse-text");
+            if (t) t.textContent = "\u0E02\u0E22\u0E32\u0E22";
+          }
+        }
         const state = this.app.kinematics.getFootBiomechanicsState(val, motionData.id);
         if (!state) return;
         if (this.footFrontalVal) {
@@ -4805,7 +4866,14 @@
       if (!this.handPanel) return;
       const isHandMotion = motionData && (motionData.region === "wrist" || motionData.id.startsWith("wrist") || motionData.id.startsWith("thumb"));
       if (isHandMotion) {
-        this.handPanel.classList.remove("hidden");
+        if (this.handPanel.classList.contains("hidden")) {
+          this.handPanel.classList.remove("hidden");
+          if (window.innerWidth <= 768) {
+            this.handPanel.classList.add("collapsed");
+            const t = this.handPanel.querySelector(".collapse-text");
+            if (t) t.textContent = "\u0E02\u0E22\u0E32\u0E22";
+          }
+        }
         const state = this.app.kinematics.getHandBiomechanicsState(val, motionData.id);
         if (!state) return;
         if (this.saddleRuleName) this.saddleRuleName.textContent = state.arthroRule;
