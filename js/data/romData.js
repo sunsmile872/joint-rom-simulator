@@ -1930,6 +1930,9 @@ export const ROM_DATA = {
 /**
  * Clinical Pathology Presets to demonstrate restricted ROM patterns
  */
+/**
+ * Clinical Pathology Presets to demonstrate restricted ROM patterns & Capsular End-Feels
+ */
 export const PATHOLOGY_PRESETS = [
   {
     id: 'normal',
@@ -1939,29 +1942,90 @@ export const PATHOLOGY_PRESETS = [
   {
     id: 'adhesive_capsulitis',
     name: 'Adhesive Capsulitis (Frozen Shoulder)',
-    jointId: 'shoulder_external_rotation',
-    targetDegrees: 20,
-    description: 'Classic capsular pattern: External Rotation > Abduction > Internal Rotation severe restriction with painful firm end-feel.'
+    primaryJointId: 'shoulder_abduction',
+    description: 'Classic Cyriax Capsular Pattern: Severe limitation in ER > Abduction > IR due to contracture of axillary pouch, coracohumeral ligament (CHL), and rotator interval fibrosis.',
+    restrictions: {
+      shoulder_abduction: {
+        max: 65,
+        targetDegrees: 65,
+        label: 'Frozen Shoulder (Abduction: 65° Max)',
+        explanation: 'พังผืดหดรั้งของ Inferior Capsule (Axillary Pouch) ขัดขวางการเลื่อนตัวลง (Inferior Slide) ของหัว Humerus ทำให้แขนกางติดล็อกที่ ~65° ทันที!'
+      },
+      shoulder_external_rotation: {
+        max: 20,
+        targetDegrees: 20,
+        label: 'Frozen Shoulder (External Rotation: 20° Max)',
+        explanation: 'Coracohumeral Ligament และ Rotator Interval พังผืดหดรั้งรุนแรงที่สุดตาม Capsular Pattern จำกัดการหมุนออกไม่เกิน 20° (ปกติ 90°)'
+      },
+      shoulder_flexion: {
+        max: 80,
+        targetDegrees: 80,
+        label: 'Frozen Shoulder (Flexion: 80° Max)',
+        explanation: 'Anterior Capsule และ Axillary Pouch ติดล็อก หยุดการยกแขนไปข้างหน้าไว้ที่ ~80°'
+      },
+      shoulder_internal_rotation: {
+        max: 35,
+        targetDegrees: 35,
+        label: 'Frozen Shoulder (Internal Rotation: 35° Max)',
+        explanation: 'Posterior Capsule พังผืดตึงรั้ง จำกัดการเอื้อมมือไปด้านหลัง'
+      }
+    }
+  },
+  {
+    id: 'subacromial_impingement',
+    name: 'Subacromial Impingement Syndrome',
+    primaryJointId: 'shoulder_abduction',
+    description: 'Painful Arc between 60° and 120° of abduction caused by supraspinatus tendon & subacromial bursa compression.',
+    restrictions: {
+      shoulder_abduction: {
+        max: 120,
+        targetDegrees: 90,
+        label: 'Impingement Painful Arc (60°–120°)',
+        explanation: 'เส้นเอ็น Supraspinatus และถุง Bursa ถูกเพดาน Acromion กดเบียดรุนแรงในช่วง 60°–120° ทำให้เจ็บขัดและชะงักการยกแขน'
+      }
+    }
   },
   {
     id: 'knee_flexion_contracture',
     name: 'Knee Flexion Contracture (Post-Op/Stroke)',
-    jointId: 'knee_extension',
-    targetDegrees: 15,
-    description: 'Inability to achieve terminal 0° extension due to posterior capsular tightening and hamstring spasticity.'
+    primaryJointId: 'knee_extension',
+    description: 'Inability to achieve terminal 0° extension due to posterior capsular tightening and hamstring spasticity.',
+    restrictions: {
+      knee_extension: {
+        min: 15,
+        max: 15,
+        targetDegrees: 15,
+        label: 'Knee Contracture (Lacks 15° Extension)',
+        explanation: 'ผู้ป่วยขาดการเหยียดเข่าสุด 15° (Terminal extension deficit) จาก posterior capsule และ hamstrings หดเกร็ง'
+      }
+    }
   },
   {
     id: 'hallux_rigidus',
     name: 'Hallux Rigidus (1st MTP Arthrosis)',
-    jointId: 'first_mtp_extension',
-    targetDegrees: 25,
-    description: 'Severe loss of great toe extension (<30°) leading to apropulsive gait and compensatory lateral foot rolling.'
+    primaryJointId: 'first_mtp_extension',
+    description: 'Severe loss of great toe extension (<30°) leading to apropulsive gait and compensatory lateral foot rolling.',
+    restrictions: {
+      first_mtp_extension: {
+        max: 25,
+        targetDegrees: 25,
+        label: 'Hallux Rigidus (25° Max)',
+        explanation: 'กระดูกงอก Dorsal Osteophyte ที่หัวกระดูก Metatarsal ขัดขวางการกระดกนิ้วโป้งเท้า ไม่สามารถเดินลงน้ำหนักแบบปกติได้'
+      }
+    }
   },
   {
     id: 'wrist_drop',
     name: 'Radial Nerve Palsy (Wrist Drop)',
-    jointId: 'wrist_extension',
-    targetDegrees: 0,
-    description: 'Flaccid paralysis of wrist and finger extensors resulting in inability to extend wrist against gravity.'
+    primaryJointId: 'wrist_extension',
+    description: 'Flaccid paralysis of wrist and finger extensors resulting in inability to extend wrist against gravity.',
+    restrictions: {
+      wrist_extension: {
+        max: 0,
+        targetDegrees: 0,
+        label: 'Radial Nerve Palsy (Wrist Drop 0°)',
+        explanation: 'เส้นประสาท Radial บาดเจ็บ อัมพาตกล้ามเนื้อเหยียดข้อมือ ไม่สามารถกระดกข้อมือต้านแรงโน้มถ่วงได้เลย (0°)'
+      }
+    }
   }
 ];
