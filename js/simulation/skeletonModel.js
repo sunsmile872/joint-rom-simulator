@@ -747,4 +747,47 @@ export class SkeletonModel {
       acromion.material = isImpinging ? this.highlightMaterial : this.boneMaterial;
     }
   }
+
+  setTnccAxesState(isParallel, divergenceAngle = 36) {
+    const tnAxis = this.joints['r_tn_axis'];
+    const ccAxis = this.joints['r_cc_axis'];
+    if (!tnAxis || !ccAxis) return;
+
+    if (isParallel) {
+      // Parallel alignment (Axes line up -> Midfoot Unlocked for shock absorption)
+      tnAxis.rotation.y = 0;
+      ccAxis.rotation.y = 0;
+    } else {
+      // Converging / Crossed alignment (Axes cross -> Midfoot Locked into rigid lever)
+      const halfRad = THREE.MathUtils.degToRad(divergenceAngle / 2);
+      tnAxis.rotation.y = halfRad;
+      ccAxis.rotation.y = -halfRad;
+    }
+  }
+
+  setPlantarFasciaTension(tensionRatio) {
+    const fascia = this.meshes['r_plantar_fascia'];
+    if (!fascia) return;
+
+    const clamped = Math.max(0, Math.min(1, tensionRatio));
+    if (clamped > 0.6) {
+      // High tension (Windlass active): Glowing Amber/Cyan
+      fascia.material.color.setHex(0xf59e0b);
+      fascia.material.emissive.setHex(0xd97706);
+      fascia.material.emissiveIntensity = 0.4 + clamped * 0.5;
+      fascia.scale.set(1.05, 1.2, 0.95);
+    } else if (clamped > 0.2) {
+      // Moderate tension: Bright Cyan
+      fascia.material.color.setHex(0x06b6d4);
+      fascia.material.emissive.setHex(0x0891b2);
+      fascia.material.emissiveIntensity = 0.35 + clamped * 0.3;
+      fascia.scale.set(1, 1, 1);
+    } else {
+      // Relaxed state: Mint Green
+      fascia.material.color.setHex(0x10b981);
+      fascia.material.emissive.setHex(0x059669);
+      fascia.material.emissiveIntensity = 0.35;
+      fascia.scale.set(1, 1, 1);
+    }
+  }
 }
