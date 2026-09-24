@@ -1975,6 +1975,104 @@ export const ROM_DATA = {
     ]
   },
 
+  subtalar_pronation: {
+    id: 'subtalar_pronation',
+    region: 'ankle_foot',
+    jointName: 'Subtalar & TNCC (Transverse Tarsal) Complex',
+    motionName: 'Subtalar Pronation (Triplanar Unlocking)',
+    plane: 'Triplanar (Eversion + Abduction + Dorsiflexion)',
+    axis: 'Oblique Subtalar Axis (42° from horizontal, 16° from sagittal)',
+    normalMin: 0,
+    normalMax: 15,
+    unit: 'degrees',
+    referenceRangeText: '0° – 15° (AAOS eversion component: 15°)',
+    functionalRange: '10° – 12° (Loading response in gait, shock absorption, ground contouring)',
+    hypermobilityThreshold: 25,
+    impingementRiskThreshold: 30,
+    sliderMin: 0,
+    sliderMax: 25,
+    endFeel: {
+      type: 'Firm (Ligamentous) or Hard',
+      description: 'Tension in medial deltoid ligament (tibionavicular/tibiocalcaneal fibers) and contact between lateral calcaneus and fibular malleolus.',
+      abnormalEndFeel: 'Hard / Painful (tarsal coalition / calcaneonavicular bar).'
+    },
+    arthrokinematics: {
+      type: 'Triplanar Multi-Articular Gliding & Chopart Unlocking',
+      rule: 'NWB: Calcaneal Eversion + Abduction + Dorsiflexion | WB: Calcaneal Eversion + Talar Adduction/Plantarflexion + Tibial Internal Rotation',
+      description: 'TNCC Parallel Alignment (Neumann Ch. 14, pp. 614–616, Fig 14.24): In pronation, the Talonavicular (TN) and Calcaneocuboid (CC) joint axes align PARALLEL to one another, unlocking the transverse tarsal joint into a flexible shock absorber. In closed kinetic chain (weight-bearing), calcaneal eversion forces the talus to adduct and plantarflex, driving ~6°–10° of coupled Tibial Internal Rotation!',
+      closePacked: 'Full Supination (inversion)',
+      loosePacked: 'Pronated / Neutral'
+    },
+    muscles: {
+      primeMovers: [
+        { name: 'Peroneus (Fibularis) longus', innervation: 'Superficial Peroneal Nerve (L5-S1)' },
+        { name: 'Peroneus (Fibularis) brevis', innervation: 'Superficial Peroneal Nerve (L5-S1)' }
+      ],
+      synergists: ['Peroneus tertius', 'Extensor digitorum longus'],
+      antagonists: ['Tibialis posterior', 'Tibialis anterior']
+    },
+    goniometry: {
+      position: 'Prone with foot over end of table (NWB) or standing alignment (WB Fick angle / resting calcaneal stance angle).',
+      fulcrum: 'Posterior ankle midway between malleoli.',
+      stationaryArm: 'Posterior midline of lower leg.',
+      movableArm: 'Posterior midline of calcaneus.',
+      substitutions: 'Knee external rotation, hip internal rotation.'
+    },
+    citations: [
+      { book: 'Neumann (3rd Ed)', chapter: 'Chapter 14: Ankle and Foot', page: 'pp. 614–618, Fig 14.24 & Table 14.5' },
+      { book: "Braddom's PM&R (7th Ed)", chapter: 'Biomechanics of Gait: Stance Phase Subtalar Function', page: 'Ch. 5' }
+    ]
+  },
+
+  subtalar_supination: {
+    id: 'subtalar_supination',
+    region: 'ankle_foot',
+    jointName: 'Subtalar & TNCC (Transverse Tarsal) Complex',
+    motionName: 'Subtalar Supination (Triplanar Locking)',
+    plane: 'Triplanar (Inversion + Adduction + Plantarflexion)',
+    axis: 'Oblique Subtalar Axis (42° from horizontal, 16° from sagittal)',
+    normalMin: 0,
+    normalMax: 30,
+    unit: 'degrees',
+    referenceRangeText: '0° – 30° (AAOS inversion component: 30°–35°)',
+    functionalRange: '20° – 25° (Terminal stance push-off, rigid propulsion lever)',
+    hypermobilityThreshold: 40,
+    impingementRiskThreshold: 48,
+    sliderMin: 0,
+    sliderMax: 40,
+    endFeel: {
+      type: 'Firm (Ligamentous)',
+      description: 'Tension in calcaneofibular ligament, lateral talocalcaneal ligament, cervical ligament, and lateral peroneus tendons.',
+      abnormalEndFeel: 'Empty (grade III lateral ankle ligament sprain).'
+    },
+    arthrokinematics: {
+      type: 'Triplanar Multi-Articular Gliding & Chopart Locking',
+      rule: 'NWB: Calcaneal Inversion + Adduction + Plantarflexion | WB: Calcaneal Inversion + Talar Abduction/Dorsiflexion + Tibial External Rotation',
+      description: 'TNCC Convergent Locking (Neumann Ch. 14, pp. 614–616, Fig 14.24): In supination, the Talonavicular (TN) and Calcaneocuboid (CC) joint axes CONVERGE and CROSS each other, mechanically locking the midtarsal joints into a rigid propulsion lever for push-off. In closed kinetic chain, this drives ~6°–10° of coupled Tibial External Rotation and knee extension stability!',
+      closePacked: 'Full Supination',
+      loosePacked: 'Midway between extremes'
+    },
+    muscles: {
+      primeMovers: [
+        { name: 'Tibialis posterior (primary dynamic arch stabilizer)', innervation: 'Tibial Nerve (L4-L5)' },
+        { name: 'Tibialis anterior', innervation: 'Deep Peroneal Nerve (L4-L5)' }
+      ],
+      synergists: ['Flexor digitorum longus', 'Flexor hallucis longus'],
+      antagonists: ['Peroneus longus', 'Peroneus brevis']
+    },
+    goniometry: {
+      position: 'Prone with foot over end of examination table.',
+      fulcrum: 'Posterior ankle midway between malleoli.',
+      stationaryArm: 'Posterior midline of lower leg.',
+      movableArm: 'Posterior midline of calcaneus.',
+      substitutions: 'Hip external rotation compensation.'
+    },
+    citations: [
+      { book: 'Neumann (3rd Ed)', chapter: 'Chapter 14: Ankle and Foot', page: 'pp. 614–618, Fig 14.24 & Table 14.5' },
+      { book: 'Daniels & Worthingham (10th Ed)', chapter: 'Foot Inversion Testing', page: 'pp. 232–235' }
+    ]
+  },
+
   first_mtp_extension: {
     id: 'first_mtp_extension',
     region: 'ankle_foot',
