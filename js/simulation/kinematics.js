@@ -7,6 +7,9 @@ export class KinematicsEngine {
     this.currentValue = 0;
     this.isScapulaLocked = false;
     this.isImpinging = false;
+    this.isWeightBearing = false; // Foot: WB Closed Chain vs NWB Open Chain
+    this.isTenodesisPassive = true; // Hand: Tenodesis coupling active
+    this.currentGrip = 'none'; // Prehension Grip preset
   }
 
   setScapulaLocked(locked) {
@@ -14,6 +17,36 @@ export class KinematicsEngine {
     if (this.currentMotionId) {
       this.applyMotion(this.currentMotionId, this.currentValue);
     }
+  }
+
+  setWeightBearing(isWb) {
+    this.isWeightBearing = !!isWb;
+    if (this.currentMotionId) {
+      this.applyMotion(this.currentMotionId, this.currentValue);
+    }
+  }
+
+  setTenodesis(isPassive) {
+    this.isTenodesisPassive = !!isPassive;
+    if (this.currentMotionId) {
+      this.applyMotion(this.currentMotionId, this.currentValue);
+    }
+  }
+
+  setGrip(gripId) {
+    this.currentGrip = gripId;
+    if (this.currentMotionId) {
+      this.applyMotion(this.currentMotionId, this.currentValue);
+    }
+  }
+
+  curlFingers(mcpRad, pipRad, dipRad, fingers = ['index', 'middle', 'ring', 'little']) {
+    const joints = this.model.joints;
+    fingers.forEach(name => {
+      if (joints[`r_finger_${name}_mcp`]) joints[`r_finger_${name}_mcp`].rotation.x = -mcpRad;
+      if (joints[`r_finger_${name}_pip`]) joints[`r_finger_${name}_pip`].rotation.x = -pipRad;
+      if (joints[`r_finger_${name}_dip`]) joints[`r_finger_${name}_dip`].rotation.x = -dipRad;
+    });
   }
 
   setPathology(pathologyId) {
