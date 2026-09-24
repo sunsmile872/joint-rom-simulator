@@ -520,32 +520,134 @@ export class SkeletonModel {
     rMalleolusMed.position.set(-0.028, 0.015, 0);
     rAnkleGroup.add(rMalleolusMed);
 
-    // Subtalar & Transverse Tarsal (Inversion / Eversion pivot)
+    // Talus Bone (Sits firmly in mortise between malleoli)
+    const rTalusMesh = new THREE.Mesh(new THREE.BoxGeometry(0.040, 0.030, 0.052), this.boneMaterial);
+    rTalusMesh.position.set(0, -0.014, 0.008);
+    rAnkleGroup.add(rTalusMesh);
+    this.meshes['r_talus'] = rTalusMesh;
+
+    // Subtalar Joint (Triplanar oblique pivot: 42° transverse, 16° sagittal)
     const rSubtalarGroup = new THREE.Group();
+    rSubtalarGroup.position.set(0, -0.024, 0);
     rAnkleGroup.add(rSubtalarGroup);
     this.joints['r_subtalar'] = rSubtalarGroup;
 
-    // Calcaneus (Heel bone)
-    const rCalcaneusGeo = new THREE.BoxGeometry(0.045, 0.04, 0.09);
-    const rCalcaneusMesh = new THREE.Mesh(rCalcaneusGeo, this.boneMaterial);
-    rCalcaneusMesh.position.set(0, -0.025, -0.03);
-    rSubtalarGroup.add(rCalcaneusMesh);
+    // Calcaneus (Heel bone with posterior tuberosity & sustentaculum tali)
+    const rCalcaneusGroup = new THREE.Group();
+    rCalcaneusGroup.position.set(0, 0, 0);
+    rSubtalarGroup.add(rCalcaneusGroup);
+    this.joints['r_calcaneus'] = rCalcaneusGroup;
 
-    // Midfoot / Metatarsals
-    const rMetatarsalsGeo = new THREE.BoxGeometry(0.065, 0.03, 0.12);
+    const rCalcaneusGeo = new THREE.BoxGeometry(0.044, 0.042, 0.088);
+    const rCalcaneusMesh = new THREE.Mesh(rCalcaneusGeo, this.boneMaterial);
+    rCalcaneusMesh.position.set(0, -0.018, -0.038);
+    rCalcaneusGroup.add(rCalcaneusMesh);
+
+    // Medial Sustentaculum Tali shelf
+    const rSustentaculumMesh = new THREE.Mesh(new THREE.BoxGeometry(0.014, 0.012, 0.024), this.boneMaterial);
+    rSustentaculumMesh.position.set(-0.025, -0.012, -0.022);
+    rCalcaneusGroup.add(rSustentaculumMesh);
+
+    // Transverse Tarsal (TNCC / Chopart) Joint Complex
+    const rTnccGroup = new THREE.Group();
+    rTnccGroup.position.set(0, -0.015, 0.022);
+    rSubtalarGroup.add(rTnccGroup);
+    this.joints['r_tncc'] = rTnccGroup;
+
+    // Medial Column: Navicular Bone
+    const rNavicularMesh = new THREE.Mesh(new THREE.BoxGeometry(0.026, 0.024, 0.026), this.boneMaterial);
+    rNavicularMesh.position.set(-0.018, 0.006, 0.012);
+    rTnccGroup.add(rNavicularMesh);
+
+    // Lateral Column: Cuboid Bone
+    const rCuboidMesh = new THREE.Mesh(new THREE.BoxGeometry(0.024, 0.022, 0.032), this.boneMaterial);
+    rCuboidMesh.position.set(0.018, -0.002, 0.010);
+    rTnccGroup.add(rCuboidMesh);
+
+    // Dynamic TNCC Axes Visualizers (Parallel = Unlocked vs Crossed = Locked)
+    const axisMatTn = new THREE.MeshStandardMaterial({
+      color: 0x06b6d4, // Cyan
+      emissive: 0x0891b2,
+      emissiveIntensity: 0.6,
+      transparent: true,
+      opacity: 0.85
+    });
+    const axisMatCc = new THREE.MeshStandardMaterial({
+      color: 0x10b981, // Emerald
+      emissive: 0x059669,
+      emissiveIntensity: 0.6,
+      transparent: true,
+      opacity: 0.85
+    });
+
+    const rTnAxisGroup = new THREE.Group();
+    rTnAxisGroup.position.set(-0.018, 0.022, 0.012);
+    rTnccGroup.add(rTnAxisGroup);
+    this.joints['r_tn_axis'] = rTnAxisGroup;
+
+    const rTnAxisMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.0025, 0.0025, 0.045, 8), axisMatTn);
+    rTnAxisMesh.rotation.z = Math.PI / 2;
+    rTnAxisGroup.add(rTnAxisMesh);
+
+    const rCcAxisGroup = new THREE.Group();
+    rCcAxisGroup.position.set(0.018, 0.018, 0.010);
+    rTnccGroup.add(rCcAxisGroup);
+    this.joints['r_cc_axis'] = rCcAxisGroup;
+
+    const rCcAxisMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.0025, 0.0025, 0.045, 8), axisMatCc);
+    rCcAxisMesh.rotation.z = Math.PI / 2;
+    rCcAxisGroup.add(rCcAxisMesh);
+
+    // Forefoot & Medial Longitudinal Arch (MLA)
+    const rForefootGroup = new THREE.Group();
+    rForefootGroup.position.set(0, 0, 0.026);
+    rTnccGroup.add(rForefootGroup);
+    this.joints['r_forefoot'] = rForefootGroup;
+
+    // Metatarsals 1-5 (Curved Transverse Arch)
+    const rMetatarsalsGeo = new THREE.BoxGeometry(0.062, 0.024, 0.075);
     const rMetatarsalsMesh = new THREE.Mesh(rMetatarsalsGeo, this.boneMaterial);
-    rMetatarsalsMesh.position.set(0, -0.025, 0.065);
-    rSubtalarGroup.add(rMetatarsalsMesh);
+    rMetatarsalsMesh.position.set(0, -0.008, 0.038);
+    rForefootGroup.add(rMetatarsalsMesh);
+
+    // Plantar Fascia (Aponeurosis) Strip (Underneath Arch)
+    const fasciaMat = new THREE.MeshStandardMaterial({
+      color: 0x10b981,
+      emissive: 0x059669,
+      emissiveIntensity: 0.35,
+      transparent: true,
+      opacity: 0.85
+    });
+    const rPlantarFasciaMesh = new THREE.Mesh(new THREE.BoxGeometry(0.032, 0.003, 0.12), fasciaMat);
+    rPlantarFasciaMesh.position.set(-0.008, -0.036, 0.025);
+    rSubtalarGroup.add(rPlantarFasciaMesh);
+    this.meshes['r_plantar_fascia'] = rPlantarFasciaMesh;
 
     // 1st Metatarsophalangeal Joint (1st MTP & Great Toe)
     const rFirstMtpGroup = new THREE.Group();
-    rFirstMtpGroup.position.set(-0.02, -0.025, 0.125);
-    rSubtalarGroup.add(rFirstMtpGroup);
+    rFirstMtpGroup.position.set(-0.022, -0.008, 0.076);
+    rForefootGroup.add(rFirstMtpGroup);
     this.joints['r_first_mtp'] = rFirstMtpGroup;
 
-    const rGreatToeMesh = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.022, 0.05), this.boneMaterial);
-    rGreatToeMesh.position.set(0, 0, 0.025);
-    rFirstMtpGroup.add(rGreatToeMesh);
+    const rFirstMtpJointMesh = this.createJointSphere(0.013, true);
+    rFirstMtpGroup.add(rFirstMtpJointMesh);
+
+    // Great Toe Proximal Phalanx
+    const rToeProxMesh = this.createCylinderBone(0.010, 0.009, 0.030);
+    rToeProxMesh.position.set(0, 0, 0.015);
+    rToeProxMesh.rotation.x = Math.PI / 2;
+    rFirstMtpGroup.add(rToeProxMesh);
+
+    // Great Toe IP Joint & Distal Phalanx
+    const rToeIpGroup = new THREE.Group();
+    rToeIpGroup.position.set(0, 0, 0.030);
+    rFirstMtpGroup.add(rToeIpGroup);
+    this.joints['r_toe_ip'] = rToeIpGroup;
+
+    const rToeDistMesh = this.createCylinderBone(0.009, 0.007, 0.022);
+    rToeDistMesh.position.set(0, 0, 0.011);
+    rToeDistMesh.rotation.x = Math.PI / 2;
+    rToeIpGroup.add(rToeDistMesh);
 
     // ----------------------------------------------------
     // LEFT LOWER EXTREMITY (Symmetrical Stand)
