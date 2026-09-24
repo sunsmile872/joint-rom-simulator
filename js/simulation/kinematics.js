@@ -40,10 +40,22 @@ export class KinematicsEngine {
     }
   }
 
-  curlFingers(mcpRad, pipRad, dipRad, fingers = ['index', 'middle', 'ring', 'little']) {
+  curlFingers(mcpRad, pipRad, dipRad, fingers = ['index', 'middle', 'ring', 'little'], convergence = false) {
     const joints = this.model.joints;
+    const convergenceFactors = {
+      index: { rotZ: -0.03, rotY: 0 },
+      middle: { rotZ: 0, rotY: 0 },
+      ring: { rotZ: 0.08, rotY: 0 },
+      little: { rotZ: 0.16, rotY: -0.10 }
+    };
     fingers.forEach(name => {
-      if (joints[`r_finger_${name}_mcp`]) joints[`r_finger_${name}_mcp`].rotation.x = -mcpRad;
+      if (joints[`r_finger_${name}_mcp`]) {
+        joints[`r_finger_${name}_mcp`].rotation.x = -mcpRad;
+        if (convergence && convergenceFactors[name]) {
+          joints[`r_finger_${name}_mcp`].rotation.z = convergenceFactors[name].rotZ;
+          joints[`r_finger_${name}_mcp`].rotation.y = convergenceFactors[name].rotY;
+        }
+      }
       if (joints[`r_finger_${name}_pip`]) joints[`r_finger_${name}_pip`].rotation.x = -pipRad;
       if (joints[`r_finger_${name}_dip`]) joints[`r_finger_${name}_dip`].rotation.x = -dipRad;
     });
