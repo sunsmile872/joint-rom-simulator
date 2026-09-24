@@ -65,6 +65,26 @@ export class ArthrokinematicsVisualizer {
       // Convex on concave: Anterior/superior roll, Posterior/inferior slide
       rollDir.set(0, 0.8, 0.6).normalize();
       slideDir.set(0, -0.8, -0.6).normalize();
+    } else if (motionData.id.includes('thumb_cmc_abduction')) {
+      // Saddle: Convex on Concave (Roll palmar, Slide dorsal - OPPOSITE)
+      rollDir.set(0, 0, 1).normalize();
+      slideDir.set(0, 0, -1).normalize();
+    } else if (motionData.id.includes('thumb_cmc_flexion')) {
+      // Saddle: Concave on Convex (Roll medial/ulnar, Slide medial/ulnar - SAME)
+      rollDir.set(-1, 0, 0).normalize();
+      slideDir.set(-1, 0, 0).normalize();
+    } else if (motionData.id.includes('thumb_opposition')) {
+      // Triplanar opposition complex
+      rollDir.set(-0.7, 0.5, 0.5).normalize();
+      slideDir.set(0.7, -0.5, -0.5).normalize();
+    } else if (motionData.id.includes('subtalar_pronation') || motionData.id.includes('subtalar_eversion')) {
+      // Multi-articular triplanar pronation
+      rollDir.set(0.8, -0.2, 0.5).normalize();
+      slideDir.set(-0.8, 0.2, -0.5).normalize();
+    } else if (motionData.id.includes('subtalar_supination') || motionData.id.includes('subtalar_inversion')) {
+      // Multi-articular triplanar supination
+      rollDir.set(-0.8, 0.2, -0.5).normalize();
+      slideDir.set(0.8, -0.2, 0.5).normalize();
     } else {
       // General default: Convex opposite, Concave same
       if (isConvexOnConcave) {
