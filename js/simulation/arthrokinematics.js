@@ -420,7 +420,7 @@ export class ArthrokinematicsVisualizer {
       depthWrite: false
     });
     this.rollSprite = new THREE.Sprite(rollSpriteMat);
-    this.rollSprite.scale.set(0.09, 0.03, 1);
+    this.rollSprite.scale.set(0.072, 0.024, 1);
     this.rollSprite.renderOrder = 1000;
     this.group.add(this.rollSprite);
 
@@ -430,7 +430,7 @@ export class ArthrokinematicsVisualizer {
       depthWrite: false
     });
     this.slideSprite = new THREE.Sprite(slideSpriteMat);
-    this.slideSprite.scale.set(0.09, 0.03, 1);
+    this.slideSprite.scale.set(0.072, 0.024, 1);
     this.slideSprite.renderOrder = 1000;
     this.group.add(this.slideSprite);
   }
@@ -479,7 +479,7 @@ export class ArthrokinematicsVisualizer {
       if (perp.lengthSq() < 0.001) {
         perp.crossVectors(rollDir, new THREE.Vector3(1, 0, 0));
       }
-      perp.normalize().multiplyScalar(0.026); // 2.6cm side-by-side separation
+      perp.normalize().multiplyScalar(0.034); // 3.4cm side-by-side separation
 
       this.rollArrow.position.copy(perp);
       this.slideArrow.position.copy(perp.clone().negate());
@@ -493,12 +493,20 @@ export class ArthrokinematicsVisualizer {
     this.rollArrow.setLength(pulse, 0.04, 0.024);
     this.slideArrow.setLength(pulse, 0.04, 0.024);
 
+    // Stagger badges along vector axis for parallel joints to prevent badge overlap
+    let rollDist = pulse + 0.038;
+    let slideDist = pulse + 0.038;
+    if (isSame) {
+      rollDist = pulse + 0.052;
+      slideDist = pulse + 0.022;
+    }
+
     // Update 3D Billboard text badges
     this.rollSprite.material.map = getBadgeTexture(labelRoll, '#059669');
-    this.rollSprite.position.copy(this.rollArrow.position).addScaledVector(rollDir, pulse + 0.038);
+    this.rollSprite.position.copy(this.rollArrow.position).addScaledVector(rollDir, rollDist);
 
     this.slideSprite.material.map = getBadgeTexture(labelSlide, '#e11d48');
-    this.slideSprite.position.copy(this.slideArrow.position).addScaledVector(slideDir, pulse + 0.038);
+    this.slideSprite.position.copy(this.slideArrow.position).addScaledVector(slideDir, slideDist);
   }
 
   setVisible(visible) {
