@@ -102,21 +102,49 @@ class App {
 
   onPathologyChange(pathologyId) {
     const preset = PATHOLOGY_PRESETS.find(p => p.id === pathologyId);
-    if (!preset) return;
-
-    if (preset.id === 'normal') {
+    if (!preset || preset.id === 'normal') {
+      this.activePathology = null;
+      this.activeRestriction = null;
+      this.kinematics.setPathology(null);
+      this.controls.clearPathologyAlert();
+      this.controls.updateSliderRange(this.currentMotion);
       this.setAngle(this.currentMotion.normalMin, false);
       return;
     }
 
-    if (preset.jointId && ROM_DATA[preset.jointId]) {
-      this.currentRegionId = ROM_DATA[preset.jointId].region;
+    this.activePathology = preset;
+    this.kinematics.setPathology(preset.id);
+
+    // If current motion is directly restricted by this pathology, apply restriction in place
+    if (preset.restrictions && preset.restrictions[this.currentMotionId]) {
+      this.applyActivePathology();
+    } else if (preset.primaryJointId && ROM_DATA[preset.primaryJointId]) {
+      // Otherwise switch to primary joint of this pathology
+      const targetJoint = ROM_DATA[preset.primaryJointId];
+      this.currentRegionId = targetJoint.region;
       document.getElementById('region-select').value = this.currentRegionId;
       this.updateMotionDropdown(this.currentRegionId);
-      document.getElementById('motion-select').value = preset.jointId;
-      this.setMotion(preset.jointId);
-      this.setAngle(preset.targetDegrees, false);
-      this.controls.slider.value = preset.targetDegrees;
+      document.getElementById('motion-select').value = preset.primaryJointId;
+      this.setMotion(preset.primaryJointId);
+    }
+  }
+
+  applyActivePathology() {
+    if (!this.activePathology || !this.activePathology.restrictions) {
+      this.activeRestriction = null;
+      this.controls.clearPathologyAlert();
+      return;
+    }
+
+    const restriction = this.activePathology.restrictions[this.currentMotionId];
+    if (restriction) {
+      this.activeRestriction = restriction;
+      this.controls.showPathologyAlert(this.activePathology, restriction);
+      this.setAngle(restriction.targetDegrees, false);
+      this.controls.slider.value = restriction.targetDegrees;
+    } else {
+      this.activeRestriction = null;
+      this.controls.clearPathologyAlert();
     }
   }
 
@@ -126,6 +154,15 @@ class App {
     this.currentMotionId = motionId;
     this.currentMotion = ROM_DATA[motionId];
     this.currentAngle = this.currentMotion.normalMin;
+
+    // Check if active pathology restricts newly selected motion
+    if (this.activePathology && this.activePathology.restrictions && this.activePathology.restrictions[motionId]) {
+      this.activeRestriction = this.activePathology.restrictions[motionId];
+      this.controls.showPathologyAlert(this.activePathology, this.activeRestriction);
+    } else {
+      this.activeRestriction = null;
+      this.controls.clearPathologyAlert();
+    }
 
     // Highlight Joint Mesh
     const jointMeshKey = this.getJointKeyForMotion(motionId);
@@ -137,8 +174,10 @@ class App {
     // Update Clinical Details Panel
     this.detailPanel.render(this.currentMotion);
 
-    // Apply zero pose
-    this.kinematics.applyMotion(motionId, this.currentAngle);
+    // Set initial target or zero pose
+    const initialAngle = this.activeRestriction ? this.activeRestriction.targetDegrees : this.currentAngle;
+    this.setAngle(initialAngle, false);
+    this.controls.slider.value = initialAngle;
 
     // Update camera focus if in joint_focus mode
     if (this.scene.currentCameraPreset === 'joint_focus') {
@@ -148,9 +187,19 @@ class App {
   }
 
   setAngle(angle, fromAnimation = false) {
-    this.currentAngle = angle;
-    this.kinematics.applyMotion(this.currentMotionId, angle);
-    this.controls.updateValueDisplay(angle, this.currentMotion);
+    let effectiveAngle = angle;
+    if (this.activeRestriction) {
+      if (this.activeRestriction.max !== undefined && effectiveAngle > this.activeRestriction.max) {
+        effectiveAngle = this.activeRestriction.max;
+      }
+      if (this.activeRestriction.min !== undefined && effectiveAngle < this.activeRestriction.min) {
+        effectiveAngle = this.activeRestriction.min;
+      }
+    }
+
+    this.currentAngle = effectiveAngle;
+    this.kinematics.applyMotion(this.currentMotionId, effectiveAngle);
+    this.controls.updateValueDisplay(effectiveAngle, this.currentMotion);
   }
 
   getJointKeyForMotion(motionId) {
