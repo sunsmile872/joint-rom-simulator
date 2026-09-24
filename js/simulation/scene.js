@@ -149,7 +149,12 @@ export class SimulationScene {
         break;
       case 'joint_focus':
         if (targetJointPos) {
-          targetPos.copy(targetJointPos).add(new THREE.Vector3(0.5, 0.2, 1.1));
+          const isFoot = targetJointPos.y < 0.35;
+          const isHand = targetJointPos.y < 1.25 && targetJointPos.x > 0.12;
+          const offset = (isFoot || isHand)
+            ? new THREE.Vector3(0.20, 0.10, 0.42)
+            : new THREE.Vector3(0.5, 0.2, 1.1);
+          targetPos.copy(targetJointPos).add(offset);
           newTarget.copy(targetJointPos);
         } else {
           targetPos.set(0.6, 1.35, 1.2);
