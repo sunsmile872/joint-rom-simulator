@@ -210,6 +210,7 @@ class App {
     if (motionId.startsWith('elbow')) return 'r_elbow';
     if (motionId.startsWith('forearm')) return 'r_forearm';
     if (motionId.startsWith('wrist')) return 'r_wrist';
+    if (motionId.startsWith('thumb')) return 'r_thumb_cmc';
     if (motionId.startsWith('hip')) return 'r_hip';
     if (motionId.startsWith('knee')) return 'r_knee';
     if (motionId.startsWith('ankle')) return 'r_ankle';

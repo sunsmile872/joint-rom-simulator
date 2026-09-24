@@ -6,7 +6,7 @@
     { id: "tmj", name: "Temporomandibular (TMJ)", icon: "\u{1F5E3}\uFE0F" },
     { id: "shoulder", name: "Shoulder Complex", icon: "\u{1F4AA}" },
     { id: "elbow_forearm", name: "Elbow & Forearm", icon: "\u{1F9BE}" },
-    { id: "wrist", name: "Wrist Joint", icon: "\u{1F590}\uFE0F" },
+    { id: "wrist", name: "Wrist & Hand Complex", icon: "\u{1F590}\uFE0F" },
     { id: "hip", name: "Hip Joint", icon: "\u{1F9B5}" },
     { id: "knee", name: "Knee Joint", icon: "\u{1F9BF}" },
     { id: "ankle_foot", name: "Ankle & Foot", icon: "\u{1F9B6}" }
@@ -1170,6 +1170,151 @@
         { book: "Daniels & Worthingham (10th Ed)", chapter: "Wrist Deviation", page: "p. 132" }
       ]
     },
+    thumb_cmc_abduction: {
+      id: "thumb_cmc_abduction",
+      region: "wrist",
+      jointName: "1st Carpometacarpal (CMC / Trapeziometacarpal) Saddle Joint",
+      motionName: "Thumb CMC Palmar Abduction",
+      plane: "Sagittal (Perpendicular to Palm)",
+      axis: "Anteroposterior Axis through Trapezium",
+      normalMin: 0,
+      normalMax: 45,
+      unit: "degrees",
+      referenceRangeText: "0\xB0 \u2013 45\xB0 (AAOS: 45\xB0\u201350\xB0, Neumann: 45\xB0)",
+      functionalRange: "35\xB0 (Grasping large cups, bottles, opening grasp)",
+      hypermobilityThreshold: 55,
+      impingementRiskThreshold: 65,
+      sliderMin: 0,
+      sliderMax: 60,
+      endFeel: {
+        type: "Firm (Web space tissue stretch / Ligamentous)",
+        description: "Tension in first web space fascia, intermetacarpal ligament, and adductor pollicis muscle.",
+        abnormalEndFeel: "Hard (basilar thumb osteoarthritis / CMC spurring) or Empty."
+      },
+      arthrokinematics: {
+        type: "Saddle Joint: Convex-on-Concave Orthogonal Rule",
+        rule: "Convex 1st Metacarpal base rolls and slides in OPPOSITE directions on Concave Trapezium",
+        description: "Orthogonal Saddle Kinematics (Neumann Ch. 8, pp. 268\u2013270): In palmar abduction, the convex diameter of the 1st metacarpal base rolls palmarward (anteriorly) and slides dorsalward (posteriorly) across the concave saddle surface of the trapezium.",
+        closePacked: "Full opposition / extreme abduction",
+        loosePacked: "Midway between abduction/adduction and flexion/extension"
+      },
+      muscles: {
+        primeMovers: [
+          { name: "Abductor pollicis brevis (APB)", innervation: "Median Nerve (C8-T1, Recurrent thenar motor branch)" },
+          { name: "Abductor pollicis longus (APL)", innervation: "Posterior Interosseous Nerve / Radial (C7-C8)" }
+        ],
+        synergists: ["Opponens pollicis", "Flexor pollicis brevis (superficial head)"],
+        antagonists: ["Adductor pollicis (transverse & oblique heads)", "First dorsal interosseous"]
+      },
+      goniometry: {
+        position: "Forearm in mid-position resting on ulnar border on table, thumb alongside 2nd metacarpal.",
+        fulcrum: "Junction of the bases of the 1st and 2nd metacarpals (anatomical snuffbox region).",
+        stationaryArm: "Lateral midline of the 2nd metacarpal bone.",
+        movableArm: "Lateral midline of the 1st metacarpal bone.",
+        substitutions: "Thumb MCP/IP hyperextension, wrist radial deviation."
+      },
+      citations: [
+        { book: "Neumann (3rd Ed)", chapter: "Chapter 8: Hand", page: "pp. 268\u2013272, Fig 8.13 & Table 8.3" },
+        { book: "Braddom's PM&R (7th Ed)", chapter: "Hand & Upper Limb Examination", page: "Ch. 3" },
+        { book: "Daniels & Worthingham (10th Ed)", chapter: "Thumb Abduction Testing", page: "pp. 134\u2013137" }
+      ]
+    },
+    thumb_cmc_flexion: {
+      id: "thumb_cmc_flexion",
+      region: "wrist",
+      jointName: "1st Carpometacarpal (CMC / Trapeziometacarpal) Saddle Joint",
+      motionName: "Thumb CMC Flexion (Across Palm)",
+      plane: "Frontal (Parallel to Palm)",
+      axis: "Oblique Coronal Axis through Trapezium",
+      normalMin: 0,
+      normalMax: 45,
+      unit: "degrees",
+      referenceRangeText: "0\xB0 \u2013 45\xB0 (AAOS: 45\xB0\u201350\xB0)",
+      functionalRange: "30\xB0 (Holding pen, cutlery, fine key pinch)",
+      hypermobilityThreshold: 55,
+      impingementRiskThreshold: 65,
+      sliderMin: 0,
+      sliderMax: 55,
+      endFeel: {
+        type: "Soft (Soft tissue approximation) or Firm",
+        description: "Contact with thenar eminence tissues; tension in posterior oblique ligament and dorsal CMC capsule.",
+        abnormalEndFeel: "Hard (osteoarthritis / thumb CMC osteophytes)."
+      },
+      arthrokinematics: {
+        type: "Saddle Joint: Concave-on-Convex Orthogonal Rule",
+        rule: "Concave 1st Metacarpal base rolls and slides in the SAME direction on Convex Trapezium",
+        description: "Orthogonal Saddle Kinematics (Neumann Ch. 8, pp. 268\u2013270): In flexion across the palm, the concave diameter of the 1st metacarpal base rolls and slides in the SAME ulnar/medial direction across the convex saddle surface of the trapezium.",
+        closePacked: "Full opposition / extreme flexion",
+        loosePacked: "Midway between abduction/adduction and flexion/extension"
+      },
+      muscles: {
+        primeMovers: [
+          { name: "Flexor pollicis brevis (FPB)", innervation: "Median (superficial head, C8-T1) & Deep Ulnar (deep head, C8-T1)" },
+          { name: "Opponens pollicis", innervation: "Median Nerve (C8-T1)" }
+        ],
+        synergists: ["Flexor pollicis longus", "Adductor pollicis"],
+        antagonists: ["Extensor pollicis longus (EPL)", "Extensor pollicis brevis (EPB)", "Abductor pollicis longus"]
+      },
+      goniometry: {
+        position: "Forearm supinated, resting dorsal surface on table.",
+        fulcrum: "Palmar / dorsal junction of 1st CMC joint.",
+        stationaryArm: "Ventral midline of 2nd metacarpal.",
+        movableArm: "Ventral midline of 1st metacarpal.",
+        substitutions: "Thumb MCP flexion compensation."
+      },
+      citations: [
+        { book: "Neumann (3rd Ed)", chapter: "Chapter 8: Hand", page: "pp. 268\u2013272, Fig 8.14 & Table 8.3" },
+        { book: "Daniels & Worthingham (10th Ed)", chapter: "Thumb Flexion Testing", page: "pp. 138\u2013140" }
+      ]
+    },
+    thumb_opposition: {
+      id: "thumb_opposition",
+      region: "wrist",
+      jointName: "1st Ray & CMC Saddle Complex",
+      motionName: "Thumb Opposition (Triplanar Compound)",
+      plane: "Multiplanar (Combined Abduction + Flexion + Internal Axial Rotation)",
+      axis: "Dynamic Sequential Saddle Helical Axis",
+      normalMin: 0,
+      normalMax: 60,
+      unit: "degrees",
+      referenceRangeText: "0\xB0 \u2013 60\xB0 (AAOS: Pad of thumb touches base or tip of 5th digit = 0 mm)",
+      functionalRange: "45\xB0 (Writing, typing, buttoning shirts, precision pinch)",
+      hypermobilityThreshold: 70,
+      impingementRiskThreshold: 75,
+      sliderMin: 0,
+      sliderMax: 65,
+      endFeel: {
+        type: "Soft (Pulp contact) or Firm (Ligamentous)",
+        description: "Contact between thumb pulp and fingertip pulp; tension in dorsoradial ligament complex.",
+        abnormalEndFeel: "Empty (median nerve thenar motor branch palsy / severe CTS atrophy)."
+      },
+      arthrokinematics: {
+        type: "Triplanar Compound Saddle Coupling",
+        rule: "Phase 1: Abduction \u2192 Phase 2: Flexion \u2192 Phase 3: Medial Axial Rotation",
+        description: "Evolutionary Hallux-Pollux Milestone (Neumann Ch. 8, pp. 270\u2013271): Opposition is a coordinated sequence where the 1st metacarpal abducts, flexes medially, and automatically rotates internally (~45\xB0\u201360\xB0) around its own long axis due to oblique pulling of Opponens Pollicis and helical tension in the anterior oblique (beak) ligament, presenting the thumb pulp directly face-to-face with the opposite fingers!",
+        closePacked: "Full opposition (thumb tip pressing firmly against 5th digit)",
+        loosePacked: "Anatomical neutral"
+      },
+      muscles: {
+        primeMovers: [
+          { name: "Opponens pollicis (primary workhorse for internal rotation)", innervation: "Median Nerve (C8-T1, Recurrent branch)" },
+          { name: "Abductor pollicis brevis (APB)", innervation: "Median Nerve (C8-T1)" }
+        ],
+        synergists: ["Flexor pollicis brevis", "Adductor pollicis"],
+        antagonists: ["Extensor pollicis longus", "Extensor pollicis brevis", "Abductor pollicis longus"]
+      },
+      goniometry: {
+        position: "Forearm supinated, wrist in neutral.",
+        fulcrum: "Linear millimeter ruler measuring distance from tip of thumb to base of 5th digit (or angular rotation of 1st metacarpal).",
+        stationaryArm: "Palmar plane across metacarpal heads 2-5.",
+        movableArm: "Plane across thumbnail / 1st metacarpal.",
+        substitutions: "Cupping of palm by 5th digit flexion (opponens digiti minimi trick movement)."
+      },
+      citations: [
+        { book: "Neumann (3rd Ed)", chapter: "Chapter 8: Hand", page: "pp. 270\u2013273, Fig 8.16 & Table 8.4" },
+        { book: "Braddom's PM&R (7th Ed)", chapter: "Hand Functional Prehension Assessment", page: "Ch. 3" }
+      ]
+    },
     // ==========================================
     // HIP JOINT
     // ==========================================
@@ -1784,6 +1929,102 @@
         { book: "Daniels & Worthingham (10th Ed)", chapter: "Foot Eversion Testing", page: "pp. 236\u2013239" }
       ]
     },
+    subtalar_pronation: {
+      id: "subtalar_pronation",
+      region: "ankle_foot",
+      jointName: "Subtalar & TNCC (Transverse Tarsal) Complex",
+      motionName: "Subtalar Pronation (Triplanar Unlocking)",
+      plane: "Triplanar (Eversion + Abduction + Dorsiflexion)",
+      axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
+      normalMin: 0,
+      normalMax: 15,
+      unit: "degrees",
+      referenceRangeText: "0\xB0 \u2013 15\xB0 (AAOS eversion component: 15\xB0)",
+      functionalRange: "10\xB0 \u2013 12\xB0 (Loading response in gait, shock absorption, ground contouring)",
+      hypermobilityThreshold: 25,
+      impingementRiskThreshold: 30,
+      sliderMin: 0,
+      sliderMax: 25,
+      endFeel: {
+        type: "Firm (Ligamentous) or Hard",
+        description: "Tension in medial deltoid ligament (tibionavicular/tibiocalcaneal fibers) and contact between lateral calcaneus and fibular malleolus.",
+        abnormalEndFeel: "Hard / Painful (tarsal coalition / calcaneonavicular bar)."
+      },
+      arthrokinematics: {
+        type: "Triplanar Multi-Articular Gliding & Chopart Unlocking",
+        rule: "NWB: Calcaneal Eversion + Abduction + Dorsiflexion | WB: Calcaneal Eversion + Talar Adduction/Plantarflexion + Tibial Internal Rotation",
+        description: "TNCC Parallel Alignment (Neumann Ch. 14, pp. 614\u2013616, Fig 14.24): In pronation, the Talonavicular (TN) and Calcaneocuboid (CC) joint axes align PARALLEL to one another, unlocking the transverse tarsal joint into a flexible shock absorber. In closed kinetic chain (weight-bearing), calcaneal eversion forces the talus to adduct and plantarflex, driving ~6\xB0\u201310\xB0 of coupled Tibial Internal Rotation!",
+        closePacked: "Full Supination (inversion)",
+        loosePacked: "Pronated / Neutral"
+      },
+      muscles: {
+        primeMovers: [
+          { name: "Peroneus (Fibularis) longus", innervation: "Superficial Peroneal Nerve (L5-S1)" },
+          { name: "Peroneus (Fibularis) brevis", innervation: "Superficial Peroneal Nerve (L5-S1)" }
+        ],
+        synergists: ["Peroneus tertius", "Extensor digitorum longus"],
+        antagonists: ["Tibialis posterior", "Tibialis anterior"]
+      },
+      goniometry: {
+        position: "Prone with foot over end of table (NWB) or standing alignment (WB Fick angle / resting calcaneal stance angle).",
+        fulcrum: "Posterior ankle midway between malleoli.",
+        stationaryArm: "Posterior midline of lower leg.",
+        movableArm: "Posterior midline of calcaneus.",
+        substitutions: "Knee external rotation, hip internal rotation."
+      },
+      citations: [
+        { book: "Neumann (3rd Ed)", chapter: "Chapter 14: Ankle and Foot", page: "pp. 614\u2013618, Fig 14.24 & Table 14.5" },
+        { book: "Braddom's PM&R (7th Ed)", chapter: "Biomechanics of Gait: Stance Phase Subtalar Function", page: "Ch. 5" }
+      ]
+    },
+    subtalar_supination: {
+      id: "subtalar_supination",
+      region: "ankle_foot",
+      jointName: "Subtalar & TNCC (Transverse Tarsal) Complex",
+      motionName: "Subtalar Supination (Triplanar Locking)",
+      plane: "Triplanar (Inversion + Adduction + Plantarflexion)",
+      axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
+      normalMin: 0,
+      normalMax: 30,
+      unit: "degrees",
+      referenceRangeText: "0\xB0 \u2013 30\xB0 (AAOS inversion component: 30\xB0\u201335\xB0)",
+      functionalRange: "20\xB0 \u2013 25\xB0 (Terminal stance push-off, rigid propulsion lever)",
+      hypermobilityThreshold: 40,
+      impingementRiskThreshold: 48,
+      sliderMin: 0,
+      sliderMax: 40,
+      endFeel: {
+        type: "Firm (Ligamentous)",
+        description: "Tension in calcaneofibular ligament, lateral talocalcaneal ligament, cervical ligament, and lateral peroneus tendons.",
+        abnormalEndFeel: "Empty (grade III lateral ankle ligament sprain)."
+      },
+      arthrokinematics: {
+        type: "Triplanar Multi-Articular Gliding & Chopart Locking",
+        rule: "NWB: Calcaneal Inversion + Adduction + Plantarflexion | WB: Calcaneal Inversion + Talar Abduction/Dorsiflexion + Tibial External Rotation",
+        description: "TNCC Convergent Locking (Neumann Ch. 14, pp. 614\u2013616, Fig 14.24): In supination, the Talonavicular (TN) and Calcaneocuboid (CC) joint axes CONVERGE and CROSS each other, mechanically locking the midtarsal joints into a rigid propulsion lever for push-off. In closed kinetic chain, this drives ~6\xB0\u201310\xB0 of coupled Tibial External Rotation and knee extension stability!",
+        closePacked: "Full Supination",
+        loosePacked: "Midway between extremes"
+      },
+      muscles: {
+        primeMovers: [
+          { name: "Tibialis posterior (primary dynamic arch stabilizer)", innervation: "Tibial Nerve (L4-L5)" },
+          { name: "Tibialis anterior", innervation: "Deep Peroneal Nerve (L4-L5)" }
+        ],
+        synergists: ["Flexor digitorum longus", "Flexor hallucis longus"],
+        antagonists: ["Peroneus longus", "Peroneus brevis"]
+      },
+      goniometry: {
+        position: "Prone with foot over end of examination table.",
+        fulcrum: "Posterior ankle midway between malleoli.",
+        stationaryArm: "Posterior midline of lower leg.",
+        movableArm: "Posterior midline of calcaneus.",
+        substitutions: "Hip external rotation compensation."
+      },
+      citations: [
+        { book: "Neumann (3rd Ed)", chapter: "Chapter 14: Ankle and Foot", page: "pp. 614\u2013618, Fig 14.24 & Table 14.5" },
+        { book: "Daniels & Worthingham (10th Ed)", chapter: "Foot Inversion Testing", page: "pp. 232\u2013235" }
+      ]
+    },
     first_mtp_extension: {
       id: "first_mtp_extension",
       region: "ankle_foot",
@@ -1974,6 +2215,34 @@
           targetDegrees: 0,
           label: "Radial Nerve Palsy (Wrist Drop 0\xB0)",
           explanation: "\u0E40\u0E2A\u0E49\u0E19\u0E1B\u0E23\u0E30\u0E2A\u0E32\u0E17 Radial \u0E1A\u0E32\u0E14\u0E40\u0E08\u0E47\u0E1A \u0E2D\u0E31\u0E21\u0E1E\u0E32\u0E15\u0E01\u0E25\u0E49\u0E32\u0E21\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E40\u0E2B\u0E22\u0E35\u0E22\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E37\u0E2D \u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E01\u0E23\u0E30\u0E14\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E37\u0E2D\u0E15\u0E49\u0E32\u0E19\u0E41\u0E23\u0E07\u0E42\u0E19\u0E49\u0E21\u0E16\u0E48\u0E27\u0E07\u0E44\u0E14\u0E49\u0E40\u0E25\u0E22 (0\xB0)"
+        }
+      }
+    },
+    {
+      id: "c6_tetraplegia_tenodesis",
+      name: "C6 Tetraplegia (Tenodesis Grasp Candidate)",
+      primaryJointId: "wrist_extension",
+      description: "Intact wrist extensors (ECRL/ECRB, C6) allow active wrist extension to induce functional passive finger flexion via Tenodesis action.",
+      restrictions: {
+        wrist_extension: {
+          max: 45,
+          targetDegrees: 35,
+          label: "Tenodesis Functional Grasp Zone (30\xB0\u201340\xB0 Extension)",
+          explanation: "\u0E1C\u0E39\u0E49\u0E1B\u0E48\u0E27\u0E22\u0E2D\u0E31\u0E21\u0E1E\u0E32\u0E15\u0E23\u0E30\u0E14\u0E31\u0E1A C6 \u0E43\u0E0A\u0E49\u0E01\u0E25\u0E49\u0E32\u0E21\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E40\u0E2B\u0E22\u0E35\u0E22\u0E14\u0E02\u0E49\u0E2D\u0E21\u0E37\u0E2D (ECRL/ECRB) \u0E01\u0E23\u0E30\u0E14\u0E01\u0E02\u0E49\u0E2D\u0E21\u0E37\u0E2D 35\xB0 \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E14\u0E36\u0E07\u0E40\u0E2A\u0E49\u0E19\u0E40\u0E2D\u0E47\u0E19\u0E19\u0E34\u0E49\u0E27\u0E21\u0E37\u0E2D\u0E43\u0E2B\u0E49\u0E07\u0E2D\u0E08\u0E31\u0E1A\u0E2A\u0E34\u0E48\u0E07\u0E02\u0E2D\u0E07\u0E2D\u0E31\u0E15\u0E42\u0E19\u0E21\u0E31\u0E15\u0E34 (Tenodesis Grasp)"
+        }
+      }
+    },
+    {
+      id: "pes_planus",
+      name: "Severe Pes Planus / Posterior Tibial Dysfunction",
+      primaryJointId: "subtalar_pronation",
+      description: "Loss of medial longitudinal arch with excessive subtalar eversion, unlocked TNCC, and compensatory internal tibial torsion.",
+      restrictions: {
+        subtalar_supination: {
+          max: 8,
+          targetDegrees: 5,
+          label: "Rigid Flatfoot (Locked in Pronation, Lacks Supination)",
+          explanation: "\u0E40\u0E2D\u0E47\u0E19 Tibialis Posterior \u0E40\u0E2A\u0E37\u0E48\u0E2D\u0E21\u0E2A\u0E20\u0E32\u0E1E \u0E2D\u0E38\u0E49\u0E07\u0E40\u0E17\u0E49\u0E32\u0E41\u0E1A\u0E19\u0E22\u0E38\u0E1A \u0E40\u0E17\u0E49\u0E32\u0E25\u0E47\u0E2D\u0E01\u0E04\u0E49\u0E32\u0E07\u0E2D\u0E22\u0E39\u0E48\u0E43\u0E19\u0E17\u0E48\u0E32 Pronation \u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16 Supinate \u0E40\u0E1B\u0E47\u0E19\u0E04\u0E32\u0E19\u0E41\u0E02\u0E47\u0E07\u0E14\u0E35\u0E14\u0E15\u0E31\u0E27\u0E44\u0E14\u0E49"
         }
       }
     }
@@ -2427,22 +2696,72 @@
       const rHandGroup = new THREE2.Group();
       rWristGroup.add(rHandGroup);
       this.joints["r_hand"] = rHandGroup;
-      const rPalmMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.065, 0.09, 0.022), this.boneMaterial);
-      rPalmMesh.position.set(0, -0.045, 0);
+      const rCarpusMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.058, 0.035, 0.024), this.boneMaterial);
+      rCarpusMesh.position.set(0, -0.018, 0);
+      rHandGroup.add(rCarpusMesh);
+      const rPalmMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.062, 0.055, 0.02), this.boneMaterial);
+      rPalmMesh.position.set(-5e-3, -0.055, 0);
       rHandGroup.add(rPalmMesh);
+      const rTrapeziumMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.02, 0.018, 0.02), this.boneMaterial);
+      rTrapeziumMesh.position.set(0.032, -0.022, 5e-3);
+      rHandGroup.add(rTrapeziumMesh);
+      this.meshes["r_trapezium"] = rTrapeziumMesh;
+      const rThumbCmcGroup = new THREE2.Group();
+      rThumbCmcGroup.position.set(0.034, -0.026, 8e-3);
+      rThumbCmcGroup.rotation.set(0.2, 0.15, -0.45);
+      rHandGroup.add(rThumbCmcGroup);
+      this.joints["r_thumb_cmc"] = rThumbCmcGroup;
+      this.joints["r_thumb"] = rThumbCmcGroup;
+      const r1stMetacarpal = this.createCylinderBone(0.012, 0.01, 0.045);
+      r1stMetacarpal.position.set(8e-3, -0.022, 4e-3);
+      rThumbCmcGroup.add(r1stMetacarpal);
+      const rThumbMcpGroup = new THREE2.Group();
+      rThumbMcpGroup.position.set(0.016, -0.045, 8e-3);
+      rThumbCmcGroup.add(rThumbMcpGroup);
+      this.joints["r_thumb_mcp"] = rThumbMcpGroup;
+      const rThumbProxPhalanx = this.createCylinderBone(0.01, 8e-3, 0.03);
+      rThumbProxPhalanx.position.set(0, -0.015, 0);
+      rThumbMcpGroup.add(rThumbProxPhalanx);
+      const rThumbIpGroup = new THREE2.Group();
+      rThumbIpGroup.position.set(0, -0.03, 0);
+      rThumbMcpGroup.add(rThumbIpGroup);
+      this.joints["r_thumb_ip"] = rThumbIpGroup;
+      const rThumbDistPhalanx = this.createCylinderBone(8e-3, 6e-3, 0.022);
+      rThumbDistPhalanx.position.set(0, -0.011, 0);
+      rThumbIpGroup.add(rThumbDistPhalanx);
       const rFingersGroup = new THREE2.Group();
-      rFingersGroup.position.set(0, -0.09, 0);
+      rFingersGroup.position.set(-5e-3, -0.082, 0);
       rHandGroup.add(rFingersGroup);
       this.joints["r_fingers"] = rFingersGroup;
-      const rFingersMesh = this.createCylinderBone(0.012, 9e-3, 0.075);
-      rFingersGroup.add(rFingersMesh);
-      const rThumbCmcGroup = new THREE2.Group();
-      rThumbCmcGroup.position.set(0.038, -0.02, 8e-3);
-      rHandGroup.add(rThumbCmcGroup);
-      this.joints["r_thumb"] = rThumbCmcGroup;
-      const rThumbMesh = this.createCylinderBone(0.012, 9e-3, 0.06);
-      rThumbMesh.rotation.z = -Math.PI / 4;
-      rThumbCmcGroup.add(rThumbMesh);
+      const fingerDefs = [
+        { name: "index", x: 0.022, lenProx: 0.036, lenMid: 0.022, lenDist: 0.018 },
+        { name: "middle", x: 7e-3, lenProx: 0.04, lenMid: 0.025, lenDist: 0.02 },
+        { name: "ring", x: -8e-3, lenProx: 0.036, lenMid: 0.022, lenDist: 0.018 },
+        { name: "little", x: -0.022, lenProx: 0.028, lenMid: 0.018, lenDist: 0.016 }
+      ];
+      fingerDefs.forEach((f) => {
+        const mcpGroup = new THREE2.Group();
+        mcpGroup.position.set(f.x, 0, 0);
+        rFingersGroup.add(mcpGroup);
+        this.joints[`r_finger_${f.name}_mcp`] = mcpGroup;
+        const proxMesh = this.createCylinderBone(8e-3, 7e-3, f.lenProx);
+        proxMesh.position.set(0, -f.lenProx / 2, 0);
+        mcpGroup.add(proxMesh);
+        const pipGroup = new THREE2.Group();
+        pipGroup.position.set(0, -f.lenProx, 0);
+        mcpGroup.add(pipGroup);
+        this.joints[`r_finger_${f.name}_pip`] = pipGroup;
+        const midMesh = this.createCylinderBone(7e-3, 6e-3, f.lenMid);
+        midMesh.position.set(0, -f.lenMid / 2, 0);
+        pipGroup.add(midMesh);
+        const dipGroup = new THREE2.Group();
+        dipGroup.position.set(0, -f.lenMid, 0);
+        pipGroup.add(dipGroup);
+        this.joints[`r_finger_${f.name}_dip`] = dipGroup;
+        const distMesh = this.createCylinderBone(6e-3, 4e-3, f.lenDist);
+        distMesh.position.set(0, -f.lenDist / 2, 0);
+        dipGroup.add(distMesh);
+      });
       const lClavicleGroup = new THREE2.Group();
       lClavicleGroup.position.set(-0.04, 0.26, 0.04);
       thoracicGroup.add(lClavicleGroup);
@@ -2558,24 +2877,102 @@
       const rMalleolusMed = new THREE2.Mesh(new THREE2.BoxGeometry(0.018, 0.03, 0.02), this.boneMaterial);
       rMalleolusMed.position.set(-0.028, 0.015, 0);
       rAnkleGroup.add(rMalleolusMed);
+      const rTalusMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.04, 0.03, 0.052), this.boneMaterial);
+      rTalusMesh.position.set(0, -0.014, 8e-3);
+      rAnkleGroup.add(rTalusMesh);
+      this.meshes["r_talus"] = rTalusMesh;
       const rSubtalarGroup = new THREE2.Group();
+      rSubtalarGroup.position.set(0, -0.024, 0);
       rAnkleGroup.add(rSubtalarGroup);
       this.joints["r_subtalar"] = rSubtalarGroup;
-      const rCalcaneusGeo = new THREE2.BoxGeometry(0.045, 0.04, 0.09);
+      const rCalcaneusGroup = new THREE2.Group();
+      rCalcaneusGroup.position.set(0, 0, 0);
+      rSubtalarGroup.add(rCalcaneusGroup);
+      this.joints["r_calcaneus"] = rCalcaneusGroup;
+      const rCalcaneusGeo = new THREE2.BoxGeometry(0.044, 0.042, 0.088);
       const rCalcaneusMesh = new THREE2.Mesh(rCalcaneusGeo, this.boneMaterial);
-      rCalcaneusMesh.position.set(0, -0.025, -0.03);
-      rSubtalarGroup.add(rCalcaneusMesh);
-      const rMetatarsalsGeo = new THREE2.BoxGeometry(0.065, 0.03, 0.12);
+      rCalcaneusMesh.position.set(0, -0.018, -0.038);
+      rCalcaneusGroup.add(rCalcaneusMesh);
+      const rSustentaculumMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.014, 0.012, 0.024), this.boneMaterial);
+      rSustentaculumMesh.position.set(-0.025, -0.012, -0.022);
+      rCalcaneusGroup.add(rSustentaculumMesh);
+      const rTnccGroup = new THREE2.Group();
+      rTnccGroup.position.set(0, -0.015, 0.022);
+      rSubtalarGroup.add(rTnccGroup);
+      this.joints["r_tncc"] = rTnccGroup;
+      const rNavicularMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.026, 0.024, 0.026), this.boneMaterial);
+      rNavicularMesh.position.set(-0.018, 6e-3, 0.012);
+      rTnccGroup.add(rNavicularMesh);
+      const rCuboidMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.024, 0.022, 0.032), this.boneMaterial);
+      rCuboidMesh.position.set(0.018, -2e-3, 0.01);
+      rTnccGroup.add(rCuboidMesh);
+      const axisMatTn = new THREE2.MeshStandardMaterial({
+        color: 440020,
+        // Cyan
+        emissive: 561586,
+        emissiveIntensity: 0.6,
+        transparent: true,
+        opacity: 0.85
+      });
+      const axisMatCc = new THREE2.MeshStandardMaterial({
+        color: 1096065,
+        // Emerald
+        emissive: 366185,
+        emissiveIntensity: 0.6,
+        transparent: true,
+        opacity: 0.85
+      });
+      const rTnAxisGroup = new THREE2.Group();
+      rTnAxisGroup.position.set(-0.018, 0.022, 0.012);
+      rTnccGroup.add(rTnAxisGroup);
+      this.joints["r_tn_axis"] = rTnAxisGroup;
+      const rTnAxisMesh = new THREE2.Mesh(new THREE2.CylinderGeometry(25e-4, 25e-4, 0.045, 8), axisMatTn);
+      rTnAxisMesh.rotation.z = Math.PI / 2;
+      rTnAxisGroup.add(rTnAxisMesh);
+      const rCcAxisGroup = new THREE2.Group();
+      rCcAxisGroup.position.set(0.018, 0.018, 0.01);
+      rTnccGroup.add(rCcAxisGroup);
+      this.joints["r_cc_axis"] = rCcAxisGroup;
+      const rCcAxisMesh = new THREE2.Mesh(new THREE2.CylinderGeometry(25e-4, 25e-4, 0.045, 8), axisMatCc);
+      rCcAxisMesh.rotation.z = Math.PI / 2;
+      rCcAxisGroup.add(rCcAxisMesh);
+      const rForefootGroup = new THREE2.Group();
+      rForefootGroup.position.set(0, 0, 0.026);
+      rTnccGroup.add(rForefootGroup);
+      this.joints["r_forefoot"] = rForefootGroup;
+      const rMetatarsalsGeo = new THREE2.BoxGeometry(0.062, 0.024, 0.075);
       const rMetatarsalsMesh = new THREE2.Mesh(rMetatarsalsGeo, this.boneMaterial);
-      rMetatarsalsMesh.position.set(0, -0.025, 0.065);
-      rSubtalarGroup.add(rMetatarsalsMesh);
+      rMetatarsalsMesh.position.set(0, -8e-3, 0.038);
+      rForefootGroup.add(rMetatarsalsMesh);
+      const fasciaMat = new THREE2.MeshStandardMaterial({
+        color: 1096065,
+        emissive: 366185,
+        emissiveIntensity: 0.35,
+        transparent: true,
+        opacity: 0.85
+      });
+      const rPlantarFasciaMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.032, 3e-3, 0.12), fasciaMat);
+      rPlantarFasciaMesh.position.set(-8e-3, -0.036, 0.025);
+      rSubtalarGroup.add(rPlantarFasciaMesh);
+      this.meshes["r_plantar_fascia"] = rPlantarFasciaMesh;
       const rFirstMtpGroup = new THREE2.Group();
-      rFirstMtpGroup.position.set(-0.02, -0.025, 0.125);
-      rSubtalarGroup.add(rFirstMtpGroup);
+      rFirstMtpGroup.position.set(-0.022, -8e-3, 0.076);
+      rForefootGroup.add(rFirstMtpGroup);
       this.joints["r_first_mtp"] = rFirstMtpGroup;
-      const rGreatToeMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.025, 0.022, 0.05), this.boneMaterial);
-      rGreatToeMesh.position.set(0, 0, 0.025);
-      rFirstMtpGroup.add(rGreatToeMesh);
+      const rFirstMtpJointMesh = this.createJointSphere(0.013, true);
+      rFirstMtpGroup.add(rFirstMtpJointMesh);
+      const rToeProxMesh = this.createCylinderBone(0.01, 9e-3, 0.03);
+      rToeProxMesh.position.set(0, 0, 0.015);
+      rToeProxMesh.rotation.x = Math.PI / 2;
+      rFirstMtpGroup.add(rToeProxMesh);
+      const rToeIpGroup = new THREE2.Group();
+      rToeIpGroup.position.set(0, 0, 0.03);
+      rFirstMtpGroup.add(rToeIpGroup);
+      this.joints["r_toe_ip"] = rToeIpGroup;
+      const rToeDistMesh = this.createCylinderBone(9e-3, 7e-3, 0.022);
+      rToeDistMesh.position.set(0, 0, 0.011);
+      rToeDistMesh.rotation.x = Math.PI / 2;
+      rToeIpGroup.add(rToeDistMesh);
       const lHipGroup = new THREE2.Group();
       lHipGroup.position.set(-0.12, -0.06, 0);
       pelvisGroup.add(lHipGroup);
@@ -2656,6 +3053,40 @@
         acromion.material = isImpinging ? this.highlightMaterial : this.boneMaterial;
       }
     }
+    setTnccAxesState(isParallel, divergenceAngle = 36) {
+      const tnAxis = this.joints["r_tn_axis"];
+      const ccAxis = this.joints["r_cc_axis"];
+      if (!tnAxis || !ccAxis) return;
+      if (isParallel) {
+        tnAxis.rotation.y = 0;
+        ccAxis.rotation.y = 0;
+      } else {
+        const halfRad = THREE2.MathUtils.degToRad(divergenceAngle / 2);
+        tnAxis.rotation.y = halfRad;
+        ccAxis.rotation.y = -halfRad;
+      }
+    }
+    setPlantarFasciaTension(tensionRatio) {
+      const fascia = this.meshes["r_plantar_fascia"];
+      if (!fascia) return;
+      const clamped = Math.max(0, Math.min(1, tensionRatio));
+      if (clamped > 0.6) {
+        fascia.material.color.setHex(16096779);
+        fascia.material.emissive.setHex(14251782);
+        fascia.material.emissiveIntensity = 0.4 + clamped * 0.5;
+        fascia.scale.set(1.05, 1.2, 0.95);
+      } else if (clamped > 0.2) {
+        fascia.material.color.setHex(440020);
+        fascia.material.emissive.setHex(561586);
+        fascia.material.emissiveIntensity = 0.35 + clamped * 0.3;
+        fascia.scale.set(1, 1, 1);
+      } else {
+        fascia.material.color.setHex(1096065);
+        fascia.material.emissive.setHex(366185);
+        fascia.material.emissiveIntensity = 0.35;
+        fascia.scale.set(1, 1, 1);
+      }
+    }
   };
 
   // js/simulation/kinematics.js
@@ -2667,12 +3098,41 @@
       this.currentValue = 0;
       this.isScapulaLocked = false;
       this.isImpinging = false;
+      this.isWeightBearing = false;
+      this.isTenodesisPassive = true;
+      this.currentGrip = "none";
     }
     setScapulaLocked(locked) {
       this.isScapulaLocked = !!locked;
       if (this.currentMotionId) {
         this.applyMotion(this.currentMotionId, this.currentValue);
       }
+    }
+    setWeightBearing(isWb) {
+      this.isWeightBearing = !!isWb;
+      if (this.currentMotionId) {
+        this.applyMotion(this.currentMotionId, this.currentValue);
+      }
+    }
+    setTenodesis(isPassive) {
+      this.isTenodesisPassive = !!isPassive;
+      if (this.currentMotionId) {
+        this.applyMotion(this.currentMotionId, this.currentValue);
+      }
+    }
+    setGrip(gripId) {
+      this.currentGrip = gripId;
+      if (this.currentMotionId) {
+        this.applyMotion(this.currentMotionId, this.currentValue);
+      }
+    }
+    curlFingers(mcpRad, pipRad, dipRad, fingers = ["index", "middle", "ring", "little"]) {
+      const joints = this.model.joints;
+      fingers.forEach((name) => {
+        if (joints[`r_finger_${name}_mcp`]) joints[`r_finger_${name}_mcp`].rotation.x = -mcpRad;
+        if (joints[`r_finger_${name}_pip`]) joints[`r_finger_${name}_pip`].rotation.x = -pipRad;
+        if (joints[`r_finger_${name}_dip`]) joints[`r_finger_${name}_dip`].rotation.x = -dipRad;
+      });
     }
     setPathology(pathologyId) {
       this.currentPathology = pathologyId;
@@ -2724,6 +3184,172 @@
           isLocked: false,
           isImpinging: false
         };
+      }
+    }
+    getFootBiomechanicsState(val = this.currentValue, motionId = this.currentMotionId) {
+      if (!motionId) return null;
+      const isPronation = motionId.includes("eversion") || motionId.includes("pronation");
+      const isSupination = motionId.includes("inversion") || motionId.includes("supination");
+      const isWindlass = motionId.includes("first_mtp_extension");
+      let frontalDeg = 0;
+      let transverseDeg = 0;
+      let sagittalDeg = 0;
+      let tnccLocked = false;
+      let tibialRotDeg = 0;
+      let tibialRotType = "Neutral (0\xB0)";
+      let fasciaTensionPercent = 10;
+      let mlaHeightMm = 15;
+      let windlassActive = false;
+      if (isPronation) {
+        frontalDeg = Math.round(val * 0.85);
+        transverseDeg = Math.round(val * 0.35);
+        sagittalDeg = Math.round(val * 0.25);
+        tnccLocked = false;
+        if (this.isWeightBearing) {
+          tibialRotDeg = Math.round(val * 0.55);
+          tibialRotType = `Internal Rot. (${tibialRotDeg}\xB0)`;
+        }
+        fasciaTensionPercent = Math.max(5, Math.round(15 - val * 0.4));
+        mlaHeightMm = Math.max(8, Math.round(15 - val * 0.3));
+      } else if (isSupination) {
+        frontalDeg = Math.round(val * 0.85);
+        transverseDeg = Math.round(val * 0.35);
+        sagittalDeg = Math.round(val * 0.25);
+        tnccLocked = true;
+        if (this.isWeightBearing) {
+          tibialRotDeg = Math.round(val * 0.45);
+          tibialRotType = `External Rot. (${tibialRotDeg}\xB0)`;
+        }
+        fasciaTensionPercent = Math.min(65, Math.round(15 + val * 0.9));
+        mlaHeightMm = Math.min(22, Math.round(15 + val * 0.2));
+      } else if (isWindlass) {
+        windlassActive = val > 20;
+        tnccLocked = val > 35;
+        const sinVal = Math.sin(THREE3.MathUtils.degToRad(val));
+        fasciaTensionPercent = Math.round(15 + sinVal * 85);
+        mlaHeightMm = Math.round(15 + sinVal * 9);
+        if (this.isWeightBearing) {
+          tibialRotDeg = Math.round(sinVal * 7);
+          tibialRotType = `External Rot. (${tibialRotDeg}\xB0)`;
+        }
+      }
+      return {
+        motionId,
+        isPronation,
+        isSupination,
+        isWindlass,
+        isWeightBearing: this.isWeightBearing,
+        frontalDeg,
+        transverseDeg,
+        sagittalDeg,
+        tnccLocked,
+        tnccStatusText: tnccLocked ? "\u{1F512} LOCKED (Rigid Propulsion Lever)" : "\u{1F513} UNLOCKED (Flexible Shock Absorber)",
+        tnccAxesText: tnccLocked ? "Convergent / Crossed (36\xB0)" : "Parallel Axes (0\xB0)",
+        tibialRotDeg,
+        tibialRotType,
+        fasciaTensionPercent,
+        mlaHeightMm,
+        windlassActive
+      };
+    }
+    getHandBiomechanicsState(val = this.currentValue, motionId = this.currentMotionId) {
+      if (!motionId) return null;
+      const isWrist = motionId.startsWith("wrist");
+      const isThumbCmc = motionId.startsWith("thumb");
+      const isGripActive = this.currentGrip !== "none";
+      let arthroRule = "Standard Articular Gliding";
+      let rollDir = "Neutral";
+      let slideDir = "Neutral";
+      let isOpposite = false;
+      let tenodesisFlexionDeg = 0;
+      let tenodesisStatusText = "Tenodesis Inactive";
+      if (motionId === "thumb_cmc_abduction") {
+        arthroRule = "Convex-on-Concave (Orthogonal Saddle Rule)";
+        rollDir = "Palmar (Anterior)";
+        slideDir = "Dorsal (Posterior)";
+        isOpposite = true;
+      } else if (motionId === "thumb_cmc_flexion") {
+        arthroRule = "Concave-on-Convex (Orthogonal Saddle Rule)";
+        rollDir = "Ulnar / Medial";
+        slideDir = "Ulnar / Medial (Same)";
+        isOpposite = false;
+      } else if (motionId === "thumb_opposition") {
+        arthroRule = "Compound Triplanar Saddle Coupling";
+        rollDir = "Palmar-Ulnar Complex";
+        slideDir = "Axial Medial Rotation";
+        isOpposite = true;
+      } else if (motionId === "wrist_extension") {
+        arthroRule = "Convex Proximal Carpals on Concave Radius";
+        rollDir = "Dorsal (Posterior)";
+        slideDir = "Palmar (Anterior)";
+        isOpposite = true;
+        if (this.isTenodesisPassive) {
+          tenodesisFlexionDeg = Math.round(Math.min(1, val / 60) * 65);
+          tenodesisStatusText = `Automatic Passive Grasp (${tenodesisFlexionDeg}\xB0 Finger Flexion)`;
+        }
+      } else if (motionId === "wrist_flexion") {
+        arthroRule = "Convex Proximal Carpals on Concave Radius";
+        rollDir = "Palmar (Anterior)";
+        slideDir = "Dorsal (Posterior)";
+        isOpposite = true;
+        if (this.isTenodesisPassive) {
+          tenodesisStatusText = "Passive Finger Release (Flat Open Hand)";
+        }
+      }
+      return {
+        motionId,
+        isWrist,
+        isThumbCmc,
+        isGripActive,
+        currentGrip: this.currentGrip,
+        isTenodesisPassive: this.isTenodesisPassive,
+        arthroRule,
+        rollDir,
+        slideDir,
+        isOpposite,
+        tenodesisFlexionDeg,
+        tenodesisStatusText
+      };
+    }
+    applyGrip(gripId) {
+      const joints = this.model.joints;
+      if (gripId === "power_grip") {
+        if (joints["r_wrist"]) {
+          joints["r_wrist"].rotation.x = THREE3.MathUtils.degToRad(25);
+          joints["r_wrist"].rotation.z = -THREE3.MathUtils.degToRad(10);
+        }
+        this.curlFingers(
+          THREE3.MathUtils.degToRad(65),
+          THREE3.MathUtils.degToRad(80),
+          THREE3.MathUtils.degToRad(45)
+        );
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.45, 0.65, -0.65);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -0.45;
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -0.35;
+      } else if (gripId === "tip_pinch") {
+        if (joints["r_wrist"]) joints["r_wrist"].rotation.x = THREE3.MathUtils.degToRad(15);
+        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.x = -0.65;
+        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.x = -0.85;
+        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.x = -0.45;
+        this.curlFingers(0.5, 0.7, 0.4, ["middle", "ring", "little"]);
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.35, 0.75, -0.65);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -0.35;
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -0.28;
+      } else if (gripId === "key_pinch") {
+        if (joints["r_wrist"]) joints["r_wrist"].rotation.x = THREE3.MathUtils.degToRad(20);
+        if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.x = -0.6;
+        if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.x = -1.1;
+        if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.x = -0.5;
+        this.curlFingers(0.7, 0.9, 0.5, ["middle", "ring", "little"]);
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.18, 0.38, -0.25);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -0.15;
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = 0;
+      } else if (gripId === "open_hand") {
+        if (joints["r_wrist"]) joints["r_wrist"].rotation.set(0, 0, 0);
+        this.curlFingers(0, 0, 0);
+        if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.2, 0.15, -0.45);
+        if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.set(0, 0, 0);
+        if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.set(0, 0, 0);
       }
     }
     applyMotion(motionId, value) {
@@ -2901,15 +3527,29 @@
           if (joints["r_forearm"]) joints["r_forearm"].rotation.y = -rad;
           break;
         // ----------------------------------------------------
-        // WRIST JOINT
+        // WRIST & HAND COMPLEX
         // ----------------------------------------------------
         case "wrist_flexion":
           if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
           if (joints["r_wrist"]) joints["r_wrist"].rotation.x = -rad;
+          if (this.isTenodesisPassive) {
+            this.curlFingers(0, 0, 0);
+            if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0.2, 0.15, -0.45);
+          }
           break;
         case "wrist_extension":
           if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
           if (joints["r_wrist"]) joints["r_wrist"].rotation.x = rad;
+          if (this.isTenodesisPassive) {
+            const ratio = Math.min(1, value / 65);
+            const mcp = THREE3.MathUtils.degToRad(55 * ratio);
+            const pip = THREE3.MathUtils.degToRad(70 * ratio);
+            const dip = THREE3.MathUtils.degToRad(40 * ratio);
+            this.curlFingers(mcp, pip, dip);
+            if (joints["r_thumb_cmc"]) {
+              joints["r_thumb_cmc"].rotation.y = 0.15 + ratio * 0.35;
+            }
+          }
           break;
         case "wrist_radial_deviation":
           if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
@@ -2919,6 +3559,36 @@
           if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
           if (joints["r_wrist"]) joints["r_wrist"].rotation.z = -rad;
           break;
+        case "thumb_cmc_abduction": {
+          if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
+          if (joints["r_thumb_cmc"]) {
+            joints["r_thumb_cmc"].rotation.y = 0.15 + rad * 0.85;
+            joints["r_thumb_cmc"].rotation.x = 0.2 + rad * 0.25;
+          }
+          break;
+        }
+        case "thumb_cmc_flexion": {
+          if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
+          if (joints["r_thumb_cmc"]) {
+            joints["r_thumb_cmc"].rotation.z = -0.45 - rad * 0.75;
+            joints["r_thumb_cmc"].rotation.x = 0.2 - rad * 0.2;
+          }
+          break;
+        }
+        case "thumb_opposition": {
+          if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
+          if (joints["r_thumb_cmc"]) {
+            joints["r_thumb_cmc"].rotation.x = 0.2 + rad * 0.45;
+            joints["r_thumb_cmc"].rotation.y = 0.15 + rad * 0.65;
+            joints["r_thumb_cmc"].rotation.z = -0.45 - rad * 0.55;
+          }
+          if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -rad * 0.35;
+          if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -rad * 0.3;
+          const oppFlex = rad * 0.25;
+          if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.x = -oppFlex;
+          if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.x = -oppFlex * 0.6;
+          break;
+        }
         // ----------------------------------------------------
         // HIP JOINT
         // ----------------------------------------------------
@@ -2974,7 +3644,7 @@
           break;
         }
         // ----------------------------------------------------
-        // ANKLE & FOOT
+        // ANKLE & FOOT COMPLEX
         // ----------------------------------------------------
         case "ankle_dorsiflexion":
           if (joints["r_ankle"]) joints["r_ankle"].rotation.x = -rad;
@@ -2983,24 +3653,50 @@
           if (joints["r_ankle"]) joints["r_ankle"].rotation.x = rad;
           break;
         case "subtalar_inversion":
+        case "subtalar_supination": {
           if (joints["r_subtalar"]) {
             joints["r_subtalar"].rotation.z = rad * 0.85;
-            joints["r_subtalar"].rotation.y = rad * 0.3;
+            joints["r_subtalar"].rotation.y = rad * 0.35;
+            joints["r_subtalar"].rotation.x = rad * 0.25;
+          }
+          this.model.setTnccAxesState(false, 36);
+          this.model.setPlantarFasciaTension(rad * 0.25);
+          if (this.isWeightBearing && joints["r_tibia_axial"]) {
+            joints["r_tibia_axial"].rotation.y = -rad * 0.45;
           }
           break;
+        }
         case "subtalar_eversion":
+        case "subtalar_pronation": {
           if (joints["r_subtalar"]) {
             joints["r_subtalar"].rotation.z = -rad * 0.85;
-            joints["r_subtalar"].rotation.y = -rad * 0.3;
+            joints["r_subtalar"].rotation.y = -rad * 0.35;
+            joints["r_subtalar"].rotation.x = -rad * 0.25;
+          }
+          this.model.setTnccAxesState(true, 0);
+          this.model.setPlantarFasciaTension(0.08);
+          if (this.isWeightBearing && joints["r_tibia_axial"]) {
+            joints["r_tibia_axial"].rotation.y = rad * 0.55;
           }
           break;
+        }
         case "first_mtp_extension": {
           if (joints["r_first_mtp"]) {
             joints["r_first_mtp"].rotation.x = -rad;
           }
+          if (joints["r_toe_ip"]) {
+            joints["r_toe_ip"].rotation.x = -rad * 0.25;
+          }
+          const sinRad = Math.sin(rad);
           if (joints["r_subtalar"]) {
-            const archElevation = Math.sin(rad) * 0.02;
-            joints["r_subtalar"].position.y = archElevation;
+            joints["r_subtalar"].position.y = sinRad * 0.024;
+            joints["r_subtalar"].rotation.z = sinRad * 0.14;
+          }
+          const tensionRatio = Math.min(1, sinRad * 1.15);
+          this.model.setPlantarFasciaTension(tensionRatio);
+          this.model.setTnccAxesState(value < 35, 36);
+          if (this.isWeightBearing && joints["r_tibia_axial"]) {
+            joints["r_tibia_axial"].rotation.y = -sinRad * 0.25;
           }
           break;
         }
@@ -3012,6 +3708,9 @@
         }
         default:
           console.warn(`Unrecognized motion ID: ${motionId}`);
+      }
+      if (this.currentGrip !== "none") {
+        this.applyGrip(this.currentGrip);
       }
     }
   };
@@ -3401,6 +4100,21 @@
       } else if (motionData.id.includes("hip_flexion")) {
         rollDir.set(0, 0.8, 0.6).normalize();
         slideDir.set(0, -0.8, -0.6).normalize();
+      } else if (motionData.id.includes("thumb_cmc_abduction")) {
+        rollDir.set(0, 0, 1).normalize();
+        slideDir.set(0, 0, -1).normalize();
+      } else if (motionData.id.includes("thumb_cmc_flexion")) {
+        rollDir.set(-1, 0, 0).normalize();
+        slideDir.set(-1, 0, 0).normalize();
+      } else if (motionData.id.includes("thumb_opposition")) {
+        rollDir.set(-0.7, 0.5, 0.5).normalize();
+        slideDir.set(0.7, -0.5, -0.5).normalize();
+      } else if (motionData.id.includes("subtalar_pronation") || motionData.id.includes("subtalar_eversion")) {
+        rollDir.set(0.8, -0.2, 0.5).normalize();
+        slideDir.set(-0.8, 0.2, -0.5).normalize();
+      } else if (motionData.id.includes("subtalar_supination") || motionData.id.includes("subtalar_inversion")) {
+        rollDir.set(-0.8, 0.2, -0.5).normalize();
+        slideDir.set(0.8, -0.2, 0.5).normalize();
       } else {
         if (isConvexOnConcave) {
           rollDir.set(0, 1, 0);
@@ -3456,6 +4170,27 @@
       this.pathologyAlertTitle = document.getElementById("pathology-alert-title");
       this.pathologyAlertBadge = document.getElementById("pathology-alert-badge");
       this.pathologyAlertDesc = document.getElementById("pathology-alert-desc");
+      this.footPanel = document.getElementById("foot-biomechanics-panel");
+      this.toggleWb = document.getElementById("toggle-weight-bearing");
+      this.footCouplingBadge = document.getElementById("foot-coupling-badge");
+      this.footFrontalVal = document.getElementById("foot-frontal-val");
+      this.footTransverseVal = document.getElementById("foot-transverse-val");
+      this.footSagittalVal = document.getElementById("foot-sagittal-val");
+      this.tnccStatusPill = document.getElementById("tncc-status-pill");
+      this.tnccAxesVal = document.getElementById("tncc-axes-val");
+      this.tibialRotVal = document.getElementById("tibial-rot-val");
+      this.fasciaProgressFill = document.getElementById("fascia-progress-fill");
+      this.fasciaPercentVal = document.getElementById("fascia-percent-val");
+      this.mlaHeightVal = document.getElementById("mla-height-val");
+      this.handPanel = document.getElementById("hand-biomechanics-panel");
+      this.toggleTenodesis = document.getElementById("toggle-tenodesis");
+      this.saddleRuleName = document.getElementById("saddle-rule-name");
+      this.handRollVal = document.getElementById("hand-roll-val");
+      this.handSlideVal = document.getElementById("hand-slide-val");
+      this.vectorRelationSymbol = document.getElementById("vector-relation-symbol");
+      this.tenodesisStatusPill = document.getElementById("tenodesis-status-pill");
+      this.tenodesisDescVal = document.getElementById("tenodesis-desc-val");
+      this.gripButtons = document.querySelectorAll(".grip-btn");
     }
     attachEventListeners() {
       if (this.toggleLockScapula) {
@@ -3466,6 +4201,32 @@
           this.updateScapularRhythmUI(this.app.currentAngle, this.app.currentMotion);
         });
       }
+      if (this.toggleWb) {
+        this.toggleWb.addEventListener("change", (e) => {
+          this.app.kinematics.setWeightBearing(e.target.checked);
+          this.app.setAngle(this.app.currentAngle, false);
+        });
+      }
+      if (this.toggleTenodesis) {
+        this.toggleTenodesis.addEventListener("change", (e) => {
+          this.app.kinematics.setTenodesis(e.target.checked);
+          this.app.setAngle(this.app.currentAngle, false);
+        });
+      }
+      this.gripButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const grip = btn.getAttribute("data-grip");
+          const isCurrentActive = btn.classList.contains("active");
+          this.gripButtons.forEach((b) => b.classList.remove("active"));
+          if (isCurrentActive) {
+            this.app.kinematics.setGrip("none");
+          } else {
+            btn.classList.add("active");
+            this.app.kinematics.setGrip(grip);
+          }
+          this.app.setAngle(this.app.currentAngle, false);
+        });
+      });
       this.slider.addEventListener("input", (e) => {
         let val = parseFloat(e.target.value);
         if (this.app.activeRestriction) {
@@ -3553,9 +4314,77 @@
         if (this.impingementAlert) this.impingementAlert.classList.add("hidden");
       }
     }
+    updateFootBiomechanicsUI(val, motionData) {
+      if (!this.footPanel) return;
+      const isFootMotion = motionData && (motionData.region === "ankle_foot" || motionData.id.startsWith("subtalar") || motionData.id.startsWith("first_mtp") || motionData.id.startsWith("ankle"));
+      if (isFootMotion) {
+        this.footPanel.classList.remove("hidden");
+        const state = this.app.kinematics.getFootBiomechanicsState(val, motionData.id);
+        if (!state) return;
+        if (this.footFrontalVal) {
+          const dir = state.isPronation ? "Eversion" : state.isSupination ? "Inversion" : "Frontal";
+          this.footFrontalVal.textContent = `${state.frontalDeg}\xB0 ${dir}`;
+        }
+        if (this.footTransverseVal) {
+          const dir = state.isPronation ? "Abduction" : state.isSupination ? "Adduction" : "Transverse";
+          this.footTransverseVal.textContent = `${state.transverseDeg}\xB0 ${dir}`;
+        }
+        if (this.footSagittalVal) {
+          const dir = state.isPronation ? "Dorsiflexion" : state.isSupination ? "Plantarflexion" : "Sagittal";
+          this.footSagittalVal.textContent = `${state.sagittalDeg}\xB0 ${dir}`;
+        }
+        if (this.tnccStatusPill) {
+          this.tnccStatusPill.className = `status-pill ${state.tnccLocked ? "status-locked" : "status-unlocked"}`;
+          this.tnccStatusPill.textContent = state.tnccStatusText;
+        }
+        if (this.tnccAxesVal) {
+          this.tnccAxesVal.textContent = state.tnccAxesText;
+        }
+        if (this.tibialRotVal) {
+          this.tibialRotVal.textContent = state.tibialRotType;
+        }
+        if (this.fasciaProgressFill) {
+          this.fasciaProgressFill.style.width = `${state.fasciaTensionPercent}%`;
+        }
+        if (this.fasciaPercentVal) {
+          this.fasciaPercentVal.textContent = `${state.fasciaTensionPercent}%`;
+        }
+        if (this.mlaHeightVal) {
+          this.mlaHeightVal.textContent = `${state.mlaHeightMm} mm`;
+        }
+      } else {
+        this.footPanel.classList.add("hidden");
+      }
+    }
+    updateHandBiomechanicsUI(val, motionData) {
+      if (!this.handPanel) return;
+      const isHandMotion = motionData && (motionData.region === "wrist" || motionData.id.startsWith("wrist") || motionData.id.startsWith("thumb"));
+      if (isHandMotion) {
+        this.handPanel.classList.remove("hidden");
+        const state = this.app.kinematics.getHandBiomechanicsState(val, motionData.id);
+        if (!state) return;
+        if (this.saddleRuleName) this.saddleRuleName.textContent = state.arthroRule;
+        if (this.handRollVal) this.handRollVal.textContent = state.rollDir;
+        if (this.handSlideVal) this.handSlideVal.textContent = state.slideDir;
+        if (this.vectorRelationSymbol) {
+          this.vectorRelationSymbol.textContent = state.isOpposite ? "\u2260 OPPOSITE" : "= SAME DIR";
+          this.vectorRelationSymbol.style.color = state.isOpposite ? "#f59e0b" : "#34d399";
+        }
+        if (this.tenodesisStatusPill) {
+          this.tenodesisStatusPill.textContent = state.isTenodesisPassive ? "\u{1F517} Tenodesis Active" : "\u26AA Tenodesis Disabled";
+        }
+        if (this.tenodesisDescVal) {
+          this.tenodesisDescVal.textContent = state.tenodesisStatusText;
+        }
+      } else {
+        this.handPanel.classList.add("hidden");
+      }
+    }
     updateValueDisplay(val, motionData) {
       this.angleDisplay.textContent = Math.round(val * 10) / 10;
       this.updateScapularRhythmUI(val, motionData);
+      this.updateFootBiomechanicsUI(val, motionData);
+      this.updateHandBiomechanicsUI(val, motionData);
       if (this.app.activeRestriction) {
         this.rangeBadge.className = "status-badge status-risk";
         this.rangeBadge.textContent = `\u{1F512} ${this.app.activeRestriction.label}`;
@@ -4146,6 +4975,7 @@
       if (motionId.startsWith("elbow")) return "r_elbow";
       if (motionId.startsWith("forearm")) return "r_forearm";
       if (motionId.startsWith("wrist")) return "r_wrist";
+      if (motionId.startsWith("thumb")) return "r_thumb_cmc";
       if (motionId.startsWith("hip")) return "r_hip";
       if (motionId.startsWith("knee")) return "r_knee";
       if (motionId.startsWith("ankle")) return "r_ankle";
