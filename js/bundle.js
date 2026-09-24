@@ -2725,11 +2725,13 @@
             joints["r_shoulder"].rotation.x = -ghRad;
           }
           if (joints["r_scapula"]) {
-            joints["r_scapula"].rotation.z = stRad * 0.35;
-            joints["r_scapula"].rotation.x = -stRad * 0.25;
+            joints["r_scapula"].rotation.z = stRad * 0.45;
+            joints["r_scapula"].rotation.x = -stRad * 0.2;
+            joints["r_scapula"].rotation.y = stRad * 0.15;
           }
           if (joints["r_clavicle"]) {
-            joints["r_clavicle"].rotation.z = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.4);
+            joints["r_clavicle"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.45);
+            joints["r_clavicle"].rotation.y = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.15);
           }
           this.model.setImpingementState(this.isImpinging);
           break;
@@ -2755,11 +2757,13 @@
             }
           }
           if (joints["r_scapula"]) {
-            joints["r_scapula"].rotation.z = stRad;
-            joints["r_scapula"].rotation.x = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.35);
+            joints["r_scapula"].rotation.z = stRad * 0.5;
+            joints["r_scapula"].rotation.x = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.33);
+            joints["r_scapula"].rotation.y = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.15);
           }
           if (joints["r_clavicle"]) {
-            joints["r_clavicle"].rotation.z = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.5);
+            joints["r_clavicle"].rotation.z = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.5);
+            joints["r_clavicle"].rotation.y = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.2);
           }
           this.model.setImpingementState(this.isImpinging);
           break;
