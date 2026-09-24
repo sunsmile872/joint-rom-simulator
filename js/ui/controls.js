@@ -46,6 +46,7 @@ export class ControlsManager {
       this.toggleLockScapula.addEventListener('change', (e) => {
         const locked = e.target.checked;
         this.app.kinematics.setScapulaLocked(locked);
+        this.app.setAngle(this.app.currentAngle, false);
         this.updateScapularRhythmUI(this.app.currentAngle, this.app.currentMotion);
       });
     }
