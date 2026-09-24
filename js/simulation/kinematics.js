@@ -108,6 +108,181 @@ export class KinematicsEngine {
     }
   }
 
+  getFootBiomechanicsState(val = this.currentValue, motionId = this.currentMotionId) {
+    if (!motionId) return null;
+    const isPronation = motionId.includes('eversion') || motionId.includes('pronation');
+    const isSupination = motionId.includes('inversion') || motionId.includes('supination');
+    const isWindlass = motionId.includes('first_mtp_extension');
+
+    let frontalDeg = 0;
+    let transverseDeg = 0;
+    let sagittalDeg = 0;
+    let tnccLocked = false;
+    let tibialRotDeg = 0;
+    let tibialRotType = 'Neutral (0°)';
+    let fasciaTensionPercent = 10;
+    let mlaHeightMm = 15;
+    let windlassActive = false;
+
+    if (isPronation) {
+      frontalDeg = Math.round(val * 0.85);
+      transverseDeg = Math.round(val * 0.35);
+      sagittalDeg = Math.round(val * 0.25);
+      tnccLocked = false;
+      if (this.isWeightBearing) {
+        tibialRotDeg = Math.round(val * 0.55);
+        tibialRotType = `Internal Rot. (${tibialRotDeg}°)`;
+      }
+      fasciaTensionPercent = Math.max(5, Math.round(15 - val * 0.4));
+      mlaHeightMm = Math.max(8, Math.round(15 - val * 0.3));
+    } else if (isSupination) {
+      frontalDeg = Math.round(val * 0.85);
+      transverseDeg = Math.round(val * 0.35);
+      sagittalDeg = Math.round(val * 0.25);
+      tnccLocked = true;
+      if (this.isWeightBearing) {
+        tibialRotDeg = Math.round(val * 0.45);
+        tibialRotType = `External Rot. (${tibialRotDeg}°)`;
+      }
+      fasciaTensionPercent = Math.min(65, Math.round(15 + val * 0.9));
+      mlaHeightMm = Math.min(22, Math.round(15 + val * 0.2));
+    } else if (isWindlass) {
+      windlassActive = val > 20;
+      tnccLocked = val > 35;
+      const sinVal = Math.sin(THREE.MathUtils.degToRad(val));
+      fasciaTensionPercent = Math.round(15 + sinVal * 85);
+      mlaHeightMm = Math.round(15 + sinVal * 9);
+      if (this.isWeightBearing) {
+        tibialRotDeg = Math.round(sinVal * 7);
+        tibialRotType = `External Rot. (${tibialRotDeg}°)`;
+      }
+    }
+
+    return {
+      motionId,
+      isPronation,
+      isSupination,
+      isWindlass,
+      isWeightBearing: this.isWeightBearing,
+      frontalDeg,
+      transverseDeg,
+      sagittalDeg,
+      tnccLocked,
+      tnccStatusText: tnccLocked ? '🔒 LOCKED (Rigid Propulsion Lever)' : '🔓 UNLOCKED (Flexible Shock Absorber)',
+      tnccAxesText: tnccLocked ? 'Convergent / Crossed (36°)' : 'Parallel Axes (0°)',
+      tibialRotDeg,
+      tibialRotType,
+      fasciaTensionPercent,
+      mlaHeightMm,
+      windlassActive
+    };
+  }
+
+  getHandBiomechanicsState(val = this.currentValue, motionId = this.currentMotionId) {
+    if (!motionId) return null;
+    const isWrist = motionId.startsWith('wrist');
+    const isThumbCmc = motionId.startsWith('thumb');
+    const isGripActive = this.currentGrip !== 'none';
+
+    let arthroRule = 'Standard Articular Gliding';
+    let rollDir = 'Neutral';
+    let slideDir = 'Neutral';
+    let isOpposite = false;
+    let tenodesisFlexionDeg = 0;
+    let tenodesisStatusText = 'Tenodesis Inactive';
+
+    if (motionId === 'thumb_cmc_abduction') {
+      arthroRule = 'Convex-on-Concave (Orthogonal Saddle Rule)';
+      rollDir = 'Palmar (Anterior)';
+      slideDir = 'Dorsal (Posterior)';
+      isOpposite = true;
+    } else if (motionId === 'thumb_cmc_flexion') {
+      arthroRule = 'Concave-on-Convex (Orthogonal Saddle Rule)';
+      rollDir = 'Ulnar / Medial';
+      slideDir = 'Ulnar / Medial (Same)';
+      isOpposite = false;
+    } else if (motionId === 'thumb_opposition') {
+      arthroRule = 'Compound Triplanar Saddle Coupling';
+      rollDir = 'Palmar-Ulnar Complex';
+      slideDir = 'Axial Medial Rotation';
+      isOpposite = true;
+    } else if (motionId === 'wrist_extension') {
+      arthroRule = 'Convex Proximal Carpals on Concave Radius';
+      rollDir = 'Dorsal (Posterior)';
+      slideDir = 'Palmar (Anterior)';
+      isOpposite = true;
+      if (this.isTenodesisPassive) {
+        tenodesisFlexionDeg = Math.round(Math.min(1, val / 60) * 65);
+        tenodesisStatusText = `Automatic Passive Grasp (${tenodesisFlexionDeg}° Finger Flexion)`;
+      }
+    } else if (motionId === 'wrist_flexion') {
+      arthroRule = 'Convex Proximal Carpals on Concave Radius';
+      rollDir = 'Palmar (Anterior)';
+      slideDir = 'Dorsal (Posterior)';
+      isOpposite = true;
+      if (this.isTenodesisPassive) {
+        tenodesisStatusText = 'Passive Finger Release (Flat Open Hand)';
+      }
+    }
+
+    return {
+      motionId,
+      isWrist,
+      isThumbCmc,
+      isGripActive,
+      currentGrip: this.currentGrip,
+      isTenodesisPassive: this.isTenodesisPassive,
+      arthroRule,
+      rollDir,
+      slideDir,
+      isOpposite,
+      tenodesisFlexionDeg,
+      tenodesisStatusText
+    };
+  }
+
+  applyGrip(gripId) {
+    const joints = this.model.joints;
+    if (gripId === 'power_grip') {
+      if (joints['r_wrist']) {
+        joints['r_wrist'].rotation.x = THREE.MathUtils.degToRad(25);
+        joints['r_wrist'].rotation.z = -THREE.MathUtils.degToRad(10);
+      }
+      this.curlFingers(
+        THREE.MathUtils.degToRad(65),
+        THREE.MathUtils.degToRad(80),
+        THREE.MathUtils.degToRad(45)
+      );
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.45, 0.65, -0.65);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -0.45;
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -0.35;
+    } else if (gripId === 'tip_pinch') {
+      if (joints['r_wrist']) joints['r_wrist'].rotation.x = THREE.MathUtils.degToRad(15);
+      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.x = -0.65;
+      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.x = -0.85;
+      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.x = -0.45;
+      this.curlFingers(0.5, 0.7, 0.4, ['middle', 'ring', 'little']);
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.35, 0.75, -0.65);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -0.35;
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -0.28;
+    } else if (gripId === 'key_pinch') {
+      if (joints['r_wrist']) joints['r_wrist'].rotation.x = THREE.MathUtils.degToRad(20);
+      if (joints['r_finger_index_mcp']) joints['r_finger_index_mcp'].rotation.x = -0.60;
+      if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.x = -1.10;
+      if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.x = -0.50;
+      this.curlFingers(0.7, 0.9, 0.5, ['middle', 'ring', 'little']);
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.18, 0.38, -0.25);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -0.15;
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = 0;
+    } else if (gripId === 'open_hand') {
+      if (joints['r_wrist']) joints['r_wrist'].rotation.set(0, 0, 0);
+      this.curlFingers(0, 0, 0);
+      if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0.2, 0.15, -0.45);
+      if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.set(0, 0, 0);
+      if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.set(0, 0, 0);
+    }
+  }
+
   applyMotion(motionId, value) {
     this.currentMotionId = motionId;
     this.currentValue = value;
