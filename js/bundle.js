@@ -2006,7 +2006,7 @@
       floor.receiveShadow = true;
       this.scene.add(floor);
     }
-    setCameraPreset(preset, targetJointPos = null) {
+    setCameraPreset(preset, targetJointPos = null, instant = false) {
       this.currentCameraPreset = preset;
       const duration = 800;
       const startTime = performance.now();
@@ -2046,6 +2046,15 @@
           break;
         default:
           targetPos.set(0, 1.3, 3.2);
+      }
+      if (instant) {
+        this.camera.position.copy(targetPos);
+        this.controls.target.copy(newTarget);
+        this.controls.update();
+        if (this.renderer && this.scene && this.camera) {
+          this.renderer.render(this.scene, this.camera);
+        }
+        return;
       }
       const tweenCamera = (time) => {
         const elapsed = time - startTime;
@@ -3968,10 +3977,10 @@
       if (motionId.startsWith("first_mtp")) return "r_first_mtp";
       return "r_shoulder";
     }
-    setCameraPreset(preset) {
+    setCameraPreset(preset, instant = false) {
       const jointMeshKey = this.getJointKeyForMotion(this.currentMotionId);
       const jointPos = this.skeleton.getJointPosition(jointMeshKey);
-      this.scene.setCameraPreset(preset, jointPos);
+      this.scene.setCameraPreset(preset, jointPos, instant);
     }
     onSceneUpdate() {
       const jointMeshKey = this.getJointKeyForMotion(this.currentMotionId);
