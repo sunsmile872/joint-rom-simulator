@@ -736,9 +736,9 @@ body {
    ==================================================== */
 .scapular-rhythm-panel {
   position: absolute;
-  bottom: 96px;
-  left: 24px;
-  right: 24px;
+  bottom: 106px;
+  left: 20px;
+  right: 20px;
   background: rgba(11, 20, 42, 0.94);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(20, 184, 166, 0.25);
