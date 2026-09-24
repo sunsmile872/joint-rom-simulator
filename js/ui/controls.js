@@ -29,9 +29,27 @@ export class ControlsManager {
 
     // Range status pill
     this.rangeBadge = document.getElementById('range-status-badge');
+
+    // Scapulohumeral Rhythm Elements
+    this.rhythmPanel = document.getElementById('scapular-rhythm-panel');
+    this.toggleLockScapula = document.getElementById('toggle-lock-scapula');
+    this.ghDegVal = document.getElementById('gh-deg-val');
+    this.stDegVal = document.getElementById('st-deg-val');
+    this.ghProgressFill = document.getElementById('gh-progress-fill');
+    this.stProgressFill = document.getElementById('st-progress-fill');
+    this.impingementAlert = document.getElementById('impingement-alert');
   }
 
   attachEventListeners() {
+    // Scapula Lock Toggle
+    if (this.toggleLockScapula) {
+      this.toggleLockScapula.addEventListener('change', (e) => {
+        const locked = e.target.checked;
+        this.app.kinematics.setScapulaLocked(locked);
+        this.updateScapularRhythmUI(this.app.currentAngle, this.app.currentMotion);
+      });
+    }
+
     // Slider input
     this.slider.addEventListener('input', (e) => {
       const val = parseFloat(e.target.value);
@@ -98,22 +116,66 @@ export class ControlsManager {
     this.updateValueDisplay(motionData.normalMin, motionData);
   }
 
+  updateScapularRhythmUI(val, motionData) {
+    if (!this.rhythmPanel) return;
+
+    const isShoulderElevation = motionData && (
+      motionData.id === 'shoulder_abduction' || motionData.id === 'shoulder_flexion'
+    );
+
+    if (isShoulderElevation) {
+      this.rhythmPanel.classList.remove('hidden');
+      const bd = this.app.kinematics.getScapulohumeralBreakdown(val);
+
+      if (this.ghDegVal) this.ghDegVal.textContent = `${bd.ghDeg}° / 120°`;
+      if (this.stDegVal) {
+        this.stDegVal.textContent = bd.isLocked ? '0° (🔒 LOCKED)' : `${bd.stDeg}° / 60°`;
+      }
+
+      if (this.ghProgressFill) {
+        this.ghProgressFill.style.width = `${Math.min(100, (bd.ghDeg / 120) * 100)}%`;
+      }
+      if (this.stProgressFill) {
+        this.stProgressFill.style.width = `${Math.min(100, (bd.stDeg / 60) * 100)}%`;
+      }
+
+      if (bd.isImpinging) {
+        if (this.impingementAlert) this.impingementAlert.classList.remove('hidden');
+        if (this.rangeBadge) {
+          this.rangeBadge.className = 'status-badge status-risk';
+          this.rangeBadge.textContent = '🚨 Subacromial Impingement!';
+        }
+      } else {
+        if (this.impingementAlert) this.impingementAlert.classList.add('hidden');
+      }
+    } else {
+      this.rhythmPanel.classList.add('hidden');
+      if (this.impingementAlert) this.impingementAlert.classList.add('hidden');
+    }
+  }
+
   updateValueDisplay(val, motionData) {
     this.angleDisplay.textContent = Math.round(val * 10) / 10;
 
-    // Evaluate Range Zone
-    if (val < motionData.normalMin) {
-      this.rangeBadge.className = 'status-badge status-subnormal';
-      this.rangeBadge.textContent = 'Restricted / Hypomobile';
-    } else if (val <= motionData.normalMax) {
-      this.rangeBadge.className = 'status-badge status-normal';
-      this.rangeBadge.textContent = 'Normal Physiological Range';
-    } else if (val <= motionData.hypermobilityThreshold) {
-      this.rangeBadge.className = 'status-badge status-hyper';
-      this.rangeBadge.textContent = 'Hypermobility / Laxity Zone';
-    } else {
-      this.rangeBadge.className = 'status-badge status-risk';
-      this.rangeBadge.textContent = 'Excessive / Impingement Risk';
+    // Update 2:1 Scapulohumeral Monitor if applicable
+    this.updateScapularRhythmUI(val, motionData);
+
+    // Evaluate Range Zone (only override if not impinging)
+    const isImpinging = this.app.kinematics && this.app.kinematics.isImpinging;
+    if (!isImpinging) {
+      if (val < motionData.normalMin) {
+        this.rangeBadge.className = 'status-badge status-subnormal';
+        this.rangeBadge.textContent = 'Restricted / Hypomobile';
+      } else if (val <= motionData.normalMax) {
+        this.rangeBadge.className = 'status-badge status-normal';
+        this.rangeBadge.textContent = 'Normal Physiological Range';
+      } else if (val <= motionData.hypermobilityThreshold) {
+        this.rangeBadge.className = 'status-badge status-hyper';
+        this.rangeBadge.textContent = 'Hypermobility / Laxity Zone';
+      } else {
+        this.rangeBadge.className = 'status-badge status-risk';
+        this.rangeBadge.textContent = 'Excessive / Impingement Risk';
+      }
     }
   }
 

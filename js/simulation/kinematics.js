@@ -5,6 +5,53 @@ export class KinematicsEngine {
     this.model = skeletonModel;
     this.currentMotionId = null;
     this.currentValue = 0;
+    this.isScapulaLocked = false;
+    this.isImpinging = false;
+  }
+
+  setScapulaLocked(locked) {
+    this.isScapulaLocked = !!locked;
+    if (this.currentMotionId) {
+      this.applyMotion(this.currentMotionId, this.currentValue);
+    }
+  }
+
+  getScapulohumeralBreakdown(totalDeg = this.currentValue) {
+    if (this.isScapulaLocked) {
+      const ghDeg = Math.min(totalDeg, 120);
+      const stDeg = 0;
+      const isImpinging = totalDeg >= 120;
+      return {
+        ghDeg: Math.round(ghDeg),
+        stDeg: 0,
+        maxGh: 120,
+        maxSt: 60,
+        totalDeg: Math.round(totalDeg),
+        isLocked: true,
+        isImpinging
+      };
+    } else {
+      let ghDeg = 0;
+      let stDeg = 0;
+      if (totalDeg <= 30) {
+        // Setting phase
+        ghDeg = totalDeg * (5 / 6);
+        stDeg = totalDeg * (1 / 6);
+      } else {
+        // 2:1 synchronized ratio: reaches exactly 120° GH and 60° ST at 180°
+        ghDeg = 25 + (totalDeg - 30) * (95 / 150);
+        stDeg = 5 + (totalDeg - 30) * (55 / 150);
+      }
+      return {
+        ghDeg: Math.round(ghDeg),
+        stDeg: Math.round(stDeg),
+        maxGh: 120,
+        maxSt: 60,
+        totalDeg: Math.round(totalDeg),
+        isLocked: false,
+        isImpinging: false
+      };
+    }
   }
 
   applyMotion(motionId, value) {
@@ -93,21 +140,34 @@ export class KinematicsEngine {
       // SHOULDER COMPLEX
       // ----------------------------------------------------
       case 'shoulder_flexion': {
-        // Pure sagittal forward elevation (0° to 180° overhead)
-        // Scapula elevates in rhythm without twisting coordinate frame
         const totalDeg = value;
-        const stAngle = THREE.MathUtils.degToRad(totalDeg * (1 / 3));
+        const breakdown = this.getScapulohumeralBreakdown(totalDeg);
+        this.isImpinging = breakdown.isImpinging;
+
+        const ghRad = THREE.MathUtils.degToRad(breakdown.ghDeg);
+        const stRad = THREE.MathUtils.degToRad(breakdown.stDeg);
 
         if (joints['r_shoulder']) {
-          joints['r_shoulder'].rotation.x = -rad;
+          // Pure sagittal forward elevation
+          joints['r_shoulder'].rotation.x = -ghRad;
         }
+
+        if (joints['r_scapula']) {
+          // Upward rotation and slight anterior tilt
+          joints['r_scapula'].rotation.z = stRad * 0.35;
+          joints['r_scapula'].rotation.x = -stRad * 0.25;
+        }
+
         if (joints['r_clavicle']) {
-          joints['r_clavicle'].rotation.z = -stAngle * 0.25;
+          joints['r_clavicle'].rotation.z = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.4);
         }
+
+        this.model.setImpingementState(this.isImpinging);
         break;
       }
 
       case 'shoulder_extension': {
+        this.model.setImpingementState(false);
         if (joints['r_shoulder']) {
           joints['r_shoulder'].rotation.x = rad; // Posterior backward extension (0° to 60°)
         }
@@ -115,25 +175,42 @@ export class KinematicsEngine {
       }
 
       case 'shoulder_abduction': {
-        // Coronal plane abduction away from midline (0° to 180° overhead)
-        // With external rotation clearance above 60° (Neumann p. 154)
         const totalDeg = value;
-        const stAngle = THREE.MathUtils.degToRad(totalDeg * (1 / 3));
+        const breakdown = this.getScapulohumeralBreakdown(totalDeg);
+        this.isImpinging = breakdown.isImpinging;
+
+        const ghRad = THREE.MathUtils.degToRad(breakdown.ghDeg);
+        const stRad = THREE.MathUtils.degToRad(breakdown.stDeg);
 
         if (joints['r_shoulder']) {
-          joints['r_shoulder'].rotation.z = rad;
-          if (totalDeg > 60) {
-            const extRot = THREE.MathUtils.degToRad((totalDeg - 60) * 0.35);
+          // Glenohumeral abduction
+          joints['r_shoulder'].rotation.z = ghRad;
+          // Humeral external rotation clearance above 60° (Neumann p. 154)
+          if (!this.isScapulaLocked && totalDeg > 60) {
+            const extRot = THREE.MathUtils.degToRad((totalDeg - 60) * 0.32);
             joints['r_shoulder'].rotation.y = extRot;
           }
         }
-        if (joints['r_clavicle']) {
-          joints['r_clavicle'].rotation.z = -stAngle * 0.3;
+
+        if (joints['r_scapula']) {
+          // 3D Scapular movement:
+          // 1. Upward rotation: inferior angle swings laterally (rotation.z)
+          joints['r_scapula'].rotation.z = stRad;
+          // 2. Posterior tilting: lifts acromial shelf up and back (rotation.x)
+          joints['r_scapula'].rotation.x = THREE.MathUtils.degToRad(breakdown.stDeg * 0.35);
         }
+
+        if (joints['r_clavicle']) {
+          // Clavicular elevation at SC joint
+          joints['r_clavicle'].rotation.z = -THREE.MathUtils.degToRad(breakdown.stDeg * 0.5);
+        }
+
+        this.model.setImpingementState(this.isImpinging);
         break;
       }
 
       case 'shoulder_adduction': {
+        this.model.setImpingementState(false);
         if (joints['r_shoulder']) {
           joints['r_shoulder'].rotation.z = -rad; // Medial sweep across trunk (0° to 30°)
         }

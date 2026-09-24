@@ -69,6 +69,56 @@
         <button class="cam-btn" data-cam="joint_focus" title="Macro Zoom Focus on Joint">Macro Zoom</button>
       </div>
 
+      <!-- Floating 2:1 Scapulohumeral Rhythm & Lock Scapula Panel -->
+      <div id="scapular-rhythm-panel" class="scapular-rhythm-panel hidden">
+        <div class="rhythm-header">
+          <div class="rhythm-title">
+            <span class="rhythm-icon">⚖️</span>
+            <strong>2:1 Scapulohumeral Rhythm Monitor</strong>
+            <span class="badge-ratio">2 : 1 Ratio (120° GH : 60° ST)</span>
+          </div>
+          <div class="scapula-lock-toggle">
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-lock-scapula">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label" id="lock-scapula-label">🔒 ลองล็อกสะบัก (Lock Scapula)</span>
+          </div>
+        </div>
+
+        <!-- Realtime Dual Breakdown Progress Bar -->
+        <div class="rhythm-bars-container">
+          <div class="rhythm-bar-item gh-bar-item">
+            <div class="bar-meta">
+              <span class="joint-tag">🟦 Glenohumeral (GH) Joint</span>
+              <span class="deg-val" id="gh-deg-val">0° / 120°</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill gh-fill" id="gh-progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="rhythm-bar-item st-bar-item">
+            <div class="bar-meta">
+              <span class="joint-tag">🟩 Scapulothoracic (ST) Articulation</span>
+              <span class="deg-val" id="st-deg-val">0° / 60°</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill st-fill" id="st-progress-fill" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Impingement Warning Banner (Shows when locked and reaching 120°) -->
+        <div id="impingement-alert" class="impingement-alert hidden">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-body">
+            <strong>🚨 Subacromial Impingement! (สะบักติดล็อก — ไม่สามารถหมุนขึ้น 60° ได้)</strong>
+            <p>เมื่อสะบักถูกล็อกไว้ที่ 0° แขนจะยกได้สูงสุดเพียง 120° และหัวกระดูก Humerus จะชนเพดาน Acromion ทันที บดขยี้เส้นเอ็น Supraspinatus!</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Bottom Floating Slider Controller -->
       <div class="bottom-control-bar">
         <div class="control-group-play">

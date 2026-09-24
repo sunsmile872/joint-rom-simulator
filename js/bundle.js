@@ -2097,6 +2097,7 @@
       this.root = new THREE2.Group();
       this.joints = {};
       this.bones = {};
+      this.meshes = {};
       this.activeHighlightMesh = null;
       this.boneMaterial = new THREE2.MeshStandardMaterial({
         color: 14870768,
@@ -2228,25 +2229,97 @@
       this.joints["r_scapula"] = rScapulaGroup;
       const scapulaGeo = new THREE2.BufferGeometry();
       const scapulaVerts = new Float32Array([
-        0,
-        0,
-        0,
-        // Superior lateral angle / Glenoid
-        -0.08,
+        // Anterior Surface (Costal Fossa)
+        0.03,
+        0.01,
         0.02,
+        -0.09,
+        0.03,
+        -0.01,
+        -0.07,
+        -0.16,
+        0.01,
+        0.03,
+        0.01,
+        0.02,
+        -0.07,
+        -0.16,
+        0.01,
+        0.01,
+        -0.05,
+        0.02,
+        // Posterior Surface (Infraspinous / Supraspinous)
+        0.03,
+        0.01,
+        0.01,
+        -0.07,
+        -0.16,
         0,
-        // Superior medial angle
-        -0.06,
-        -0.15,
-        0
-        // Inferior angle
+        -0.09,
+        0.03,
+        -0.02,
+        0.03,
+        0.01,
+        0.01,
+        0.01,
+        -0.05,
+        0.01,
+        -0.07,
+        -0.16,
+        0,
+        // Medial Border Wall
+        -0.09,
+        0.03,
+        -0.01,
+        -0.09,
+        0.03,
+        -0.02,
+        -0.07,
+        -0.16,
+        0,
+        -0.09,
+        0.03,
+        -0.01,
+        -0.07,
+        -0.16,
+        0,
+        -0.07,
+        -0.16,
+        0.01
       ]);
       scapulaGeo.setAttribute("position", new THREE2.BufferAttribute(scapulaVerts, 3));
       scapulaGeo.computeVertexNormals();
       const scapulaMesh = new THREE2.Mesh(scapulaGeo, this.boneMaterial);
-      scapulaMesh.position.set(0, 0, 0);
       rScapulaGroup.add(scapulaMesh);
-      const glenoidMesh = this.createJointSphere(0.03, false);
+      this.meshes["r_scapula_blade"] = scapulaMesh;
+      const rSpineGeo = new THREE2.BoxGeometry(0.11, 0.014, 0.016);
+      const rSpineMesh = new THREE2.Mesh(rSpineGeo, this.boneMaterial);
+      rSpineMesh.position.set(-0.04, 0.015, -0.015);
+      rSpineMesh.rotation.set(0, 0, 0.15);
+      rScapulaGroup.add(rSpineMesh);
+      const rAcromionGeo = new THREE2.BoxGeometry(0.042, 0.014, 0.046);
+      const rAcromionMesh = new THREE2.Mesh(rAcromionGeo, this.boneMaterial);
+      rAcromionMesh.position.set(0.035, 0.036, 0.02);
+      rScapulaGroup.add(rAcromionMesh);
+      this.meshes["r_acromion"] = rAcromionMesh;
+      const rCoracoidGeo = new THREE2.BoxGeometry(0.014, 0.014, 0.038);
+      const rCoracoidMesh = new THREE2.Mesh(rCoracoidGeo, this.boneMaterial);
+      rCoracoidMesh.position.set(0.012, 0.018, 0.048);
+      rScapulaGroup.add(rCoracoidMesh);
+      const bursaGeo = new THREE2.CylinderGeometry(0.034, 0.034, 8e-3, 16);
+      bursaGeo.rotateX(Math.PI / 2);
+      const bursaMat = new THREE2.MeshStandardMaterial({
+        color: 1096065,
+        emissive: 366185,
+        emissiveIntensity: 0.35,
+        transparent: true,
+        opacity: 0.65
+      });
+      const rBursaMesh = new THREE2.Mesh(bursaGeo, bursaMat);
+      rBursaMesh.position.set(0.035, 0.018, 0.02);
+      rScapulaGroup.add(rBursaMesh);
+      this.meshes["r_subacromial_bursa"] = rBursaMesh;
+      const glenoidMesh = this.createJointSphere(0.032, false);
       glenoidMesh.position.set(0.03, -0.01, 0.03);
       rScapulaGroup.add(glenoidMesh);
       const rShoulderGroup = new THREE2.Group();
@@ -2306,9 +2379,61 @@
       const lClavicleMesh = this.createCylinderBone(0.015, 0.015, 0.15);
       lClavicleMesh.rotation.z = Math.PI / 2 - 0.1;
       lClavicleGroup.add(lClavicleMesh);
+      const lScapulaGroup = new THREE2.Group();
+      lScapulaGroup.position.set(-0.15, 0, -0.06);
+      lClavicleGroup.add(lScapulaGroup);
+      const lScapulaGeo = new THREE2.BufferGeometry();
+      const lScapulaVerts = new Float32Array([
+        -0.03,
+        0.01,
+        0.02,
+        0.09,
+        0.03,
+        -0.01,
+        0.07,
+        -0.16,
+        0.01,
+        -0.03,
+        0.01,
+        0.02,
+        0.07,
+        -0.16,
+        0.01,
+        -0.01,
+        -0.05,
+        0.02,
+        -0.03,
+        0.01,
+        0.01,
+        0.07,
+        -0.16,
+        0,
+        0.09,
+        0.03,
+        -0.02,
+        -0.03,
+        0.01,
+        0.01,
+        -0.01,
+        -0.05,
+        0.01,
+        0.07,
+        -0.16,
+        0
+      ]);
+      lScapulaGeo.setAttribute("position", new THREE2.BufferAttribute(lScapulaVerts, 3));
+      lScapulaGeo.computeVertexNormals();
+      lScapulaGroup.add(new THREE2.Mesh(lScapulaGeo, this.boneMaterial));
+      const lSpineMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.11, 0.014, 0.016), this.boneMaterial);
+      lSpineMesh.position.set(0.04, 0.015, -0.015);
+      lSpineMesh.rotation.set(0, 0, -0.15);
+      lScapulaGroup.add(lSpineMesh);
+      const lAcromionMesh = new THREE2.Mesh(new THREE2.BoxGeometry(0.042, 0.014, 0.046), this.boneMaterial);
+      lAcromionMesh.position.set(-0.035, 0.036, 0.02);
+      lScapulaGroup.add(lAcromionMesh);
       const lShoulderGroup = new THREE2.Group();
-      lShoulderGroup.position.set(-0.18, 0, 0);
-      lClavicleGroup.add(lShoulderGroup);
+      lShoulderGroup.position.set(-0.03, -0.01, 0.03);
+      lScapulaGroup.add(lShoulderGroup);
       const lHumeralHead = this.createJointSphere(0.04, false);
       lShoulderGroup.add(lHumeralHead);
       const lHumerusMesh = this.createCylinderBone(0.028, 0.024, 0.32);
@@ -2441,6 +2566,26 @@
         }
       }
     }
+    setImpingementState(isImpinging) {
+      const bursa = this.meshes["r_subacromial_bursa"];
+      const acromion = this.meshes["r_acromion"];
+      if (bursa) {
+        if (isImpinging) {
+          bursa.material.color.setHex(16007006);
+          bursa.material.emissive.setHex(14753096);
+          bursa.material.emissiveIntensity = 0.95;
+          bursa.scale.set(1.2, 0.2, 1.2);
+        } else {
+          bursa.material.color.setHex(1096065);
+          bursa.material.emissive.setHex(366185);
+          bursa.material.emissiveIntensity = 0.35;
+          bursa.scale.set(1, 1, 1);
+        }
+      }
+      if (acromion) {
+        acromion.material = isImpinging ? this.highlightMaterial : this.boneMaterial;
+      }
+    }
   };
 
   // js/simulation/kinematics.js
@@ -2450,6 +2595,49 @@
       this.model = skeletonModel;
       this.currentMotionId = null;
       this.currentValue = 0;
+      this.isScapulaLocked = false;
+      this.isImpinging = false;
+    }
+    setScapulaLocked(locked) {
+      this.isScapulaLocked = !!locked;
+      if (this.currentMotionId) {
+        this.applyMotion(this.currentMotionId, this.currentValue);
+      }
+    }
+    getScapulohumeralBreakdown(totalDeg = this.currentValue) {
+      if (this.isScapulaLocked) {
+        const ghDeg = Math.min(totalDeg, 120);
+        const stDeg = 0;
+        const isImpinging = totalDeg >= 120;
+        return {
+          ghDeg: Math.round(ghDeg),
+          stDeg: 0,
+          maxGh: 120,
+          maxSt: 60,
+          totalDeg: Math.round(totalDeg),
+          isLocked: true,
+          isImpinging
+        };
+      } else {
+        let ghDeg = 0;
+        let stDeg = 0;
+        if (totalDeg <= 30) {
+          ghDeg = totalDeg * (5 / 6);
+          stDeg = totalDeg * (1 / 6);
+        } else {
+          ghDeg = 25 + (totalDeg - 30) * (95 / 150);
+          stDeg = 5 + (totalDeg - 30) * (55 / 150);
+        }
+        return {
+          ghDeg: Math.round(ghDeg),
+          stDeg: Math.round(stDeg),
+          maxGh: 120,
+          maxSt: 60,
+          totalDeg: Math.round(totalDeg),
+          isLocked: false,
+          isImpinging: false
+        };
+      }
     }
     applyMotion(motionId, value) {
       this.currentMotionId = motionId;
@@ -2520,16 +2708,25 @@
         // ----------------------------------------------------
         case "shoulder_flexion": {
           const totalDeg = value;
-          const stAngle = THREE3.MathUtils.degToRad(totalDeg * (1 / 3));
+          const breakdown = this.getScapulohumeralBreakdown(totalDeg);
+          this.isImpinging = breakdown.isImpinging;
+          const ghRad = THREE3.MathUtils.degToRad(breakdown.ghDeg);
+          const stRad = THREE3.MathUtils.degToRad(breakdown.stDeg);
           if (joints["r_shoulder"]) {
-            joints["r_shoulder"].rotation.x = -rad;
+            joints["r_shoulder"].rotation.x = -ghRad;
+          }
+          if (joints["r_scapula"]) {
+            joints["r_scapula"].rotation.z = stRad * 0.35;
+            joints["r_scapula"].rotation.x = -stRad * 0.25;
           }
           if (joints["r_clavicle"]) {
-            joints["r_clavicle"].rotation.z = -stAngle * 0.25;
+            joints["r_clavicle"].rotation.z = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.4);
           }
+          this.model.setImpingementState(this.isImpinging);
           break;
         }
         case "shoulder_extension": {
+          this.model.setImpingementState(false);
           if (joints["r_shoulder"]) {
             joints["r_shoulder"].rotation.x = rad;
           }
@@ -2537,20 +2734,29 @@
         }
         case "shoulder_abduction": {
           const totalDeg = value;
-          const stAngle = THREE3.MathUtils.degToRad(totalDeg * (1 / 3));
+          const breakdown = this.getScapulohumeralBreakdown(totalDeg);
+          this.isImpinging = breakdown.isImpinging;
+          const ghRad = THREE3.MathUtils.degToRad(breakdown.ghDeg);
+          const stRad = THREE3.MathUtils.degToRad(breakdown.stDeg);
           if (joints["r_shoulder"]) {
-            joints["r_shoulder"].rotation.z = rad;
-            if (totalDeg > 60) {
-              const extRot = THREE3.MathUtils.degToRad((totalDeg - 60) * 0.35);
+            joints["r_shoulder"].rotation.z = ghRad;
+            if (!this.isScapulaLocked && totalDeg > 60) {
+              const extRot = THREE3.MathUtils.degToRad((totalDeg - 60) * 0.32);
               joints["r_shoulder"].rotation.y = extRot;
             }
           }
-          if (joints["r_clavicle"]) {
-            joints["r_clavicle"].rotation.z = -stAngle * 0.3;
+          if (joints["r_scapula"]) {
+            joints["r_scapula"].rotation.z = stRad;
+            joints["r_scapula"].rotation.x = THREE3.MathUtils.degToRad(breakdown.stDeg * 0.35);
           }
+          if (joints["r_clavicle"]) {
+            joints["r_clavicle"].rotation.z = -THREE3.MathUtils.degToRad(breakdown.stDeg * 0.5);
+          }
+          this.model.setImpingementState(this.isImpinging);
           break;
         }
         case "shoulder_adduction": {
+          this.model.setImpingementState(false);
           if (joints["r_shoulder"]) {
             joints["r_shoulder"].rotation.z = -rad;
           }
@@ -3140,8 +3346,22 @@
       this.toggleArthro = document.getElementById("toggle-arthro");
       this.camButtons = document.querySelectorAll(".cam-btn");
       this.rangeBadge = document.getElementById("range-status-badge");
+      this.rhythmPanel = document.getElementById("scapular-rhythm-panel");
+      this.toggleLockScapula = document.getElementById("toggle-lock-scapula");
+      this.ghDegVal = document.getElementById("gh-deg-val");
+      this.stDegVal = document.getElementById("st-deg-val");
+      this.ghProgressFill = document.getElementById("gh-progress-fill");
+      this.stProgressFill = document.getElementById("st-progress-fill");
+      this.impingementAlert = document.getElementById("impingement-alert");
     }
     attachEventListeners() {
+      if (this.toggleLockScapula) {
+        this.toggleLockScapula.addEventListener("change", (e) => {
+          const locked = e.target.checked;
+          this.app.kinematics.setScapulaLocked(locked);
+          this.updateScapularRhythmUI(this.app.currentAngle, this.app.currentMotion);
+        });
+      }
       this.slider.addEventListener("input", (e) => {
         const val = parseFloat(e.target.value);
         this.app.setAngle(val, false);
@@ -3189,20 +3409,54 @@
       this.angleUnit.textContent = motionData.unit === "mm" ? "mm" : "\xB0";
       this.updateValueDisplay(motionData.normalMin, motionData);
     }
+    updateScapularRhythmUI(val, motionData) {
+      if (!this.rhythmPanel) return;
+      const isShoulderElevation = motionData && (motionData.id === "shoulder_abduction" || motionData.id === "shoulder_flexion");
+      if (isShoulderElevation) {
+        this.rhythmPanel.classList.remove("hidden");
+        const bd = this.app.kinematics.getScapulohumeralBreakdown(val);
+        if (this.ghDegVal) this.ghDegVal.textContent = `${bd.ghDeg}\xB0 / 120\xB0`;
+        if (this.stDegVal) {
+          this.stDegVal.textContent = bd.isLocked ? "0\xB0 (\u{1F512} LOCKED)" : `${bd.stDeg}\xB0 / 60\xB0`;
+        }
+        if (this.ghProgressFill) {
+          this.ghProgressFill.style.width = `${Math.min(100, bd.ghDeg / 120 * 100)}%`;
+        }
+        if (this.stProgressFill) {
+          this.stProgressFill.style.width = `${Math.min(100, bd.stDeg / 60 * 100)}%`;
+        }
+        if (bd.isImpinging) {
+          if (this.impingementAlert) this.impingementAlert.classList.remove("hidden");
+          if (this.rangeBadge) {
+            this.rangeBadge.className = "status-badge status-risk";
+            this.rangeBadge.textContent = "\u{1F6A8} Subacromial Impingement!";
+          }
+        } else {
+          if (this.impingementAlert) this.impingementAlert.classList.add("hidden");
+        }
+      } else {
+        this.rhythmPanel.classList.add("hidden");
+        if (this.impingementAlert) this.impingementAlert.classList.add("hidden");
+      }
+    }
     updateValueDisplay(val, motionData) {
       this.angleDisplay.textContent = Math.round(val * 10) / 10;
-      if (val < motionData.normalMin) {
-        this.rangeBadge.className = "status-badge status-subnormal";
-        this.rangeBadge.textContent = "Restricted / Hypomobile";
-      } else if (val <= motionData.normalMax) {
-        this.rangeBadge.className = "status-badge status-normal";
-        this.rangeBadge.textContent = "Normal Physiological Range";
-      } else if (val <= motionData.hypermobilityThreshold) {
-        this.rangeBadge.className = "status-badge status-hyper";
-        this.rangeBadge.textContent = "Hypermobility / Laxity Zone";
-      } else {
-        this.rangeBadge.className = "status-badge status-risk";
-        this.rangeBadge.textContent = "Excessive / Impingement Risk";
+      this.updateScapularRhythmUI(val, motionData);
+      const isImpinging = this.app.kinematics && this.app.kinematics.isImpinging;
+      if (!isImpinging) {
+        if (val < motionData.normalMin) {
+          this.rangeBadge.className = "status-badge status-subnormal";
+          this.rangeBadge.textContent = "Restricted / Hypomobile";
+        } else if (val <= motionData.normalMax) {
+          this.rangeBadge.className = "status-badge status-normal";
+          this.rangeBadge.textContent = "Normal Physiological Range";
+        } else if (val <= motionData.hypermobilityThreshold) {
+          this.rangeBadge.className = "status-badge status-hyper";
+          this.rangeBadge.textContent = "Hypermobility / Laxity Zone";
+        } else {
+          this.rangeBadge.className = "status-badge status-risk";
+          this.rangeBadge.textContent = "Excessive / Impingement Risk";
+        }
       }
     }
     play() {

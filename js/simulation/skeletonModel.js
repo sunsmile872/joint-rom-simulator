@@ -6,6 +6,7 @@ export class SkeletonModel {
     this.root = new THREE.Group();
     this.joints = {};
     this.bones = {};
+    this.meshes = {};
     this.activeHighlightMesh = null;
 
     // Materials
@@ -176,27 +177,68 @@ export class SkeletonModel {
     rClavicleMesh.position.set(0, 0, 0);
     rClavicleGroup.add(rClavicleMesh);
 
-    // Scapulothoracic Joint
+    // Scapulothoracic Joint (Right Scapula)
     const rScapulaGroup = new THREE.Group();
     rScapulaGroup.position.set(0.15, 0, -0.06);
     rClavicleGroup.add(rScapulaGroup);
     this.joints['r_scapula'] = rScapulaGroup;
 
-    // Scapula blade
+    // 1. Anatomical Scapular Blade (Body & Borders)
     const scapulaGeo = new THREE.BufferGeometry();
     const scapulaVerts = new Float32Array([
-      0, 0, 0,        // Superior lateral angle / Glenoid
-      -0.08, 0.02, 0,  // Superior medial angle
-      -0.06, -0.15, 0  // Inferior angle
+      // Anterior Surface (Costal Fossa)
+      0.03, 0.01, 0.02,   -0.09, 0.03, -0.01,   -0.07, -0.16, 0.01,
+      0.03, 0.01, 0.02,   -0.07, -0.16, 0.01,    0.01, -0.05, 0.02,
+      // Posterior Surface (Infraspinous / Supraspinous)
+      0.03, 0.01, 0.01,   -0.07, -0.16, 0.00,   -0.09, 0.03, -0.02,
+      0.03, 0.01, 0.01,    0.01, -0.05, 0.01,   -0.07, -0.16, 0.00,
+      // Medial Border Wall
+      -0.09, 0.03, -0.01,  -0.09, 0.03, -0.02,  -0.07, -0.16, 0.00,
+      -0.09, 0.03, -0.01,  -0.07, -0.16, 0.00,  -0.07, -0.16, 0.01
     ]);
     scapulaGeo.setAttribute('position', new THREE.BufferAttribute(scapulaVerts, 3));
     scapulaGeo.computeVertexNormals();
     const scapulaMesh = new THREE.Mesh(scapulaGeo, this.boneMaterial);
-    scapulaMesh.position.set(0, 0, 0);
     rScapulaGroup.add(scapulaMesh);
+    this.meshes['r_scapula_blade'] = scapulaMesh;
 
-    // Acromion shelf & Glenoid Fossa
-    const glenoidMesh = this.createJointSphere(0.03, false);
+    // 2. Spine of Scapula (Prominent horizontal posterior ridge)
+    const rSpineGeo = new THREE.BoxGeometry(0.11, 0.014, 0.016);
+    const rSpineMesh = new THREE.Mesh(rSpineGeo, this.boneMaterial);
+    rSpineMesh.position.set(-0.04, 0.015, -0.015);
+    rSpineMesh.rotation.set(0, 0, 0.15);
+    rScapulaGroup.add(rSpineMesh);
+
+    // 3. Acromion Shelf (Anatomical roof arching over humeral head)
+    const rAcromionGeo = new THREE.BoxGeometry(0.042, 0.014, 0.046);
+    const rAcromionMesh = new THREE.Mesh(rAcromionGeo, this.boneMaterial);
+    rAcromionMesh.position.set(0.035, 0.036, 0.02);
+    rScapulaGroup.add(rAcromionMesh);
+    this.meshes['r_acromion'] = rAcromionMesh;
+
+    // 4. Coracoid Process (Anterior finger-like projection)
+    const rCoracoidGeo = new THREE.BoxGeometry(0.014, 0.014, 0.038);
+    const rCoracoidMesh = new THREE.Mesh(rCoracoidGeo, this.boneMaterial);
+    rCoracoidMesh.position.set(0.012, 0.018, 0.048);
+    rScapulaGroup.add(rCoracoidMesh);
+
+    // 5. Subacromial Space Indicator (Bursa & Supraspinatus outlet)
+    const bursaGeo = new THREE.CylinderGeometry(0.034, 0.034, 0.008, 16);
+    bursaGeo.rotateX(Math.PI / 2);
+    const bursaMat = new THREE.MeshStandardMaterial({
+      color: 0x10b981,
+      emissive: 0x059669,
+      emissiveIntensity: 0.35,
+      transparent: true,
+      opacity: 0.65
+    });
+    const rBursaMesh = new THREE.Mesh(bursaGeo, bursaMat);
+    rBursaMesh.position.set(0.035, 0.018, 0.02);
+    rScapulaGroup.add(rBursaMesh);
+    this.meshes['r_subacromial_bursa'] = rBursaMesh;
+
+    // 6. Glenoid Fossa
+    const glenoidMesh = this.createJointSphere(0.032, false);
     glenoidMesh.position.set(0.03, -0.01, 0.03);
     rScapulaGroup.add(glenoidMesh);
 
@@ -290,9 +332,34 @@ export class SkeletonModel {
     lClavicleMesh.rotation.z = Math.PI / 2 - 0.1;
     lClavicleGroup.add(lClavicleMesh);
 
+    // Left Scapula
+    const lScapulaGroup = new THREE.Group();
+    lScapulaGroup.position.set(-0.15, 0, -0.06);
+    lClavicleGroup.add(lScapulaGroup);
+
+    const lScapulaGeo = new THREE.BufferGeometry();
+    const lScapulaVerts = new Float32Array([
+      -0.03, 0.01, 0.02,   0.09, 0.03, -0.01,   0.07, -0.16, 0.01,
+      -0.03, 0.01, 0.02,   0.07, -0.16, 0.01,  -0.01, -0.05, 0.02,
+      -0.03, 0.01, 0.01,   0.07, -0.16, 0.00,   0.09, 0.03, -0.02,
+      -0.03, 0.01, 0.01,  -0.01, -0.05, 0.01,   0.07, -0.16, 0.00
+    ]);
+    lScapulaGeo.setAttribute('position', new THREE.BufferAttribute(lScapulaVerts, 3));
+    lScapulaGeo.computeVertexNormals();
+    lScapulaGroup.add(new THREE.Mesh(lScapulaGeo, this.boneMaterial));
+
+    const lSpineMesh = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.014, 0.016), this.boneMaterial);
+    lSpineMesh.position.set(0.04, 0.015, -0.015);
+    lSpineMesh.rotation.set(0, 0, -0.15);
+    lScapulaGroup.add(lSpineMesh);
+
+    const lAcromionMesh = new THREE.Mesh(new THREE.BoxGeometry(0.042, 0.014, 0.046), this.boneMaterial);
+    lAcromionMesh.position.set(-0.035, 0.036, 0.02);
+    lScapulaGroup.add(lAcromionMesh);
+
     const lShoulderGroup = new THREE.Group();
-    lShoulderGroup.position.set(-0.18, 0, 0);
-    lClavicleGroup.add(lShoulderGroup);
+    lShoulderGroup.position.set(-0.03, -0.01, 0.03);
+    lScapulaGroup.add(lShoulderGroup);
 
     const lHumeralHead = this.createJointSphere(0.04, false);
     lShoulderGroup.add(lHumeralHead);
@@ -482,6 +549,27 @@ export class SkeletonModel {
       } else {
         node.rotation.set(0, 0, 0);
       }
+    }
+  }
+
+  setImpingementState(isImpinging) {
+    const bursa = this.meshes['r_subacromial_bursa'];
+    const acromion = this.meshes['r_acromion'];
+    if (bursa) {
+      if (isImpinging) {
+        bursa.material.color.setHex(0xf43f5e); // Pulsing Rose Red
+        bursa.material.emissive.setHex(0xe11d48);
+        bursa.material.emissiveIntensity = 0.95;
+        bursa.scale.set(1.2, 0.2, 1.2); // Compressed / pinched subacromial space!
+      } else {
+        bursa.material.color.setHex(0x10b981); // Mint healthy space
+        bursa.material.emissive.setHex(0x059669);
+        bursa.material.emissiveIntensity = 0.35;
+        bursa.scale.set(1, 1, 1); // Normal unhindered 10mm outlet
+      }
+    }
+    if (acromion) {
+      acromion.material = isImpinging ? this.highlightMaterial : this.boneMaterial;
     }
   }
 }
