@@ -647,7 +647,7 @@ export class KinematicsEngine {
           const mcp = THREE.MathUtils.degToRad(55 * ratio);
           const pip = THREE.MathUtils.degToRad(70 * ratio);
           const dip = THREE.MathUtils.degToRad(40 * ratio);
-          this.curlFingers(mcp, pip, dip);
+          this.curlFingers(mcp, pip, dip, ['index', 'middle', 'ring', 'little'], true);
           if (joints['r_thumb_cmc']) {
             joints['r_thumb_cmc'].rotation.y = 0.15 + ratio * 0.35;
           }
