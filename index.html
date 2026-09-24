@@ -78,14 +78,20 @@
           <div class="rhythm-title">
             <span class="rhythm-icon">⚖️</span>
             <strong>2:1 Scapulohumeral Rhythm Monitor</strong>
-            <span class="badge-ratio">2 : 1 Ratio (120° GH : 60° ST)</span>
+            <span class="badge-ratio">120° GH : 60° ST</span>
           </div>
-          <div class="scapula-lock-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-lock-scapula">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label" id="lock-scapula-label">🔒 ลองล็อกสะบัก (Lock Scapula)</span>
+          <div class="header-right-actions">
+            <div class="scapula-lock-toggle">
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggle-lock-scapula">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="lock-scapula-label">🔒 ล็อกสะบัก</span>
+            </div>
+            <button class="hud-collapse-btn" data-target="scapular-rhythm-panel" title="ย่อ / ขยาย Panel (Toggle 3D View)">
+              <span class="collapse-icon">▼</span>
+              <span class="collapse-text">ซ่อน</span>
+            </button>
           </div>
         </div>
 
@@ -139,17 +145,23 @@
         <div class="hud-header">
           <div class="hud-title">
             <span class="hud-icon">🦶</span>
-            <strong>Foot & Ankle Biomechanics (Subtalar, TNCC & Windlass)</strong>
-            <span id="foot-coupling-badge" class="badge-ratio">Triplanar Axis (42°/16°)</span>
+            <strong>Foot & Ankle Biomechanics</strong>
+            <span id="foot-coupling-badge" class="badge-ratio">Triplanar Axis</span>
           </div>
 
-          <!-- Weight-Bearing (WB) Closed Chain Toggle -->
-          <div class="hud-toggle-container">
-            <label class="toggle-switch">
-              <input type="checkbox" id="toggle-weight-bearing">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label" id="wb-toggle-label">🏋️ Closed Chain (Weight-Bearing)</span>
+          <div class="header-right-actions">
+            <!-- Weight-Bearing (WB) Closed Chain Toggle -->
+            <div class="hud-toggle-container">
+              <label class="toggle-switch">
+                <input type="checkbox" id="toggle-weight-bearing">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="wb-toggle-label">🏋️ Closed Chain</span>
+            </div>
+            <button class="hud-collapse-btn" data-target="foot-biomechanics-panel" title="ย่อ / ขยาย Panel (Toggle 3D View)">
+              <span class="collapse-icon">▼</span>
+              <span class="collapse-text">ซ่อน</span>
+            </button>
           </div>
         </div>
 
