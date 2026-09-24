@@ -131,6 +131,150 @@
         </div>
       </div>
 
+      <!-- Real-time Foot & Ankle Biomechanics HUD Panel -->
+      <div id="foot-biomechanics-panel" class="biomechanics-hud-panel hidden">
+        <div class="hud-header">
+          <div class="hud-title">
+            <span class="hud-icon">🦶</span>
+            <strong>Foot & Ankle Biomechanics (Subtalar, TNCC & Windlass)</strong>
+            <span id="foot-coupling-badge" class="badge-ratio">Triplanar Axis (42°/16°)</span>
+          </div>
+
+          <!-- Weight-Bearing (WB) Closed Chain Toggle -->
+          <div class="hud-toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-weight-bearing">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label" id="wb-toggle-label">🏋️ Closed Chain (Weight-Bearing)</span>
+          </div>
+        </div>
+
+        <!-- 3-Column Biomechanical Matrix -->
+        <div class="biomech-grid">
+          <!-- Col 1: Subtalar Triplanar Decomposition -->
+          <div class="biomech-card">
+            <div class="card-label">📐 Subtalar Triplanar Decomposition</div>
+            <div class="triplanar-readouts">
+              <div class="tri-item">
+                <span class="tri-plane">Frontal:</span>
+                <span id="foot-frontal-val" class="tri-val">0° (Neutral)</span>
+              </div>
+              <div class="tri-item">
+                <span class="tri-plane">Transverse:</span>
+                <span id="foot-transverse-val" class="tri-val">0° (Neutral)</span>
+              </div>
+              <div class="tri-item">
+                <span class="tri-plane">Sagittal:</span>
+                <span id="foot-sagittal-val" class="tri-val">0° (Neutral)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2: TNCC (Transverse Tarsal) Dynamic Lock -->
+          <div class="biomech-card">
+            <div class="card-label">🔗 TNCC Joint State (Chopart)</div>
+            <div id="tncc-status-pill" class="status-pill status-unlocked">
+              🔓 UNLOCKED (Flexible Shock Absorber)
+            </div>
+            <div class="sub-caption">
+              Axes Alignment: <strong id="tncc-axes-val" class="text-teal">Parallel (0°)</strong>
+            </div>
+          </div>
+
+          <!-- Col 3: Kinetic Chain Coupling & Windlass Arch -->
+          <div class="biomech-card">
+            <div class="card-label">⛓️ Tibial Rotation & Windlass Arch</div>
+            <div class="chain-row">
+              <span class="chain-label">Tibial Axial Coupling:</span>
+              <strong id="tibial-rot-val" class="chain-val text-amber">Neutral (0°)</strong>
+            </div>
+            <div class="chain-row">
+              <span class="chain-label">Plantar Fascia Tension:</span>
+              <div class="mini-progress-track">
+                <div id="fascia-progress-fill" class="mini-progress-fill" style="width: 15%"></div>
+              </div>
+              <span id="fascia-percent-val" class="chain-val text-cyan">15%</span>
+            </div>
+            <div class="chain-row">
+              <span class="chain-label">Medial Arch Height:</span>
+              <strong id="mla-height-val" class="chain-val text-mint">15 mm</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-time Hand & Wrist Biomechanics HUD Panel -->
+      <div id="hand-biomechanics-panel" class="biomechanics-hud-panel hidden">
+        <div class="hud-header">
+          <div class="hud-title">
+            <span class="hud-icon">🖐️</span>
+            <strong>Hand & Wrist Complex (1st CMC Saddle & Tenodesis)</strong>
+            <span class="badge-ratio">Neumann Orthogonal Kinesiology</span>
+          </div>
+
+          <!-- Tenodesis Coupling Toggle -->
+          <div class="hud-toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-tenodesis" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label" id="tenodesis-toggle-label">🔗 Tenodesis Action (Passive Grip Coupling)</span>
+          </div>
+        </div>
+
+        <div class="biomech-grid">
+          <!-- Col 1: 1st CMC Saddle Arthrokinematic Rule -->
+          <div class="biomech-card">
+            <div class="card-label">⚖️ 1st CMC Saddle Arthrokinematics</div>
+            <div id="saddle-rule-name" class="saddle-rule-badge">
+              Convex-on-Concave Orthogonal Rule
+            </div>
+            <div class="roll-slide-row">
+              <div class="vector-box vector-roll">
+                <span class="vector-tag">ROLL:</span>
+                <strong id="hand-roll-val">Palmar (Anterior)</strong>
+              </div>
+              <span id="vector-relation-symbol" class="vector-relation">≠ OPPOSITE</span>
+              <div class="vector-box vector-slide">
+                <span class="vector-tag">SLIDE:</span>
+                <strong id="hand-slide-val">Dorsal (Posterior)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Col 2: Tenodesis Grasp Dynamics -->
+          <div class="biomech-card">
+            <div class="card-label">🧤 Tenodesis Action Mechanism</div>
+            <div id="tenodesis-status-pill" class="status-pill status-tenodesis">
+              Automatic Passive Grasp
+            </div>
+            <p id="tenodesis-desc-val" class="card-desc">
+              Wrist extension creates passive tension in FDP/FDS flexors, closing fingers naturally into a functional grasp.
+            </p>
+          </div>
+
+          <!-- Col 3: Functional Prehension Grips -->
+          <div class="biomech-card">
+            <div class="card-label">✊ Prehension & Functional Grip Presets</div>
+            <div class="grip-btn-group">
+              <button class="grip-btn" data-grip="power_grip" title="Cylindrical Power Grip (Wrist 25° ext, 10° ulnar dev, fingers wrapped)">
+                ✊ Power Grip
+              </button>
+              <button class="grip-btn" data-grip="tip_pinch" title="Precision Tip Pinch (Thumb pulp touching Index fingertip)">
+                🤏 Tip Pinch
+              </button>
+              <button class="grip-btn" data-grip="key_pinch" title="Lateral / Key Pinch (Thumb against radial side of 2nd digit)">
+                🗝️ Key Pinch
+              </button>
+              <button class="grip-btn" data-grip="open_hand" title="Release to flat resting open hand">
+                ✋ Open Hand
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Bottom Floating Slider Controller -->
       <div class="bottom-control-bar">
         <div class="control-group-play">
