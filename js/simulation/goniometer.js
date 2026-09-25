@@ -322,12 +322,14 @@ export class VirtualGoniometer {
         break;
 
       case 'subtalar_inversion':
+      case 'subtalar_supination':
         planeRot.set(0, 0, 0);
         surfaceOffset.set(0, 0, -0.065);
         rotDirection = -1;
         break;
 
       case 'subtalar_eversion':
+      case 'subtalar_pronation':
         planeRot.set(0, 0, 0);
         surfaceOffset.set(0, 0, -0.065);
         rotDirection = 1;

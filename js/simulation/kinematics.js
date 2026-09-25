@@ -294,18 +294,18 @@ export class KinematicsEngine {
       if (joints['r_finger_index_pip']) joints['r_finger_index_pip'].rotation.set(-1.10, 0, 0);
       if (joints['r_finger_index_dip']) joints['r_finger_index_dip'].rotation.set(-0.75, 0, 0);
 
-      // Relaxed cascade for digits 3-5 (clears visual and functional space)
-      if (joints['r_finger_middle_mcp']) joints['r_finger_middle_mcp'].rotation.set(-0.95, 0, 0);
-      if (joints['r_finger_middle_pip']) joints['r_finger_middle_pip'].rotation.set(-1.22, 0, 0);
-      if (joints['r_finger_middle_dip']) joints['r_finger_middle_dip'].rotation.set(-0.61, 0, 0);
+      // Open, relaxed resting cascade for digits 3-5 (distinctly separated from fist / power grip)
+      if (joints['r_finger_middle_mcp']) joints['r_finger_middle_mcp'].rotation.set(-0.25, 0, 0);
+      if (joints['r_finger_middle_pip']) joints['r_finger_middle_pip'].rotation.set(-0.35, 0, 0);
+      if (joints['r_finger_middle_dip']) joints['r_finger_middle_dip'].rotation.set(-0.20, 0, 0);
 
-      if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.set(-1.12, 0, 0.05);
-      if (joints['r_finger_ring_pip']) joints['r_finger_ring_pip'].rotation.set(-1.40, 0, 0);
-      if (joints['r_finger_ring_dip']) joints['r_finger_ring_dip'].rotation.set(-0.70, 0, 0);
+      if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.set(-0.32, 0, 0.04);
+      if (joints['r_finger_ring_pip']) joints['r_finger_ring_pip'].rotation.set(-0.42, 0, 0);
+      if (joints['r_finger_ring_dip']) joints['r_finger_ring_dip'].rotation.set(-0.25, 0, 0);
 
-      if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.set(-1.22, -0.05, 0.12);
-      if (joints['r_finger_little_pip']) joints['r_finger_little_pip'].rotation.set(-1.48, 0, 0);
-      if (joints['r_finger_little_dip']) joints['r_finger_little_dip'].rotation.set(-0.75, 0, 0);
+      if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.set(-0.38, -0.05, 0.08);
+      if (joints['r_finger_little_pip']) joints['r_finger_little_pip'].rotation.set(-0.48, 0, 0);
+      if (joints['r_finger_little_dip']) joints['r_finger_little_dip'].rotation.set(-0.30, 0, 0);
 
       // Opposed and flexed thumb to meet index fingertip exactly
       if (joints['r_thumb_cmc']) joints['r_thumb_cmc'].rotation.set(0, -0.60, -0.10);
@@ -667,20 +667,26 @@ export class KinematicsEngine {
       case 'thumb_cmc_abduction': {
         if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
         if (joints['r_thumb_cmc']) {
-          // Palmar abduction: rolls palmarward (+Y), slides dorsalward
-          joints['r_thumb_cmc'].rotation.y = 0.15 + rad * 0.85;
-          joints['r_thumb_cmc'].rotation.x = 0.2 + rad * 0.25;
+          // Palmar abduction (Neumann Ch. 8, pp. 288-290):
+          // 1st Metacarpal swings perpendicularly anteriorly (+X & +Z) away from the plane of the palm
+          joints['r_thumb_cmc'].rotation.x = 0.2 + rad * 0.95;
+          joints['r_thumb_cmc'].rotation.z = -0.45 + rad * 0.35;
+          joints['r_thumb_cmc'].rotation.y = 0.15 + rad * 0.15;
         }
+        if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = rad * 0.10;
         break;
       }
 
       case 'thumb_cmc_flexion': {
         if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
         if (joints['r_thumb_cmc']) {
-          // Flexion across palm: sweeps medially (-Z)
-          joints['r_thumb_cmc'].rotation.z = -0.45 - rad * 0.75;
-          joints['r_thumb_cmc'].rotation.x = 0.2 - rad * 0.2;
+          // Flexion across palm: sweeps medially (-Z) and tucks slightly toward palm (-X)
+          joints['r_thumb_cmc'].rotation.z = -0.45 - rad * 1.05;
+          joints['r_thumb_cmc'].rotation.x = 0.2 - rad * 0.35;
+          joints['r_thumb_cmc'].rotation.y = 0.15 - rad * 0.25;
         }
+        if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -rad * 0.65;
+        if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -rad * 0.45;
         break;
       }
 
@@ -688,16 +694,19 @@ export class KinematicsEngine {
         if (joints['r_elbow']) joints['r_elbow'].rotation.x = -Math.PI / 2.5;
         if (joints['r_thumb_cmc']) {
           // Coordinated Abduction + Medial Flexion + Axial Internal Rotation
-          joints['r_thumb_cmc'].rotation.x = 0.2 + rad * 0.45;
-          joints['r_thumb_cmc'].rotation.y = 0.15 + rad * 0.65;
-          joints['r_thumb_cmc'].rotation.z = -0.45 - rad * 0.55;
+          joints['r_thumb_cmc'].rotation.x = 0.2 + rad * 0.75;
+          joints['r_thumb_cmc'].rotation.y = 0.15 + rad * 0.60;
+          joints['r_thumb_cmc'].rotation.z = -0.45 - rad * 0.85;
         }
-        if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -rad * 0.35;
-        if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -rad * 0.30;
+        if (joints['r_thumb_mcp']) joints['r_thumb_mcp'].rotation.x = -rad * 0.60;
+        if (joints['r_thumb_ip']) joints['r_thumb_ip'].rotation.x = -rad * 0.50;
         // Little finger opposing cupping
-        const oppFlex = rad * 0.25;
-        if (joints['r_finger_little_mcp']) joints['r_finger_little_mcp'].rotation.x = -oppFlex;
-        if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.x = -oppFlex * 0.6;
+        const oppFlex = rad * 0.35;
+        if (joints['r_finger_little_mcp']) {
+          joints['r_finger_little_mcp'].rotation.x = -oppFlex;
+          joints['r_finger_little_mcp'].rotation.y = -oppFlex * 0.4;
+        }
+        if (joints['r_finger_ring_mcp']) joints['r_finger_ring_mcp'].rotation.x = -oppFlex * 0.5;
         break;
       }
 
@@ -776,39 +785,90 @@ export class KinematicsEngine {
         if (joints['r_ankle']) joints['r_ankle'].rotation.x = rad; // Foot points down
         break;
 
-      case 'subtalar_inversion':
-      case 'subtalar_supination': {
+      case 'subtalar_inversion': {
+        // Isolated Subtalar (Hindfoot) Inversion (0° to 20°):
+        // Predominantly frontal plane tilt of calcaneus relative to talus
         if (joints['r_subtalar']) {
-          joints['r_subtalar'].rotation.z = -rad * 0.85; // Inversion / Varus (tilts sole medially toward -X)
-          joints['r_subtalar'].rotation.y = -rad * 0.35; // Adduction (toes point medially)
-          joints['r_subtalar'].rotation.x = rad * 0.25;  // Plantarflexion
+          joints['r_subtalar'].rotation.z = -rad * 0.95; // Pure medial varus tilt
+          joints['r_subtalar'].rotation.y = -rad * 0.12; // Slight oblique adduction
+          joints['r_subtalar'].rotation.x = rad * 0.08;  // Minimal plantarflexion
+        }
+        // Midfoot remains neutral in isolated subtalar test
+        if (joints['r_tncc']) {
+          joints['r_tncc'].rotation.set(0, 0, 0);
+        }
+        this.model.setTnccAxesState(false, 20);
+        this.model.setPlantarFasciaTension(0.12);
+        break;
+      }
+
+      case 'subtalar_eversion': {
+        // Isolated Subtalar (Hindfoot) Eversion (0° to 10°):
+        // Predominantly frontal plane lateral tilt of calcaneus
+        if (joints['r_subtalar']) {
+          joints['r_subtalar'].rotation.z = rad * 0.95;  // Pure lateral valgus tilt
+          joints['r_subtalar'].rotation.y = rad * 0.12;  // Slight oblique abduction
+          joints['r_subtalar'].rotation.x = -rad * 0.08; // Minimal dorsiflexion
+        }
+        if (joints['r_tncc']) {
+          joints['r_tncc'].rotation.set(0, 0, 0);
+        }
+        this.model.setTnccAxesState(true, 5);
+        this.model.setPlantarFasciaTension(0.08);
+        break;
+      }
+
+      case 'subtalar_supination': {
+        // Combined Subtalar + Midfoot Complex (0° to 35°):
+        // 1. Subtalar: Inversion + Adduction + Plantarflexion
+        if (joints['r_subtalar']) {
+          joints['r_subtalar'].rotation.z = -rad * 0.58; 
+          joints['r_subtalar'].rotation.y = -rad * 0.28; 
+          joints['r_subtalar'].rotation.x = rad * 0.20;  
+          // Elevate Medial Longitudinal Arch (MLA)
+          joints['r_subtalar'].position.y = Math.sin(rad) * 0.020;
+        }
+        // 2. Midfoot (Transverse Tarsal / TNCC & CC):
+        // Longitudinal axis adds inversion; Oblique axis adds adduction/plantarflexion
+        if (joints['r_tncc']) {
+          joints['r_tncc'].rotation.z = -rad * 0.42; 
+          joints['r_tncc'].rotation.y = -rad * 0.22; 
+          joints['r_tncc'].rotation.x = rad * 0.18;  
         }
         // TNCC Crossed / Converging lock (rigid lever)
         this.model.setTnccAxesState(false, 36);
-        this.model.setPlantarFasciaTension(rad * 0.25);
+        this.model.setPlantarFasciaTension(Math.min(1.0, rad * 0.75));
 
-        // Weight-Bearing Closed Chain Coupling
+        // Weight-Bearing Closed Chain Coupling: Supination drives Tibial External Rotation!
         if (this.isWeightBearing && joints['r_tibia_axial']) {
-          // Supination drives Tibial External Rotation!
           joints['r_tibia_axial'].rotation.y = rad * 0.45;
         }
         break;
       }
 
-      case 'subtalar_eversion':
       case 'subtalar_pronation': {
+        // Combined Subtalar + Midfoot Complex (0° to 20°):
+        // 1. Subtalar: Eversion + Abduction + Dorsiflexion
         if (joints['r_subtalar']) {
-          joints['r_subtalar'].rotation.z = rad * 0.85;  // Eversion / Valgus (tilts sole laterally toward +X)
-          joints['r_subtalar'].rotation.y = rad * 0.35;  // Abduction (toes point laterally)
-          joints['r_subtalar'].rotation.x = -rad * 0.25; // Dorsiflexion
+          joints['r_subtalar'].rotation.z = rad * 0.55;  
+          joints['r_subtalar'].rotation.y = rad * 0.26;  
+          joints['r_subtalar'].rotation.x = -rad * 0.18; 
+          // Flatten / drop MLA toward ground
+          joints['r_subtalar'].position.y = -Math.sin(rad) * 0.012;
+        }
+        // 2. Midfoot (Transverse Tarsal / TNCC & CC):
+        // Adds eversion, abduction, and flattens arch
+        if (joints['r_tncc']) {
+          joints['r_tncc'].rotation.z = rad * 0.45;  
+          joints['r_tncc'].rotation.y = rad * 0.24;  
+          joints['r_tncc'].rotation.x = -rad * 0.16; 
         }
         // TNCC Parallel alignment (unlocked shock absorber)
         this.model.setTnccAxesState(true, 0);
-        this.model.setPlantarFasciaTension(0.08);
+        this.model.setPlantarFasciaTension(0.06);
 
-        // Weight-Bearing Closed Chain Coupling
+        // Weight-Bearing Closed Chain Coupling: Pronation drives Tibial Internal Rotation!
         if (this.isWeightBearing && joints['r_tibia_axial']) {
-          // Pronation drives Tibial Internal Rotation!
           joints['r_tibia_axial'].rotation.y = -rad * 0.55;
         }
         break;

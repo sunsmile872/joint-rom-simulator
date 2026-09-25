@@ -1836,30 +1836,30 @@
     subtalar_inversion: {
       id: "subtalar_inversion",
       region: "ankle_foot",
-      jointName: "Subtalar & Transverse Tarsal Joints",
-      motionName: "Inversion (Varus)",
+      jointName: "Subtalar (Talocalcaneal) Joint",
+      motionName: "Subtalar Inversion (Isolated Hindfoot)",
       plane: "Frontal",
       axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
       normalMin: 0,
-      normalMax: 30,
+      normalMax: 20,
       unit: "degrees",
-      referenceRangeText: "0\xB0 \u2013 30\xB0 (AAOS: 30\xB0\u201335\xB0)",
-      functionalRange: "20\xB0 (Walking across sloping ground, trail running)",
-      hypermobilityThreshold: 40,
-      impingementRiskThreshold: 48,
+      referenceRangeText: "0\xB0 \u2013 20\xB0 (AAOS: 20\xB0\u201322\xB0 isolated hindfoot tilt)",
+      functionalRange: "15\xB0 (Walking across sloping ground, trail running)",
+      hypermobilityThreshold: 28,
+      impingementRiskThreshold: 35,
       sliderMin: 0,
-      sliderMax: 40,
+      sliderMax: 30,
       endFeel: {
         type: "Firm (Ligamentous)",
         description: "Tension in calcaneofibular ligament, lateral talocalcaneal ligament, cervical ligament, and lateral peroneus muscle stretch.",
         abnormalEndFeel: "Empty (acute ATFL/CFL grade III ligament rupture)."
       },
       arthrokinematics: {
-        type: "Triplanar Multi-Articular Gliding",
-        rule: "Inversion = Calcaneus tilts medially + Adduction + Plantarflexion",
-        description: "Calcaneus tilts into varus (medially) and adducts relative to the talus. Transverse tarsal joint axes cross and lock, turning the foot into a rigid lever (Neumann p. 614, Fig 14.24).",
-        closePacked: "Full inversion (supination)",
-        loosePacked: "Midway between extremes"
+        type: "Isolated Calcaneal Frontal Gliding",
+        rule: "Convex Calcaneus rolls medially and slides laterally on concave Talus",
+        description: "Isolated subtalar motion: Calcaneus tilts into inversion (medially) relative to the talus in the frontal plane (~20\xB0). Midfoot joints remain in baseline alignment.",
+        closePacked: "Full inversion",
+        loosePacked: "Neutral"
       },
       muscles: {
         primeMovers: [
@@ -1884,29 +1884,29 @@
     subtalar_eversion: {
       id: "subtalar_eversion",
       region: "ankle_foot",
-      jointName: "Subtalar & Transverse Tarsal Joints",
-      motionName: "Eversion (Valgus)",
+      jointName: "Subtalar (Talocalcaneal) Joint",
+      motionName: "Subtalar Eversion (Isolated Hindfoot)",
       plane: "Frontal",
       axis: "Oblique Subtalar Axis",
       normalMin: 0,
-      normalMax: 15,
+      normalMax: 10,
       unit: "degrees",
-      referenceRangeText: "0\xB0 \u2013 15\xB0 (AAOS: 15\xB0\u201320\xB0)",
-      functionalRange: "10\xB0 \u2013 15\xB0 (Adapting to uneven surfaces, loading response in gait)",
-      hypermobilityThreshold: 25,
-      impingementRiskThreshold: 32,
+      referenceRangeText: "0\xB0 \u2013 10\xB0 (AAOS: 10\xB0\u201312\xB0 isolated hindfoot tilt)",
+      functionalRange: "8\xB0 \u2013 10\xB0 (Adapting to uneven surfaces)",
+      hypermobilityThreshold: 16,
+      impingementRiskThreshold: 22,
       sliderMin: 0,
-      sliderMax: 25,
+      sliderMax: 20,
       endFeel: {
         type: "Hard (Bone block) or Firm",
         description: "Contact between lateral calcaneus and lateral malleolus, or tension in deltoid ligament.",
         abnormalEndFeel: "Hard / Painful (subtalar coalition)."
       },
       arthrokinematics: {
-        type: "Triplanar Gliding",
-        rule: "Eversion = Calcaneus tilts laterally + Abduction + Dorsiflexion",
-        description: "Calcaneus tilts into valgus (laterally) and abducts relative to the talus, unlocking midtarsal joints for shock absorption.",
-        closePacked: "Full inversion (supination)",
+        type: "Isolated Calcaneal Frontal Gliding",
+        rule: "Convex Calcaneus rolls laterally and slides medially on concave Talus",
+        description: "Isolated subtalar motion: Calcaneus tilts into eversion (laterally) relative to the talus in the frontal plane (~10\xB0). Midfoot remains in baseline alignment.",
+        closePacked: "Full inversion",
         loosePacked: "Neutral"
       },
       muscles: {
@@ -1932,19 +1932,19 @@
     subtalar_pronation: {
       id: "subtalar_pronation",
       region: "ankle_foot",
-      jointName: "Subtalar & TNCC (Transverse Tarsal) Complex",
-      motionName: "Subtalar Pronation (Unlocking)",
+      jointName: "Subtalar & Transverse Tarsal (Midfoot) Complex",
+      motionName: "Foot Pronation (Combined Subtalar + Midfoot Complex)",
       plane: "Triplanar",
       axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
       normalMin: 0,
-      normalMax: 15,
+      normalMax: 20,
       unit: "degrees",
-      referenceRangeText: "0\xB0 \u2013 15\xB0 (AAOS eversion component: 15\xB0)",
-      functionalRange: "10\xB0 \u2013 12\xB0 (Loading response in gait, shock absorption, ground contouring)",
-      hypermobilityThreshold: 25,
-      impingementRiskThreshold: 30,
+      referenceRangeText: "0\xB0 \u2013 20\xB0 (Subtalar ~10\xB0 + Midfoot TNCC ~10\xB0)",
+      functionalRange: "12\xB0 \u2013 15\xB0 (Loading response in gait, shock absorption, ground contouring)",
+      hypermobilityThreshold: 28,
+      impingementRiskThreshold: 35,
       sliderMin: 0,
-      sliderMax: 25,
+      sliderMax: 30,
       endFeel: {
         type: "Firm (Ligamentous) or Hard",
         description: "Tension in medial deltoid ligament (tibionavicular/tibiocalcaneal fibers) and contact between lateral calcaneus and fibular malleolus.",
@@ -1953,7 +1953,7 @@
       arthrokinematics: {
         type: "Triplanar Multi-Articular Gliding & Chopart Unlocking",
         rule: "NWB: Calcaneal Eversion + Abduction + Dorsiflexion | WB: Calcaneal Eversion + Talar Adduction/Plantarflexion + Tibial Internal Rotation",
-        description: "TNCC Parallel Alignment (Neumann Ch. 14, pp. 614\u2013616, Fig 14.24): In pronation, the Talonavicular (TN) and Calcaneocuboid (CC) joint axes align PARALLEL to one another, unlocking the transverse tarsal joint into a flexible shock absorber. In closed kinetic chain (weight-bearing), calcaneal eversion forces the talus to adduct and plantarflex, driving ~6\xB0\u201310\xB0 of coupled Tibial Internal Rotation!",
+        description: "TNCC Parallel Alignment (Neumann Ch. 14, pp. 614\u2013616, Fig 14.24): In pronation, the Talonavicular (TN) and Calcaneocuboid (CC) joint axes align PARALLEL to one another, unlocking the transverse tarsal joint into a flexible shock absorber. Combined motion roughly doubles isolated subtalar range! In closed kinetic chain, drives ~6\xB0\u201310\xB0 of coupled Tibial Internal Rotation.",
         closePacked: "Full Supination (inversion)",
         loosePacked: "Pronated / Neutral"
       },
@@ -1980,19 +1980,19 @@
     subtalar_supination: {
       id: "subtalar_supination",
       region: "ankle_foot",
-      jointName: "Subtalar & TNCC (Transverse Tarsal) Complex",
-      motionName: "Subtalar Supination (Locking)",
+      jointName: "Subtalar & Transverse Tarsal (Midfoot) Complex",
+      motionName: "Foot Supination (Combined Subtalar + Midfoot Complex)",
       plane: "Triplanar",
       axis: "Oblique Subtalar Axis (42\xB0 from horizontal, 16\xB0 from sagittal)",
       normalMin: 0,
-      normalMax: 30,
+      normalMax: 35,
       unit: "degrees",
-      referenceRangeText: "0\xB0 \u2013 30\xB0 (AAOS inversion component: 30\xB0\u201335\xB0)",
-      functionalRange: "20\xB0 \u2013 25\xB0 (Terminal stance push-off, rigid propulsion lever)",
-      hypermobilityThreshold: 40,
-      impingementRiskThreshold: 48,
+      referenceRangeText: "0\xB0 \u2013 35\xB0 (Subtalar ~20\xB0 + Midfoot TNCC ~15\xB0)",
+      functionalRange: "25\xB0 \u2013 30\xB0 (Terminal stance push-off, rigid propulsion lever)",
+      hypermobilityThreshold: 45,
+      impingementRiskThreshold: 52,
       sliderMin: 0,
-      sliderMax: 40,
+      sliderMax: 45,
       endFeel: {
         type: "Firm (Ligamentous)",
         description: "Tension in calcaneofibular ligament, lateral talocalcaneal ligament, cervical ligament, and lateral peroneus tendons.",
@@ -3353,15 +3353,15 @@
         if (joints["r_finger_index_mcp"]) joints["r_finger_index_mcp"].rotation.set(-0.78, 0, -0.06);
         if (joints["r_finger_index_pip"]) joints["r_finger_index_pip"].rotation.set(-1.1, 0, 0);
         if (joints["r_finger_index_dip"]) joints["r_finger_index_dip"].rotation.set(-0.75, 0, 0);
-        if (joints["r_finger_middle_mcp"]) joints["r_finger_middle_mcp"].rotation.set(-0.95, 0, 0);
-        if (joints["r_finger_middle_pip"]) joints["r_finger_middle_pip"].rotation.set(-1.22, 0, 0);
-        if (joints["r_finger_middle_dip"]) joints["r_finger_middle_dip"].rotation.set(-0.61, 0, 0);
-        if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.set(-1.12, 0, 0.05);
-        if (joints["r_finger_ring_pip"]) joints["r_finger_ring_pip"].rotation.set(-1.4, 0, 0);
-        if (joints["r_finger_ring_dip"]) joints["r_finger_ring_dip"].rotation.set(-0.7, 0, 0);
-        if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.set(-1.22, -0.05, 0.12);
-        if (joints["r_finger_little_pip"]) joints["r_finger_little_pip"].rotation.set(-1.48, 0, 0);
-        if (joints["r_finger_little_dip"]) joints["r_finger_little_dip"].rotation.set(-0.75, 0, 0);
+        if (joints["r_finger_middle_mcp"]) joints["r_finger_middle_mcp"].rotation.set(-0.25, 0, 0);
+        if (joints["r_finger_middle_pip"]) joints["r_finger_middle_pip"].rotation.set(-0.35, 0, 0);
+        if (joints["r_finger_middle_dip"]) joints["r_finger_middle_dip"].rotation.set(-0.2, 0, 0);
+        if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.set(-0.32, 0, 0.04);
+        if (joints["r_finger_ring_pip"]) joints["r_finger_ring_pip"].rotation.set(-0.42, 0, 0);
+        if (joints["r_finger_ring_dip"]) joints["r_finger_ring_dip"].rotation.set(-0.25, 0, 0);
+        if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.set(-0.38, -0.05, 0.08);
+        if (joints["r_finger_little_pip"]) joints["r_finger_little_pip"].rotation.set(-0.48, 0, 0);
+        if (joints["r_finger_little_dip"]) joints["r_finger_little_dip"].rotation.set(-0.3, 0, 0);
         if (joints["r_thumb_cmc"]) joints["r_thumb_cmc"].rotation.set(0, -0.6, -0.1);
         if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.set(-0.85, 0, 0);
         if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.set(-1, 0, 0);
@@ -3628,31 +3628,39 @@
         case "thumb_cmc_abduction": {
           if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
           if (joints["r_thumb_cmc"]) {
-            joints["r_thumb_cmc"].rotation.y = 0.15 + rad * 0.85;
-            joints["r_thumb_cmc"].rotation.x = 0.2 + rad * 0.25;
+            joints["r_thumb_cmc"].rotation.x = 0.2 + rad * 0.95;
+            joints["r_thumb_cmc"].rotation.z = -0.45 + rad * 0.35;
+            joints["r_thumb_cmc"].rotation.y = 0.15 + rad * 0.15;
           }
+          if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = rad * 0.1;
           break;
         }
         case "thumb_cmc_flexion": {
           if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
           if (joints["r_thumb_cmc"]) {
-            joints["r_thumb_cmc"].rotation.z = -0.45 - rad * 0.75;
-            joints["r_thumb_cmc"].rotation.x = 0.2 - rad * 0.2;
+            joints["r_thumb_cmc"].rotation.z = -0.45 - rad * 1.05;
+            joints["r_thumb_cmc"].rotation.x = 0.2 - rad * 0.35;
+            joints["r_thumb_cmc"].rotation.y = 0.15 - rad * 0.25;
           }
+          if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -rad * 0.65;
+          if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -rad * 0.45;
           break;
         }
         case "thumb_opposition": {
           if (joints["r_elbow"]) joints["r_elbow"].rotation.x = -Math.PI / 2.5;
           if (joints["r_thumb_cmc"]) {
-            joints["r_thumb_cmc"].rotation.x = 0.2 + rad * 0.45;
-            joints["r_thumb_cmc"].rotation.y = 0.15 + rad * 0.65;
-            joints["r_thumb_cmc"].rotation.z = -0.45 - rad * 0.55;
+            joints["r_thumb_cmc"].rotation.x = 0.2 + rad * 0.75;
+            joints["r_thumb_cmc"].rotation.y = 0.15 + rad * 0.6;
+            joints["r_thumb_cmc"].rotation.z = -0.45 - rad * 0.85;
           }
-          if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -rad * 0.35;
-          if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -rad * 0.3;
-          const oppFlex = rad * 0.25;
-          if (joints["r_finger_little_mcp"]) joints["r_finger_little_mcp"].rotation.x = -oppFlex;
-          if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.x = -oppFlex * 0.6;
+          if (joints["r_thumb_mcp"]) joints["r_thumb_mcp"].rotation.x = -rad * 0.6;
+          if (joints["r_thumb_ip"]) joints["r_thumb_ip"].rotation.x = -rad * 0.5;
+          const oppFlex = rad * 0.35;
+          if (joints["r_finger_little_mcp"]) {
+            joints["r_finger_little_mcp"].rotation.x = -oppFlex;
+            joints["r_finger_little_mcp"].rotation.y = -oppFlex * 0.4;
+          }
+          if (joints["r_finger_ring_mcp"]) joints["r_finger_ring_mcp"].rotation.x = -oppFlex * 0.5;
           break;
         }
         // ----------------------------------------------------
@@ -3718,29 +3726,65 @@
         case "ankle_plantarflexion":
           if (joints["r_ankle"]) joints["r_ankle"].rotation.x = rad;
           break;
-        case "subtalar_inversion":
+        case "subtalar_inversion": {
+          if (joints["r_subtalar"]) {
+            joints["r_subtalar"].rotation.z = -rad * 0.95;
+            joints["r_subtalar"].rotation.y = -rad * 0.12;
+            joints["r_subtalar"].rotation.x = rad * 0.08;
+          }
+          if (joints["r_tncc"]) {
+            joints["r_tncc"].rotation.set(0, 0, 0);
+          }
+          this.model.setTnccAxesState(false, 20);
+          this.model.setPlantarFasciaTension(0.12);
+          break;
+        }
+        case "subtalar_eversion": {
+          if (joints["r_subtalar"]) {
+            joints["r_subtalar"].rotation.z = rad * 0.95;
+            joints["r_subtalar"].rotation.y = rad * 0.12;
+            joints["r_subtalar"].rotation.x = -rad * 0.08;
+          }
+          if (joints["r_tncc"]) {
+            joints["r_tncc"].rotation.set(0, 0, 0);
+          }
+          this.model.setTnccAxesState(true, 5);
+          this.model.setPlantarFasciaTension(0.08);
+          break;
+        }
         case "subtalar_supination": {
           if (joints["r_subtalar"]) {
-            joints["r_subtalar"].rotation.z = -rad * 0.85;
-            joints["r_subtalar"].rotation.y = -rad * 0.35;
-            joints["r_subtalar"].rotation.x = rad * 0.25;
+            joints["r_subtalar"].rotation.z = -rad * 0.58;
+            joints["r_subtalar"].rotation.y = -rad * 0.28;
+            joints["r_subtalar"].rotation.x = rad * 0.2;
+            joints["r_subtalar"].position.y = Math.sin(rad) * 0.02;
+          }
+          if (joints["r_tncc"]) {
+            joints["r_tncc"].rotation.z = -rad * 0.42;
+            joints["r_tncc"].rotation.y = -rad * 0.22;
+            joints["r_tncc"].rotation.x = rad * 0.18;
           }
           this.model.setTnccAxesState(false, 36);
-          this.model.setPlantarFasciaTension(rad * 0.25);
+          this.model.setPlantarFasciaTension(Math.min(1, rad * 0.75));
           if (this.isWeightBearing && joints["r_tibia_axial"]) {
             joints["r_tibia_axial"].rotation.y = rad * 0.45;
           }
           break;
         }
-        case "subtalar_eversion":
         case "subtalar_pronation": {
           if (joints["r_subtalar"]) {
-            joints["r_subtalar"].rotation.z = rad * 0.85;
-            joints["r_subtalar"].rotation.y = rad * 0.35;
-            joints["r_subtalar"].rotation.x = -rad * 0.25;
+            joints["r_subtalar"].rotation.z = rad * 0.55;
+            joints["r_subtalar"].rotation.y = rad * 0.26;
+            joints["r_subtalar"].rotation.x = -rad * 0.18;
+            joints["r_subtalar"].position.y = -Math.sin(rad) * 0.012;
+          }
+          if (joints["r_tncc"]) {
+            joints["r_tncc"].rotation.z = rad * 0.45;
+            joints["r_tncc"].rotation.y = rad * 0.24;
+            joints["r_tncc"].rotation.x = -rad * 0.16;
           }
           this.model.setTnccAxesState(true, 0);
-          this.model.setPlantarFasciaTension(0.08);
+          this.model.setPlantarFasciaTension(0.06);
           if (this.isWeightBearing && joints["r_tibia_axial"]) {
             joints["r_tibia_axial"].rotation.y = -rad * 0.55;
           }
@@ -4057,11 +4101,13 @@
           rotDirection = 1;
           break;
         case "subtalar_inversion":
+        case "subtalar_supination":
           planeRot.set(0, 0, 0);
           surfaceOffset.set(0, 0, -0.065);
           rotDirection = -1;
           break;
         case "subtalar_eversion":
+        case "subtalar_pronation":
           planeRot.set(0, 0, 0);
           surfaceOffset.set(0, 0, -0.065);
           rotDirection = 1;
@@ -4980,6 +5026,11 @@
       this.slider.value = currentVal;
       this.app.setAngle(currentVal, true);
       this.animFrameId = requestAnimationFrame(() => this.runAnimation());
+    }
+    resetGripButtons() {
+      if (this.gripButtons) {
+        this.gripButtons.forEach((b) => b.classList.remove("active"));
+      }
     }
   };
 
@@ -5956,6 +6007,10 @@
       const motionSelect = document.getElementById("motion-select");
       if (motionSelect && motionSelect.value !== motionId) {
         motionSelect.value = motionId;
+      }
+      this.kinematics.setGrip("none");
+      if (this.controls && this.controls.resetGripButtons) {
+        this.controls.resetGripButtons();
       }
       if (this.activePathology && this.activePathology.restrictions && this.activePathology.restrictions[motionId]) {
         this.activeRestriction = this.activePathology.restrictions[motionId];

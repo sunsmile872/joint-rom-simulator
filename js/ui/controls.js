@@ -501,4 +501,10 @@ export class ControlsManager {
 
     this.animFrameId = requestAnimationFrame(() => this.runAnimation());
   }
+
+  resetGripButtons() {
+    if (this.gripButtons) {
+      this.gripButtons.forEach(b => b.classList.remove('active'));
+    }
+  }
 }

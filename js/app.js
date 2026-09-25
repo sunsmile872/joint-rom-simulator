@@ -195,6 +195,12 @@ class App {
       motionSelect.value = motionId;
     }
 
+    // Reset active grip preset when switching motions so joint motions (like thumb) are not frozen/overridden
+    this.kinematics.setGrip('none');
+    if (this.controls && this.controls.resetGripButtons) {
+      this.controls.resetGripButtons();
+    }
+
     // Check if active pathology restricts newly selected motion
     if (this.activePathology && this.activePathology.restrictions && this.activePathology.restrictions[motionId]) {
       this.activeRestriction = this.activePathology.restrictions[motionId];
