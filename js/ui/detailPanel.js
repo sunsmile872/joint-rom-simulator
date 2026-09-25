@@ -1,3 +1,5 @@
+import { getArthrokinematicsActionData } from '../data/arthrokinematicsData.js';
+
 export class DetailPanel {
   constructor(containerElement) {
     this.container = containerElement;
@@ -7,6 +9,7 @@ export class DetailPanel {
     if (!motionData) return;
 
     const {
+      id,
       jointName,
       motionName,
       plane,
@@ -19,6 +22,15 @@ export class DetailPanel {
       goniometry,
       citations
     } = motionData;
+
+    const actionData = getArthrokinematicsActionData(id, arthrokinematics);
+
+    const vectorsHtml = actionData.vectors.map(v => `
+      <div class="arthro-vector-pill">
+        <span class="vector-tag">${v.label}:</span>
+        <span class="vector-val">${v.value}</span>
+      </div>
+    `).join('');
 
     const primeMoversHtml = muscles.primeMovers.map(m => `
       <div class="muscle-item">
@@ -54,25 +66,6 @@ export class DetailPanel {
         <div class="metric-card">
           <div class="metric-label">Functional ADL Threshold</div>
           <div class="metric-value highlight-mint">${functionalRange}</div>
-        </div>
-      </div>
-
-      <!-- Arthrokinematics Section (Neumann) -->
-      <div class="section-card">
-        <div class="section-title">
-          <span class="icon">🔄</span> Arthrokinematics & Joint Play (Neumann)
-        </div>
-        <div class="arthro-rule-badge">${arthrokinematics.rule}</div>
-        <p class="section-text">${arthrokinematics.description}</p>
-        <div class="packed-grid">
-          <div class="packed-box">
-            <span class="packed-label">🔒 Close-Packed Position:</span>
-            <span class="packed-value">${arthrokinematics.closePacked}</span>
-          </div>
-          <div class="packed-box">
-            <span class="packed-label">🔓 Loose-Packed Position:</span>
-            <span class="packed-value">${arthrokinematics.loosePacked}</span>
-          </div>
         </div>
       </div>
 
@@ -131,6 +124,60 @@ export class DetailPanel {
         <div class="citations-header">📚 Textbook References & Evidence Base</div>
         <div class="citations-list">
           ${citationsHtml}
+        </div>
+      </div>
+
+      <!-- Arthrokinematics & Joint Play (Neumann) - Moved to bottom as Visual Action Cards -->
+      <div class="section-card arthro-section-card">
+        <div class="section-title">
+          <span class="icon">🔄</span> Arthrokinematics & Joint Play (Neumann)
+        </div>
+        <div class="arthro-rule-badge">${actionData.rule}</div>
+
+        <div class="arthro-action-grid">
+          <!-- Vectors Card -->
+          <div class="arthro-action-card vector-card">
+            <div class="arthro-card-header">
+              <span class="card-icon">🎯</span>
+              <span class="card-title">ทิศทางการเคลื่อนไหวระดับผิวข้อ (Vectors)</span>
+            </div>
+            <div class="arthro-vector-list">
+              ${vectorsHtml}
+            </div>
+          </div>
+
+          <!-- Clinical Significance Card -->
+          <div class="arthro-action-card clinical-card">
+            <div class="arthro-card-header">
+              <span class="card-icon">⚠️</span>
+              <span class="card-title">ทำไมต้องรู้? (Clinical Significance)</span>
+            </div>
+            <div class="arthro-card-body">
+              ${actionData.clinicalWhy}
+            </div>
+          </div>
+
+          <!-- Joint Mobilization Card -->
+          <div class="arthro-action-card mob-card">
+            <div class="arthro-card-header">
+              <span class="card-icon">🩺</span>
+              <span class="card-title">ทิศทางการดัดข้อแก้ข้อติด (Joint Mobilization)</span>
+            </div>
+            <div class="arthro-card-body">
+              ${actionData.mobilization}
+            </div>
+          </div>
+        </div>
+
+        <div class="packed-grid">
+          <div class="packed-box">
+            <span class="packed-label">🔒 Close-Packed (ล็อกแน่นสุด):</span>
+            <span class="packed-value">${actionData.closePacked}</span>
+          </div>
+          <div class="packed-box">
+            <span class="packed-label">🔓 Loose-Packed (ท่าพัก/ดัดข้อ):</span>
+            <span class="packed-value">${actionData.loosePacked}</span>
+          </div>
         </div>
       </div>
     `;

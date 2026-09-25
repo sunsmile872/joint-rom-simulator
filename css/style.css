@@ -630,6 +630,108 @@ html, body {
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   font-size: 11px;
   font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* Arthrokinematics Action Cards */
+.arthro-section-card {
+  border: 1px solid rgba(20, 184, 166, 0.3) !important;
+  background: linear-gradient(180deg, rgba(15, 29, 61, 0.95) 0%, rgba(10, 18, 40, 0.98) 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.arthro-section-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal-primary), var(--cyan-accent));
+}
+
+.arthro-action-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0 12px 0;
+}
+
+.arthro-action-card {
+  background: rgba(7, 13, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  transition: all 0.2s ease;
+}
+
+.arthro-action-card:hover {
+  background: rgba(11, 21, 45, 0.85);
+}
+
+.arthro-action-card.vector-card {
+  border-left: 3px solid var(--cyan-accent);
+}
+
+.arthro-action-card.clinical-card {
+  border-left: 3px solid var(--amber-warning);
+}
+
+.arthro-action-card.mob-card {
+  border-left: 3px solid var(--mint-primary);
+}
+
+.arthro-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.arthro-vector-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.arthro-vector-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  color: var(--cyan-accent);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.arthro-vector-pill .vector-tag {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.arthro-vector-pill .vector-val {
+  color: #e0f2fe;
+  font-weight: 600;
+}
+
+.arthro-card-body {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: #cbd5e1;
+}
+
+.arthro-action-card.clinical-card .arthro-card-body {
+  color: #fed7aa;
+}
+
+.arthro-action-card.mob-card .arthro-card-body {
+  color: #a7f3d0;
 }
 
 .packed-grid {
