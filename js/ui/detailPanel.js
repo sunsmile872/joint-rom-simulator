@@ -55,11 +55,6 @@ export class DetailPanel {
           <div class="metric-label">Functional ADL Threshold</div>
           <div class="metric-value highlight-mint">${functionalRange}</div>
         </div>
-        <div class="metric-card full-width">
-          <div class="metric-label">Normal End-Feel Classification</div>
-          <div class="metric-value">${endFeel.type}</div>
-          <p class="metric-desc">${endFeel.description}</p>
-        </div>
       </div>
 
       <!-- Arthrokinematics Section (Neumann) -->
